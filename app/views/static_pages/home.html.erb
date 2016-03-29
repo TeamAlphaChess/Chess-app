@@ -1,6 +1,12 @@
 <!-- Passes the current page title to application.html.erb -->
 <%= content_for :page_title, 'Home' %>
 
-<h1 class="home-header">Welcome to ChessMaster!</h1>
-<button class="home-button" id="signUpModal" data-trigger="modal">Sign Up</button>
-<button class="home-button" id="login" data-trigger="modal">Login</button>
+<div class="home-container">
+  <h1 class="home-header">Welcome to ChessMaster!</h1>
+  <div class="home-buttons-container">
+    <button class="home-button" id="signUpModalTrigger" type="button">Sign Up</button>
+    <button class="home-button home-button-bottom" id="loginModalTrigger" data-trigger="modal">Login</button>
+  </div>
+</div>
+
+<%= render partial: 'sign_up' %>
