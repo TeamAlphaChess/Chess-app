@@ -4,9 +4,7 @@ class King < Piece
 	def valid_move?(destination_row, destination_col)
 		# Call obstructed method to see if there is already a piece in the
 		# destination_row/destination_column
-		return false if obstructed?(destination_row, destination_col)
-
-		# Write code to make the piece move.
+		!obstructed?(destination_row, destination_col) && distance(destination_row, destination_col) == 1
 
 	end
 

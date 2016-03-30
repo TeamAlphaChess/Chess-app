@@ -83,4 +83,19 @@ class Piece < ActiveRecord::Base
     # # This has a piece in the destination, but not in between the pieces.
     game.pieces.where(current_row_index: destination_row, current_column_index: destination_col, color: color).count > 0
   end
+
+  def distance(destination_row, destination_col)
+    if self.vertical?(destination_row, destination_col)
+      return (destination_row - current_row_index).abs
+    elsif self.horizontal?(destination_row, destination_col)
+      return (destination_col - current_column_index).abs
+    elsif self.diagonal?(destination_row, destination_col)
+      return (destination_col - current_column_index).abs
+      # destination_col - current_row_index
+    else 
+      puts "Invalid Inputs"
+    end
+  end
+
 end
+
