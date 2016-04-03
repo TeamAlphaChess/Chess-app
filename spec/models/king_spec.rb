@@ -49,16 +49,16 @@ RSpec.describe King, type: :model do
   		expect(king.valid_move?(6, 4)).to eq true
   	end
 
-    it 'should allow a move to a space if piece is opposite color' do
-      game = FactoryGirl.create(:game)
-      king = King.new(game: game, current_row_index: 5, current_column_index: 5, color: 'black')
-      expect(king.valid_move?(6, 4, 'white')).to eq true
-    end
+    # it 'should allow a move to a space if piece is opposite color' do
+    #   game = FactoryGirl.create(:game)
+    #   king = King.new(game: game, current_row_index: 5, current_column_index: 5)
+    #   expect(king.valid_move?(6, 4, 'white')).to eq true
+    # end
 
-    it 'should not allow a move to a space if piece is same color' do
-      game = FactoryGirl.create(:game)
-      king = King.new(game: game, current_row_index: 5, current_column_index: 5, color: 'black')
-      expect(king.valid_move?(6, 4, 'black')).to eq false
-    end
+    # it 'should not allow a move to a space if piece is same color' do
+    #   game = FactoryGirl.create(:game)
+    #   king = King.new(game: game, color: 'black')
+    #   expect(king.valid_move?('black')).to eq false
+    # end
   end
 end

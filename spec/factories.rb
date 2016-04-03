@@ -19,7 +19,12 @@ FactoryGirl.define do
     type nil
     current_row_index nil
     current_column_index nil
-    color nil
+    color 'black'
     captured nil
   end
+
+  # factory :king do
+  #   color 'black'
+  # end
+
 end
