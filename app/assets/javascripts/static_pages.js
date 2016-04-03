@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $('#signUpModalTrigger').on('click', function() {
-      alert('hello');
       $('#signUpModal').modal('toggle');
+      $('.modal').css({'display': 'flex', 'align-items': 'center', 'justify-content': 'center'});
     });
 });

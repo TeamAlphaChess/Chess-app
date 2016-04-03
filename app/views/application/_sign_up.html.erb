@@ -1,28 +1,25 @@
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-  <!-- Modal -->
-  <div id="signUpModal" class="modal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+<!-- Sign Up Modal -->
+<div id="signUpModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Sign Up</h4>
+        <button type="button" class="close-icon modal-close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-inputs">
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= f.error_notification %>
+            <%= f.input :email, required: true, autofocus: true, placeholder: 'Email', label: false %>
+            <%= f.input :name, required: true, placeholder: 'Player Tag', label: false %>
+            <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), placeholder: 'Password', label: false %>
+            <%= f.input :password_confirmation, required: true, placeholder: 'Confirm Password', label: false %>
         </div>
-        <div class="modal-body">
-          <div class="form-inputs">
-            <%= f.input :email, required: true, autofocus: true %>
-            <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-            <%= f.input :password_confirmation, required: true %>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <%= f.submit 'Sign up', class: 'btn btn-default'%>
-        </div>
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+      </div>
+      <div class="modal-footer">
+          <%= f.submit 'Submit', class: 'btn btn-default'%>
+        <% end %>
       </div>
     </div>
   </div>
-<% end %>
+</div>

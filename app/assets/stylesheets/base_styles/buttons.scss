@@ -1,0 +1,21 @@
+.btn-default {
+  background-color: $yellow;
+}
+
+.btn {
+  border: none;
+  font-family: $font-light;
+  border-radius: 0;
+  color: $dark-gray;
+  padding: 4px 12px;
+  transition: $linear-transition;
+}
+
+.btn-default:hover {
+  background-color: $yellow;
+  color: $white;
+}
+
+button:focus {
+  outline: 0;
+}
