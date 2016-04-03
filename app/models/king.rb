@@ -4,7 +4,6 @@ class King < Piece
  		# Evaluate piece with invalid_destination to make sure there is not already a piece in the
  		# destination_row/destination_column of the same color
     # Check to see if the king is only moving exactly one space in any direction on the board
- 		!invalid_destination?(destination_row, destination_col) && distance(destination_row, destination_col) == 1 
-    # && !same_color?(color)
+ 		!destination_with_piece_of_same_color?(destination_row, destination_col) && distance(destination_row, destination_col) == 1 
  	end
 end

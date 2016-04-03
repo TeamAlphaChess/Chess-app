@@ -91,17 +91,5 @@ RSpec.describe Piece, type: :model do
       # expect(response).to have_http_status(:unproceessable_entity)
       # it raises an error because there is a piece in the destination.
     end
-
-    it 'should allow a move to a space if piece is opposite color' do
-      game = FactoryGirl.create(:game)
-      king = King.new(game: game, current_row_index: 5, current_column_index: 5)
-      expect(king.valid_move?(6, 4)).to eq true
-    end
-
-    it 'should not allow a move to a space if piece is same color' do
-      game = FactoryGirl.create(:game)
-      king = King.new(game: game, color: 'black')
-      expect(king.valid_move?(6, 4)).to eq false
-    end
   end
 end

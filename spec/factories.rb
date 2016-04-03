@@ -19,12 +19,15 @@ FactoryGirl.define do
     type nil
     current_row_index nil
     current_column_index nil
-    color 'black'
+    color nil
     captured nil
+
+    factory :king, class: King do
+      type 'King'
+    end
+
+    factory :pawn, class: Pawn do
+      type 'Pawn'
+    end
   end
-
-  # factory :king do
-  #   color 'black'
-  # end
-
 end
