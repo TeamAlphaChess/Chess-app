@@ -4,10 +4,10 @@ class Piece < ActiveRecord::Base
 
   def obstructed?(destination_row, destination_col)
     invalid_input?(destination_row, destination_col) ||
-      invalid_horizontal_move?(destination_row, destination_col) ||
-      invalid_vertical_move?(destination_row, destination_col) ||
-      invalid_diagonal_move?(destination_row, destination_col) ||
-      invalid_destination?(destination_row, destination_col)
+    invalid_horizontal_move?(destination_row, destination_col) ||
+    invalid_vertical_move?(destination_row, destination_col) ||
+    invalid_diagonal_move?(destination_row, destination_col) ||
+    invalid_destination?(destination_row, destination_col)
   end
 
   def horizontal?(destination_row, destination_col)
@@ -16,12 +16,12 @@ class Piece < ActiveRecord::Base
   end
 
   def vertical?(destination_row, destination_col)
-    # is the column the same, but the row different?
+    # Is the column the same, but the row different?
     (current_column_index == destination_col) && (current_row_index != destination_row)
   end
 
   def diagonal?(destination_row, destination_col)
-    # is the row and column different?
+    # Are the row and column the same?
     (current_row_index - destination_row).abs == (current_column_index - destination_col).abs
   end
 
@@ -76,12 +76,17 @@ class Piece < ActiveRecord::Base
   end
 
   def invalid_input?(destination_row, destination_col)
-    destination_row > 7 || destination_col > 7
+    # Check if destination row or column is outside board bounds
+    destination_row > 7 || destination_col > 7 || destination_row < 0 || destination_col < 0 
   end
 
   def invalid_destination?(destination_row, destination_col)
-    # # This has a piece in the destination, but not in between the pieces.
+    # This has a piece in the destination, but not in between the pieces.
     game.pieces.where(current_row_index: destination_row, current_column_index: destination_col, color: color).count > 0
+  end
+
+  def same_color?(color)
+    game.pieces.where(color: color)
   end
 
   def distance(destination_row, destination_col)
