@@ -6,8 +6,7 @@ class Piece < ActiveRecord::Base
     invalid_input?(destination_row, destination_col) ||
     invalid_horizontal_move?(destination_row, destination_col) ||
     invalid_vertical_move?(destination_row, destination_col) ||
-    invalid_diagonal_move?(destination_row, destination_col) ||
-    destination_with_piece_of_same_color?(destination_row, destination_col)
+    invalid_diagonal_move?(destination_row, destination_col) 
   end
 
   def horizontal?(destination_row, destination_col)
