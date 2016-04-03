@@ -2,9 +2,15 @@
   background: $dark-overlay;
 }
 
+.modal-flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .form-control {
   border: 2px solid $yellow;
-  margin: 25px 0;
+  margin: 28px 0;
   border-radius: 0;
   height: 30px;
   font-family: $font-light;
@@ -19,6 +25,7 @@
   width: 83%;
   margin: auto;
   height: auto;
+  max-width: 400px;
 }
 
 .modal-content {
@@ -32,15 +39,10 @@
   background: none;
   font-size: 30px;
   border: none;
-  height: 70%;
   padding: 0;
   margin: 0;
   line-height: 0.8;
   transition: $linear-transition;
-}
-
-.modal-close:hover {
-  color: $yellow;
 }
 
 .modal-header {
@@ -60,13 +62,11 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  margin: 0;
 }
 
 .modal-title {
   font-size: 13px;
   height: 100%;
-
 }
 
 .modal-footer {

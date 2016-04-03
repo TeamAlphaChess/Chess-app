@@ -7,7 +7,7 @@
   font-family: $font-light;
   border-radius: 0;
   color: $dark-gray;
-  padding: 4px 12px;
+  padding: 6px 18px;
   transition: $linear-transition;
 }
 
@@ -18,4 +18,19 @@
 
 button:focus {
   outline: 0;
+}
+
+.home-button {
+  display: block;
+  background-color: $dark-gray;
+  border: 2px solid $yellow;
+  font-family: $font-light;
+  color: $yellow;
+  font-size: 20px;
+  width: 100%;
+  transition: $linear-transition;
+}
+
+.home-button-bottom {
+  margin-top: 20px;
 }

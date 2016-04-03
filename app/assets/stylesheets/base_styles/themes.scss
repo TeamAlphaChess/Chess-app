@@ -9,6 +9,7 @@ Colors
             $green:     rgb(98, 190, 108);
            $orange:     rgb(248, 155, 56);
               $red:     rgb(227, 94, 90);
+             $blue:     rgb(0, 146, 240);
 
 /* ====================================
 Overlays
@@ -35,6 +36,12 @@ Box Shadows
      $font-regular:     montserratregular;
        $font-light:     montserratlight;
   $font-ultralight:     montserratultra_light;
+
+/* ====================================
+Secondary Typeface
+======================================*/
+
+$second-font-regular:   cabinregular;
 
 /* ====================================
 Transitions

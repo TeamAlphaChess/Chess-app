@@ -5,66 +5,64 @@ Just make sure this file is empty when
 you commit.
 ======================================*/
 
-.home-header {
-  color: $yellow;
-  font-family: $font-bold;
-  font-size: 30px;
-  line-height: 1.5;
-  text-align: center;
-  margin: 0;
-  width: 100%;
-  max-width: 220px;
-}
 
-.home-container {
-  padding: 15px 0px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: space-around;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
 
-.home-button {
-  display: block;
-  background-color: $dark-gray;
-  border: 2px solid $yellow;
-  font-family: $font-light;
-  color: $yellow;
-  font-size: 20px;
-  width: 100%;
-  transition: $linear-transition;
-}
 
-.home-button-bottom {
-  margin-top: 20px;
-}
 
-.home-buttons-container {
-  width: 100%;
-  max-width: 200px;
-  text-align: center;
-}
 
-.home-button:hover {
-  border: 2px solid white;
-  color: white;
-}
 
 /* ====================================
 Media Queries.
 ======================================*/
 
+@media (min-width: 550px) {
+
+
+
+}
+
 
 @media (min-width: $screen-sm-min) {
+  .form-control {
+    margin: 43px 0;
+    height: 50px;
+    font-size: 15px;
+  }
 
+  .modal-dialog {
+    width: 83%;
+    margin: auto;
+    height: auto;
+    max-width: 600px;
+  }
 
+  .modal-content {
+    padding: 6px 25px 25px 25px;
+  }
+
+  .modal-close {
+    font-size: 37px;
+    line-height: 0.8;
+  }
+
+  .modal-header {
+    padding: 0;
+    border-bottom: 1px solid $light-gray;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    height: 100%;
+  }
+
+  .modal-footer {
+    height: 15%;
+  }
+
+  .btn {
+    padding: 12px 36px;
+    font-size: 18px;
+  }
 }
 
 @media (min-width: $screen-md-min) {

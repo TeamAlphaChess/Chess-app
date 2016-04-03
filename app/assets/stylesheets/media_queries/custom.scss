@@ -1,0 +1,25 @@
+/* ====================================
+Home Page 550px min width
+======================================*/
+
+@media (min-width: 550px) and (max-width: 767px) {
+
+  .home-header {
+    max-width: 350px;
+    font-size: 50px;
+  }
+
+  .home-buttons-container {
+    max-width: 300px;
+  }
+
+  .home-button {
+    font-size: 20px;
+    border-width: 2px;
+    padding: 5px;
+  }
+
+  .home-button-bottom {
+    margin-top: 35px;
+  }
+}
