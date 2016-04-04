@@ -79,17 +79,8 @@ RSpec.describe Piece, type: :model do
       FactoryGirl.create(:piece, game: game, current_row_index: 2, current_column_index: 2)
 
       expect(piece1.obstructed?(100, 300)).to eq true
+      expect(piece1.obstructed?(-100, -300)).to eq true
       # it raises an error because there is an invalid input. There is no row: 100, col: 300
-    end
-
-    it 'returns true for invalid destination' do
-      game = FactoryGirl.create(:game) # Would do this using FactoryGirl
-      piece1 = FactoryGirl.create(:piece, game: game, current_row_index: 1, current_column_index: 1)
-      FactoryGirl.create(:piece, game: game, current_row_index: 2, current_column_index: 2)
-
-      expect(piece1.obstructed?(2, 2)).to eq true
-      # expect(response).to have_http_status(:unproceessable_entity)
-      # it raises an error because there is a piece in the destination.
     end
   end
 end

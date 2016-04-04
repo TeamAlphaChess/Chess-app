@@ -22,12 +22,12 @@ FactoryGirl.define do
     color nil
     captured nil
 
-    factory :king, class: King do
-      type 'King'
-    end
+    # factory :king, class: King do
+    #   type 'King'
+    # end
 
-    factory :pawn, class: Pawn do
-      type 'Pawn'
-    end
+    # factory :pawn, class: Pawn do
+    #   type 'Pawn'
+    # end
   end
 end
