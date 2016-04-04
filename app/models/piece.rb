@@ -4,9 +4,9 @@ class Piece < ActiveRecord::Base
 
   def obstructed?(destination_row, destination_col)
     invalid_input?(destination_row, destination_col) ||
-    invalid_horizontal_move?(destination_row, destination_col) ||
-    invalid_vertical_move?(destination_row, destination_col) ||
-    invalid_diagonal_move?(destination_row, destination_col) 
+      invalid_horizontal_move?(destination_row, destination_col) ||
+      invalid_vertical_move?(destination_row, destination_col) ||
+      invalid_diagonal_move?(destination_row, destination_col)
   end
 
   def horizontal?(destination_row, destination_col)
@@ -76,7 +76,7 @@ class Piece < ActiveRecord::Base
 
   def invalid_input?(destination_row, destination_col)
     # Check if destination row or column is outside board bounds
-    destination_row > 7 || destination_col > 7 || destination_row < 0 || destination_col < 0 
+    destination_row > 7 || destination_col > 7 || destination_row < 0 || destination_col < 0
   end
 
   def destination_with_piece_of_same_color?(destination_row, destination_col)
