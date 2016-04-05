@@ -9,4 +9,21 @@ $(document).ready(function() {
       $('#loginModal').modal('toggle');
       $('#loginModal').addClass('modal-flexbox');
     });
+
+
+    $( 'form' ).submit(function( event ) {
+      var targetElement = event.target;
+
+      $.ajax({
+        method: targetElement.method,
+        url: targetElement.action,
+        data: $(targetElement).serializeArray(),
+        complete: function(response, status) {
+          targetElement.innerHTML = response.responseText;
+          debugger;
+        }
+      });
+      event.preventDefault();
+    });
+
 });
