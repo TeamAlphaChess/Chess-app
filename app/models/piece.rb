@@ -80,7 +80,7 @@ class Piece < ActiveRecord::Base
     destination_row > 7 || destination_col > 7 || destination_row < 0 || destination_col < 0
   end
 
-  def destination_with_piece_of_same_color?(destination_row, destination_col)
+  def same_color?(destination_row, destination_col)
     # method describes that we are assessing color of destination location piece
     game.pieces.where(current_row_index: destination_row, current_column_index: destination_col, color: color).count > 0
   end
