@@ -16,6 +16,9 @@
   color: $white;
 }
 
+
+
+
 button:focus {
   outline: 0;
 }
@@ -33,4 +36,11 @@ button:focus {
 
 .home-button-bottom {
   margin-top: 20px;
+}
+
+
+.btn-default:focus {
+  background-color: $yellow;
+  outline: 0;
+  color: $dark-gray;
 }
