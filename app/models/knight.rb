@@ -1,20 +1,18 @@
 class Knight < Piece
-
   def valid_move?(destination_row, destination_col)
-    if same_color?(destination_row, destination_col)
-      # Move fails
-      false
-    elsif valid_coordinates(current_column_index, current_row_index, destination_col, destination_row)
-      # Move passes
-      true
-    else
-      false
-    end
+    return false unless valid_coordinates?(destination_row, destination_col)
+    return false if same_color?(destination_row, destination_col)
 
-    # def valid_coordinates(x1, y1, x2, y2)
-    #   true if (x1-x2).abs == 1 && (y1 - y2).abs == 2
-    #   true if (x1-x2).abs == 2 && (y1 - y2).abs == 1
-    #   false
-    # end
+    # Move passes if spot is empty or has a piece of different color
+    return true if !spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col)
+    false
+  end
+
+  private
+
+  def valid_coordinates?(destination_row, destination_col)
+    return true if (current_column_index - destination_col).abs == 1 && (current_row_index - destination_row).abs == 2
+    return true if (current_column_index - destination_col).abs == 2 && (current_row_index - destination_row).abs == 1
+    false
   end
 end

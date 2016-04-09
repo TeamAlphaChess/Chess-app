@@ -5,11 +5,11 @@ RSpec.describe Knight, type: :model do
       game = FactoryGirl.create(:game)
       # Select white knight from the board
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
-      # Should return true as it is a valid move and destination spot is empty
+      # Should return true as if destination spot is empty
       expect(white_knight.valid_move?(2, 2)).to eq true
     end
 
-    it 'should return false for valid_move if theres a piece with same color' do
+    it 'should return false for valid_move if theres a piece with same color in the destination spot' do
       game = FactoryGirl.create(:game)
       # Select white knight from the board
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
@@ -17,12 +17,12 @@ RSpec.describe Knight, type: :model do
       expect(white_knight.valid_move?(1, 3)).to eq false
     end
 
-    it 'should return false for valid_move if piece move is invalid' do
+    it 'should return false if piece move is invalid' do
       game = FactoryGirl.create(:game)
       # Select white knight from the board
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
-      # Should return false as a knight cannot move to one adjacent square
-      expect(white_knight.valid_move?(0, 2)).to eq false
+      # Should return false as a knight cannot move two squares forward
+      expect(white_knight.valid_move?(2, 1)).to eq false
     end
 
     it 'should return true for valid_move if theres a piece with different color' do
