@@ -15,31 +15,9 @@
     <%= render partial: 'header_not_signed_in' %>
   <% end %>
   <div class="container main-container">
-      <div id="mainSideNav" class="main-sidenav">
-        <ul class="main-sidenav-links">
-          <li>
-            <%= link_to destroy_user_session_path, method: :delete do %>
-              <div class="main-sidenav-text main-sidenav-logout">
-                <i class="logout"></i><span>Logout</span>
-              </div>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to '#' do %>
-              <div class="main-sidenav-text main-sidenav-profile">
-                <i class="avatar main-sidenav-profile-icon"></i><span>Profile</span>
-              </div>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to page_path(:the_team) do %>
-              <div class="main-sidenav-text main-sidenav-contact">
-                <i class="contact"></i><span>Contact</span>
-              </div>
-            <% end %>
-          </li>
-        </ul>
-      </div>
+      <% if user_signed_in? %>
+        <%= render partial: 'main_sidenav' %>
+      <% end %>
       <div class="container-fluid" id="mainContentContainer">
         <!-- <% if notice.present? %>
           <p class="alert alert-info"><%= notice %></p>

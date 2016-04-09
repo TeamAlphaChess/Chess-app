@@ -78,12 +78,6 @@ $(document).ready(function() {
     form = $(form);
     $(form).bind('ajax:complete', function(event, response) {
 
-      // this part is not really working :$ so had to
-      // manually add reroute to response.status == 201
-      if (response.redirect) {
-        window.location.replace(this);
-      }
-
       if (response.status === 422) {
         insertStatusMessages(response.responseJSON.errors, 'failure', modal, 'inputs');
 
@@ -91,21 +85,18 @@ $(document).ready(function() {
         insertStatusMessages('Email or password is invalid', 'failure', modal, 'footer');
 
       } else if (response.status === 201) {
-        // If I click the back button after logging in, it goes back to the home screen
-        // but need to make sure the user session is destroyed.
-        // There's also issues if I logout, then click the back button. It messes up
-        // the app a bit.
         insertStatusMessages('Submission is successful!', 'success', modal, 'footer');
-        location.href="/games";
+        if (modal.attr('id') === 'loginModal') {
+          location.href="/games";
+        } else {
+          window.setTimeout(function(){
+            closeModal(modal);
+          }, 1500);
+        }
       }
+      form.off('ajax:complete');
+      form.off('submit');
     });
-      // check line 128 - 134. not sure whether
-      // to add this there or here.
-      // form.off('ajax:complete');
-
-      // issues with form.off as it's going too quickly. It runs before
-      // the ajax response comes in so the code won't be able to catch it.
-      // jquery.when().done() doesn't seem to be working.
   }
 
 
@@ -132,9 +123,7 @@ $(document).ready(function() {
   });
 
   // Submit form
-  // the ajaxResponse callback is going too quickly.
-  // jQuery .when(resetForm()).done(ajaxResponse())
-  $('form').on('submit', function() {
+  $('form').on('submit', function(e) {
     var modal = $($(this).data('modalid'));
     var form = $(this);
     resetForm(modal, false, function() {

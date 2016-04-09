@@ -5,161 +5,22 @@ Just make sure this file is empty when
 you commit.
 ======================================*/
 
-.form-statuses {
-  height: 28px;
-  font-size: 11px;
-  width: 100%;
-  margin: 0 auto;
-  font-family: $font-light;
-  padding: 0 0 4px 33px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.form-statuses li {
-  line-height: 24px;
-}
-
-.form-item-error {
-  color: $red;
-  display: none;
-}
-
-.form-item-successful {
-  color: $green;
-  display: none;
-}
-
-.form-footer-links-and-statuses {
-  height: 100%;
-  padding: 0;
-  list-style: none;
+.header-username {
+  width: 30px;
   margin: 0;
-  width: 60%;
-  height: 32px;
-  display: inline-block;
-  float: left;
-  text-align: center;
-  position: relative;
-  top: 1px;
-  font-family: $font-light;
-  font-size: 13px;
-  color: $dark-gray;
-}
-
-.form-footer-links-and-statuses li {
-  display: inline-block;
-  height: 100%;
-  width: auto;
-  line-height: 30px;
-  margin: 0 3px;
-}
-
-.form-footer-links-and-statuses a {
-  transition: $linear-transition;
-}
-
-.form-footer-links-and-statuses a:hover {
-  color: $red;
-  cursor: pointer;
-}
-
-.form-footer-links-and-statuses a {
-  text-decoration: none;
-  color: $dark-gray;
-  font-family: $font-light;
-}
-
-.form-footer-status {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-family: $font-light;
-  line-height: 30px;
-  font-size: 13px;
+  float: right;
 }
 
 /* ====================================
 Media Queries.
 ======================================*/
 
-@media (min-width: 550px) {
 
-
-
-}
 
 
 @media (min-width: $screen-sm-min) {
 
-  .form-footer-status {
-    line-height: 49px;
-    font-size: 16px;
-  }
 
-
-  .form-footer-links-and-statuses {
-    height: 49px;
-  }
-
-  .form-footer-links-and-statuses li {
-    line-height: 49px;
-    font-size: 16px;
-    margin: 0 10px;
-  }
-
-  .form-statuses {
-    height: 43px;
-    font-size: 13px;
-    padding-bottom: 8px;
-  }
-
-  .form-statuses li {
-    line-height: 35px;
-  }
-
-  .form-control {
-    height: 50px;
-    font-size: 15px;
-  }
-
-  .modal-dialog {
-    width: 83%;
-    margin: auto;
-    height: auto;
-    max-width: 600px;
-  }
-
-  .modal-content {
-    padding: 6px 25px 25px 25px;
-  }
-
-  .modal-close {
-    font-size: 37px;
-    line-height: 0.8;
-  }
-
-  .modal-header {
-    padding: 0;
-    border-bottom: 1px solid $light-gray;
-  }
-
-  .modal-title {
-    font-size: 16px;
-    height: 100%;
-  }
-
-  .modal-footer {
-    height: 15%;
-  }
-
-  .btn {
-    padding: 12px 36px;
-    font-size: 18px;
-  }
 }
 
 @media (min-width: $screen-md-min) {

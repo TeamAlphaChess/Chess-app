@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authenticate_user!
+  def authenticate_user!(options={})
     if !user_signed_in?
       redirect_to root_path
     end
