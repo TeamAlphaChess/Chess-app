@@ -9,28 +9,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-default">
-    <div class="container header-container">
-      <div class="navbar-header">
-        <% if user_signed_in? %>
-          <%= link_to "Chessmaster Logo", games_path, class: "navbar-brand full-logo text-hide" %>
-        <% else %>
-          <%= link_to "Chessmaster Logo", root_path, class: "navbar-brand full-logo text-hide" %>
-        <% end %>
-      </div>
-      <div class="navbar-avatar-container pull-right" id="mainSideNavTrigger">
-        <div class="avatar navbar-avatar">
-        </div>
-      </div>
-    </div>
-  </nav>
-
-
+  <% if user_signed_in? %>
+    <%= render partial: 'header_signed_in' %>
+  <% else %>
+    <%= render partial: 'header_not_signed_in' %>
+  <% end %>
   <div class="container main-container">
       <div id="mainSideNav" class="main-sidenav">
         <ul class="main-sidenav-links">
           <li>
-            <%= link_to '#' do %>
+            <%= link_to destroy_user_session_path, method: :delete do %>
               <div class="main-sidenav-text main-sidenav-logout">
                 <i class="logout"></i><span>Logout</span>
               </div>
@@ -39,7 +27,7 @@
           <li>
             <%= link_to '#' do %>
               <div class="main-sidenav-text main-sidenav-profile">
-                <i class="avatar  main-sidenav-profile-icon"></i><span>Profile</span>
+                <i class="avatar main-sidenav-profile-icon"></i><span>Profile</span>
               </div>
             <% end %>
           </li>
@@ -53,12 +41,12 @@
         </ul>
       </div>
       <div class="container-fluid" id="mainContentContainer">
-        <% if notice.present? %>
+        <!-- <% if notice.present? %>
           <p class="alert alert-info"><%= notice %></p>
         <% end %>
         <% if alert.present? %>
           <p class="alert alert-danger"><%= alert %></p>
-        <% end %>
+        <% end %> -->
         <%= yield %>
       </div>
     </div>
