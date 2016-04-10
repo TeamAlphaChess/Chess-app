@@ -44,14 +44,12 @@ RSpec.describe Rook, type: :model do
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
       white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       white_pawn.update_attributes(current_row_index: nil, current_column_index: nil)
-      black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 0)
       expect(white_rook.valid_move?(6, 0)).to eq true
     end
 
     it 'should return false for an obstructed move to an empty spot' do
       game = FactoryGirl.create(:game)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
-      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       expect(white_rook.valid_move?(2, 0)).to eq false
     end
   end
