@@ -4,11 +4,8 @@ class Rook < Piece
     return false if obstructed?(destination_row, destination_col)
     return false if same_color?(destination_row, destination_col)
     
-    if horizontal?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
-      true
-    elsif vertical?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
-      true
-    end
+    return true if horizontal?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
+    return true if vertical?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
   end
 end
 

@@ -36,7 +36,6 @@ RSpec.describe Rook, type: :model do
     it 'should return false for a move to a space with same color piece' do
       game = FactoryGirl.create(:game)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
-      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       expect(white_rook.valid_move?(1, 0)).to eq false
     end
 
