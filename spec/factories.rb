@@ -26,7 +26,6 @@ FactoryGirl.define do
   factory :queen, class: Queen do
     current_row_index 4
     current_column_index 4
-    color "white"
+    color 'white'
   end
-
 end
