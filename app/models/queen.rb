@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Queen < Piece
   def valid_move?(destination_row, destination_col)
     !same_color?(destination_row, destination_col) &&
