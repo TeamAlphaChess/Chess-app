@@ -8,6 +8,7 @@ TeamAlphaChess::Application.routes.draw do
   # Sign up page
   get "/users/sign_up(.:format)" => 'devise/registrations#new'
 
+
   resources :games
   resources :users
 end

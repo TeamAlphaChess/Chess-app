@@ -13,14 +13,15 @@
     <div class="container header-container">
       <div class="navbar-header">
         <% if user_signed_in? %>
-          <%= image_tag @user.gravatar_url() %><%= image_tag @user.gravatar_url() %></td>, games_path, class: "navbar-brand full-logo text-hide" %>
+          <%= link_to "Chessmaster Logo", games_path, class: "navbar-brand full-logo text-hide" %>
         <% else %>
           <%= link_to "Chessmaster Logo", root_path, class: "navbar-brand full-logo text-hide" %>
         <% end %>
       </div>
       <div class="navbar-avatar-container pull-right" id="mainSideNavTrigger">
-        <div class="avatar navbar-avatar">
-        </div>
+
+        <%= gravatar_for(current_user) %>
+
       </div>
     </div>
   </nav>
