@@ -5,8 +5,11 @@ TeamAlphaChess::Application.routes.draw do
   get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
   root to: 'static_pages#show', id: 'home'
 
+  # Sign up page
+  get "/users/sign_up(.:format)" => 'devise/registrations#new'
 
   resources :games
+  resources :users
 end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
