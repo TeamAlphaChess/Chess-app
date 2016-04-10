@@ -148,11 +148,19 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'spot_taken?' do
-    it 'returns true for spot taken' do
+    it 'returns true if a spot is taken' do
       game = FactoryGirl.create(:game) # Would do this using FactoryGirl
       piece = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
 
       expect(piece.spot_taken?(1, 1)).to eq true
+      # it raises an error because there is a piece in the destination.
+    end
+
+    it 'returns false for an empty spot' do
+      game = FactoryGirl.create(:game) # Would do this using FactoryGirl
+      piece = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+
+      expect(piece.spot_taken?(3, 0)).to eq false
       # it raises an error because there is a piece in the destination.
     end
   end
