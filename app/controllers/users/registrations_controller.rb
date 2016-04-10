@@ -3,14 +3,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
   before_filter :configure_permitted_parameters
 
-  def new
-    super
-  end
-
-  def create
-    super
-  end
-
   protected
 
   def configure_permitted_parameters

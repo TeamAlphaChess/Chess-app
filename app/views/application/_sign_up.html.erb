@@ -7,7 +7,7 @@
         <button type="button" class="close-icon modal-close" data-modal-to-close="#signUpModal"></button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for(resource, as: resource_name, remote: true, url: registration_path(resource_name), data: {modalid: '#signUpModal'} )  do |f| %>
+        <%= simple_form_for(resource, as: resource_name, remote: true, url: registration_path(resource_name), data: {modalid: '#signUpModal'}, html: {id: :signUpForm})  do |f| %>
           <div class="form-inputs">
             <%= f.input :email, required: true, autofocus: true, placeholder: 'Email', label: false %>
               <ul class="form-statuses" data-statusfor="email">
