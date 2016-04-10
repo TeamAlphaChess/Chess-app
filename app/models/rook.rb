@@ -3,10 +3,13 @@ class Rook < Piece
     # enter code here
     return false if obstructed?(destination_row, destination_col)
     return false if same_color?(destination_row, destination_col)
-    
-    return true if horizontal?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
-    return true if vertical?(destination_row, destination_col) && (!spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col))
+
+    return true if empty_or_diff_color?(destination_row, destination_col) && (horizontal?(destination_row, destination_col) || vertical?(destination_row, destination_col))
+  end
+
+  private
+
+  def empty_or_diff_color?(destination_row, destination_col)
+    return true if !spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col)
   end
 end
-
-
