@@ -13,7 +13,7 @@
     <div class="container header-container">
       <div class="navbar-header">
         <% if user_signed_in? %>
-          <%= image_tag avatar_url() %></td>, games_path, class: "navbar-brand full-logo text-hide" %>
+          <%= image_tag @user.gravatar_url() %><%= image_tag @user.gravatar_url() %></td>, games_path, class: "navbar-brand full-logo text-hide" %>
         <% else %>
           <%= link_to "Chessmaster Logo", root_path, class: "navbar-brand full-logo text-hide" %>
         <% end %>
