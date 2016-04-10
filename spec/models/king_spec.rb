@@ -8,7 +8,7 @@ RSpec.describe King, type: :model do
       # Select black pawn from the board
       black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 3)
       # Update black pawn position
-      black_pawn.update_attribute1s(current_row_index: 4, current_column_index: 3)
+      black_pawn.update_attributes(current_row_index: 4, current_column_index: 3)
       # Update king's position to be in front of black pawn
       white_king.update_attributes(current_row_index: 5, current_column_index: 3)
       expect(white_king.valid_move?(4, 3)).to eq true

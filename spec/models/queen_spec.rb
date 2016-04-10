@@ -7,7 +7,17 @@ RSpec.describe Queen, type: :model do
       queen
       
       expect(queen.valid_move?(6,4)).to eq true
-      expect(queen.valid_move?(2,4)).to eq true
+    end
+
+    it "should allow a horizontal-right move" do
+      queen
+
+      expect(queen.valid_move?(4,6)).to eq true
+    end
+
+    it "should allow a diagonal down-right move" do
+      queen
+
       expect(queen.valid_move?(6,6)).to eq true
     end
 
@@ -16,20 +26,5 @@ RSpec.describe Queen, type: :model do
       expect(queen.valid_move?(6,5)).to eq false
     end
 
-    it "should allow a horizonal-left move" do
-
-    end
-
-    it "should allow a horizonal-right move" do
-
-    end
-
-    it "should allow a diagonal-up left move" do
-
-    end
-
-    it "should allow a diagonal-up right move" do
-
-    end
 end
 end
