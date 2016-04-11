@@ -24,13 +24,17 @@ Home Page 550px min width
   }
 }
 
+/* ====================================
+Modal form footer statuses
+======================================*/
+
 @media (max-width: 320px) {
   .form-footer-status {
     vertical-align: middle;
     font-size: 11px;
   }
 }
-@media (min-width: 321px) {
+@media (min-width: 321px) and (max-width: 479px) {
   .form-footer-status {
     line-height: 30px;
     font-size: 11px;
@@ -38,8 +42,7 @@ Home Page 550px min width
 }
 
 
-@media (min-width: 480px) {
-
+@media (min-width: 480px) and (max-width: 767px) {
   .form-footer-status {
     line-height: 30px;
     font-size: 12px;

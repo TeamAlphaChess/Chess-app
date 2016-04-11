@@ -24,12 +24,8 @@ $(document).ready(function() {
 
   function resetForm(modal, resetInputs, callback) {
     modal = $(modal);
-    modal.find('.form-statuses li').fadeOut('slow', function() {
-      $(this).remove();
-    });
-    modal.find('.form-footer-status').fadeOut('fast', function() {
-      $(this).remove();
-    });
+    modal.find('.form-statuses li').remove();
+    modal.find('.form-footer-status').empty().css('display', 'none');
     if (resetInputs === true) {
       modal.find('.form-inputs input').val('');
       modal.find('.form-footer-link').fadeIn('slow');
@@ -49,7 +45,7 @@ $(document).ready(function() {
     if (location === 'inputs') {
       for (var key in message) {
         keyCapitalized = key[0].toUpperCase() + key.substring(1, key.length);
-        messageBox = modal.find('[data-statusfor="' + key + '"]');
+        messageBox = modal.find('[data-status-for="' + key + '"]');
         messageBox.html('<li>' + keyCapitalized + ' ' + message[key] + '</li>');
 
         if (messageType === 'success') {
@@ -63,11 +59,12 @@ $(document).ready(function() {
     } else if (location === 'footer') {
       messageBox = modal.find('.form-footer-links-and-statuses')
       messageBox.find('.form-footer-link').fadeOut('slow', function() {
-        messageBox.append('<div>' + message + '</div');
+        var formFooterStatus = messageBox.find('.form-footer-status');
+        formFooterStatus.html(message);
         if (messageType === 'success') {
-          $('.' + messageBox.attr('class') + ' div').addClass('form-footer-status form-item-successful').fadeIn('slow');
+          $(formFooterStatus).addClass('form-item-successful').fadeIn('slow').css('display', 'flex');
         } else if (messageType === 'failure') {
-          $('.' + messageBox.attr('class') + ' div').addClass('form-footer-status form-item-error').fadeIn('slow');
+          $(formFooterStatus).addClass('form-item-error').fadeIn('slow').css('display', 'flex');
         }
       });
     }
@@ -77,7 +74,6 @@ $(document).ready(function() {
     modal = $(modal);
     form = $(form);
     $(form).bind('ajax:complete', function(event, response) {
-
       if (response.status === 422) {
         insertStatusMessages(response.responseJSON.errors, 'failure', modal, 'inputs');
 
@@ -86,19 +82,17 @@ $(document).ready(function() {
 
       } else if (response.status === 201) {
         insertStatusMessages('Submission is successful!', 'success', modal, 'footer');
-        if (modal.attr('id') === 'loginModal') {
-          location.href="/games";
+        var redirectOnSuccess = form.data('redirect-on-success');
+        if (redirectOnSuccess) {
+          window.location.href = redirectOnSuccess;
         } else {
           window.setTimeout(function(){
             closeModal(modal);
           }, 1500);
         }
       }
-      form.off('ajax:complete');
-      form.off('submit');
     });
   }
-
 
   /* ====================================
   General Event Listeners
@@ -124,7 +118,7 @@ $(document).ready(function() {
 
   // Submit form
   $('form').on('submit', function(e) {
-    var modal = $($(this).data('modalid'));
+    var modal = $($(this).data('modal-id'));
     var form = $(this);
     resetForm(modal, false, function() {
       ajaxResponse(modal, form);

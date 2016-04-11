@@ -23,3 +23,8 @@ Hover States
 .modal-close:hover {
   color: $yellow;
 }
+
+.form-footer-links-and-statuses a:hover {
+  color: $red;
+  cursor: pointer;
+}

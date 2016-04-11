@@ -7,26 +7,28 @@
         <button type="button" class="close-icon modal-close" data-modal-to-close="#signUpModal"></button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for(resource, as: resource_name, remote: true, url: registration_path(resource_name), data: {modalid: '#signUpModal'}, html: {id: :signUpForm})  do |f| %>
+        <%= simple_form_for(resource, as: resource_name, remote: true, url: registration_path(resource_name), data: {modal_id: '#signUpModal', redirect_on_success: games_path })  do |f| %>
           <div class="form-inputs">
             <%= f.input :email, required: true, autofocus: true, placeholder: 'Email', label: false %>
-              <ul class="form-statuses" data-statusfor="email">
+              <ul class="form-statuses" data-status-for="email">
               </ul>
             <%= f.input :name, required: true, placeholder: 'Name', label: false %>
-              <ul class="form-statuses" data-statusfor="name">
+              <ul class="form-statuses" data-status-for="name">
               </ul>
             <%= f.input :password, required: true, placeholder: 'Password', label: false %>
-              <ul class="form-statuses" data-statusfor="password">
+              <ul class="form-statuses" data-status-for="password">
               </ul>
             <%= f.input :password_confirmation, required: true, placeholder: 'Confirm Password', label: false %>
-              <ul class="form-statuses" data-statusfor="password_confirmation">
+              <ul class="form-statuses" data-status-for="password_confirmation">
               </ul>
           </div>
       </div>
       <div class="modal-footer">
           <ul class="form-footer-links-and-statuses">
+            <div class="form-footer-status">
+            </div>
           </ul>
-          <%= f.submit 'Submit', class: 'btn btn-default modal-form-submit'%>
+          <%= f.submit 'Submit', class: 'btn btn-default'%>
         <% end %>
       </div>
     </div>
