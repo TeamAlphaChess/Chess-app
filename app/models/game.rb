@@ -51,4 +51,10 @@ class Game < ActiveRecord::Base
 
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 3)
   end
+
+  def check?
+    # some kind of code here
+    # will call valid_move? on each piece to see if they can
+    # capture king.
+  end
 end
