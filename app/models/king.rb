@@ -9,8 +9,11 @@ class King < Piece
   end
 
   def can_castle?(rook_position)
-    # this method will check to make sure that the rook and the
-    # king have not moved.
+    # Is the path between king & rook obstructed?
+    return false if obstructed?(0,0) || obstructed?(0,7)
+
+    # Is the king in check?
+    check?()
   end
 
   def castle!(rook_position)
