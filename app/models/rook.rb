@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Rook < Piece
   def valid_move?(destination_row, destination_col)
     # enter code here
