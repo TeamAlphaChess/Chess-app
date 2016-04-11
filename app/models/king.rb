@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class King < Piece
   # Should determine if the king piece can move to the designated spot
   def valid_move?(destination_row, destination_col)
