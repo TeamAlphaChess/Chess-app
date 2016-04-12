@@ -7,15 +7,15 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authenticate_user!(options = {})
+  def authenticate_user!(_options = {})
     redirect_to root_path unless user_signed_in?
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     games_path
   end
 
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     root_path
   end
 end
