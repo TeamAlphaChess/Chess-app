@@ -1,0 +1,46 @@
+.btn-default {
+  background-color: $yellow;
+}
+
+.btn {
+  border: none;
+  font-family: $font-light;
+  border-radius: 0;
+  color: $dark-gray;
+  padding: 6px 18px;
+  transition: $linear-transition;
+}
+
+.btn-default:hover {
+  background-color: $yellow;
+  color: $white;
+}
+
+
+
+
+button:focus {
+  outline: 0;
+}
+
+.home-button {
+  display: block;
+  background-color: $dark-gray;
+  border: 2px solid $yellow;
+  font-family: $font-light;
+  color: $yellow;
+  font-size: 20px;
+  width: 100%;
+  transition: $linear-transition;
+}
+
+.home-button-bottom {
+  margin-top: 20px;
+}
+
+
+.btn-default:focus {
+  background-color: $yellow;
+  outline: 0;
+  color: $dark-gray;
+}

@@ -1,11 +1,10 @@
 TeamAlphaChess::Application.routes.draw do
-  devise_for :users
 
   # Renders Static Pages. High_Voltage gem used for this.
   get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
   root to: 'static_pages#show', id: 'home'
-
-
+  
+  devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
   resources :games
 end
   # The priority is based upon order of creation: first created -> highest priority.
