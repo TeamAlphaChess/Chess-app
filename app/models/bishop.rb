@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Bishop < Piece
   def valid_move?(destination_row, destination_col)
     return false unless diagonal?(destination_row, destination_col)

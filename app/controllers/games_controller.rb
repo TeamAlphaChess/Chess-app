@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 class GamesController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!
 
   def new
     @game = Game.new
