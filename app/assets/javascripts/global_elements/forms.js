@@ -17,7 +17,7 @@ $(document).ready(function() {
     modal.one('hidden.bs.modal', function (e) {
       resetForm(modal, true);
       if (callback && typeof callback === 'function') {
-        callback();
+        return callback();
       }
     });
   }
@@ -31,7 +31,7 @@ $(document).ready(function() {
       modal.find('.form-footer-link').fadeIn('slow');
     }
     if (callback && typeof callback === 'function') {
-      callback();
+      return callback();
     }
   }
 
@@ -44,15 +44,17 @@ $(document).ready(function() {
 
     if (location === 'inputs') {
       for (var key in message) {
-        keyCapitalized = key[0].toUpperCase() + key.substring(1, key.length);
-        messageBox = modal.find('[data-status-for="' + key + '"]');
-        messageBox.html('<li>' + keyCapitalized + ' ' + message[key] + '</li>');
+        if (message.hasOwnProperty.call(message, key)) {
+          keyCapitalized = key[0].toUpperCase() + key.substring(1, key.length);
+          messageBox = modal.find('[data-status-for="' + key + '"]');
+          messageBox.html('<li>' + keyCapitalized + ' ' + message[key] + '</li>');
 
-        if (messageType === 'success') {
-          messageBox.find('li').addClass('form-item-successful').fadeIn('slow');
+          if (messageType === 'success') {
+            messageBox.find('li').addClass('form-item-successful').fadeIn('slow');
 
-        } else if (messageType === 'failure') {
-          messageBox.find('li').addClass('form-item-error').fadeIn('slow');
+          } else if (messageType === 'failure') {
+            messageBox.find('li').addClass('form-item-error').fadeIn('slow');
+          }
         }
       }
 
