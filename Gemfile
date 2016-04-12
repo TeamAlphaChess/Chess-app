@@ -57,12 +57,6 @@ gem 'ionicons-rails'
 # Gravatar for user avatars
 gem 'gravatar'
 
-# Gravtastic
-gem 'gravtastic'
-
-# Rails view helper for grabbing Gravatar images
-gem 'gravatar_image_tag'
-
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails', '~> 4.0'
