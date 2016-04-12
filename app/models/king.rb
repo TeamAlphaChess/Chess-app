@@ -10,6 +10,7 @@ class King < Piece
 
   def can_castle?(rook_position)
     # Is the path between king & rook obstructed?
+    return false if rook_position.has_moved?
     return false if has_moved?
 
     # Is the king in check?
@@ -18,6 +19,16 @@ class King < Piece
 
   def castle!(rook_position)
     # this is where we will update the database for the move.
+    return unless can_castle?(rook_position)
+
+  end
+
+  def castle_kingside(rook_position)
+    
+  end
+
+  def castle_queenside(rook_position)
+
   end
 
 end
