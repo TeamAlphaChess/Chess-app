@@ -12,6 +12,14 @@ deploy:
   provider: heroku
   api_key:
     secure: w6Wfocq/MD3X6humJOnMVx1ZBRG0wuUw60HU7yvJlzpEcSHxWIaU30szZ2Z5ZeV8qbYyU/IDpzyBmLl9+6DhnX3c9zpvMaT1m+GVMDxmTqsjyI8JKwvjI3XOHodSRRP6r9PQ1dylazfJ9ReAQjyVcl25hLKEkiuCnrOYJCQ/PSOB4NVQGsn68jRSPxyD20w0rLeabnYgFeokWYNXXX1FjLnkED8p25FyQvWt5PErHJ5IP224wBsROY+Y1KSa8IevdIiZVArgy3x0Z2yaGi/t76owmqjHV5O4ei15i8HYLDwqcy5Od/wiNv4rlOHjEgVSxihFsyk2edQYveTa0U1BV/LBHqoK70gLmFOrMI9L7NdjdRioT5H4SlKXcA0aOSzJ3cx4Iqx2tNPwJ/808AyhmMwOggZgxQAOrwRkQ0qiRKzFHcf0YD/6q1/L432cfKRU7IganfZ9vhgdJl14xlw6yBYWvJP8hdN0KQ591W3ak96qJ+88Xk9djB+oHYPWjEXzF/DNRGrriGBjSZ77bYrm7bzcOZdjTkLnYq+hzT+GXO6XFLc4mxpNaje/pNgAiLaz5JUaRerBx9Ho4bnun0Uplz5VHDcNhAdI6/6VMfZ702ntB8baOxmGl8uI24wSASqc5eUXSFok2RPgLdgdGtfgOfzQiriHXx2EBPl9mYI3Yj4=
-  app: Chess-app
+  app: chess-team-alpha-chess
   on:
     repo: TeamAlphaChess/Chess-app
+
+
+# addons:
+#       code_climate:
+#         repo_token: 62xBHrZMnWv6dfTcMAiq
+addons:
+    code_climate:
+        repo_token: a291f217625b6d218c3d50c80d21f5b4cb62dafd0eb1765e0bb4c49cf77c1d18
