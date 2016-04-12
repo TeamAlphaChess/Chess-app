@@ -44,7 +44,7 @@ $(document).ready(function() {
 
     if (location === 'inputs') {
       for (var key in message) {
-        if (message.hasOwnProperty.call(message, key)) {
+        if (message.hasOwnProperty(key)) {
           keyCapitalized = key[0].toUpperCase() + key.substring(1, key.length);
           messageBox = modal.find('[data-status-for="' + key + '"]');
           messageBox.html('<li>' + keyCapitalized + ' ' + message[key] + '</li>');
