@@ -123,4 +123,9 @@ class Piece < ActiveRecord::Base
       update_attributes(current_row_index: destination_row, current_column_index: destination_col)
     end
   end
+
+  def has_moved?
+    updated_at != created_at
+  end
+  
 end

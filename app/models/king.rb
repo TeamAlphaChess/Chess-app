@@ -10,7 +10,7 @@ class King < Piece
 
   def can_castle?(rook_position)
     # Is the path between king & rook obstructed?
-    return false if obstructed?(0,0) || obstructed?(0,7)
+    return false if has_moved?
 
     # Is the king in check?
     check?()
