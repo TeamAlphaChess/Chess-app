@@ -33,6 +33,14 @@ RSpec.describe Rook, type: :model do
       expect(white_rook.valid_move?(4, 0)).to eq true
     end
 
+    it 'should return false for a diagnal move' do
+      game = FactoryGirl.create(:game)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 1)
+      white_pawn.update_attributes(current_row_index: nil, current_column_index: nil)
+      expect(white_rook.valid_move?(1, 1)).to eq false
+    end
+
     it 'should return false for a move to a space with same color piece' do
       game = FactoryGirl.create(:game)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
