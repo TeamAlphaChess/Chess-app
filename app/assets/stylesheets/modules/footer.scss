@@ -11,3 +11,30 @@ App Layout Template
   z-index: 100;
   position: relative;
 }
+
+.footer-container {
+  height: 100%;
+}
+
+.footer-links {
+  height: 100%;
+  font-family: $font-regular;
+  font-size: 10px;
+  color: $dark-gray;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.footer-links li {
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: $dark-gray;
+  transition: $linear-transition;
+}

@@ -1,7 +1,7 @@
 @media (min-width: $screen-sm-min){
 
   /* =============================================
-  App Layout Template
+  Main Navbar
   ==============================================*/
 
   .navbar {
@@ -34,5 +34,133 @@
     width: 250px;
   }
 
+  /* =============================================
+  Main Sidenav
+  ==============================================*/
+
+  .main-sidenav {
+    padding: 40px 10px;
+  }
+
+  .main-sidenav-links li {
+    height: 70px;
+    margin: 16px 0;
+  }
+
+  .main-sidenav-links span {
+    margin-left: 10px;
+  }
+
+  .main-sidenav-text {
+    width: 38%;
+    font-family: $second-font-regular;
+    font-size: 18px;
+  }
+
+  .main-sidenav-profile-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* =============================================
+  Home Elements
+  ==============================================*/
+
+  .home-header {
+    max-width: 600px;
+    font-size: 80px;
+  }
+
+  .home-buttons-container {
+    max-width: 400px;
+  }
+
+  .home-button {
+    font-size: 30px;
+    border-width: 3px;
+    padding: 10px;
+  }
+
+  .home-button-bottom {
+    margin-top: 45px;
+  }
+
+  /* =============================================
+  Footer
+  ==============================================*/
+
+  .footer-links {
+    font-size: 13px;
+  }
+
+  /* =============================================
+  Modals
+  ==============================================*/
+
+  .form-footer-status {
+    line-height: 49px;
+    font-size: 16px;
+  }
+
+
+  .form-footer-links-and-statuses {
+    height: 49px;
+  }
+
+  .form-footer-links-and-statuses li {
+    line-height: 49px;
+    font-size: 16px;
+    margin: 0 10px;
+  }
+
+  .form-statuses {
+    height: 43px;
+    font-size: 13px;
+    padding-bottom: 8px;
+  }
+
+  .form-statuses li {
+    line-height: 35px;
+  }
+
+  .form-control {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .modal-dialog {
+    width: 83%;
+    margin: auto;
+    height: auto;
+    max-width: 600px;
+  }
+
+  .modal-content {
+    padding: 6px 25px 25px 25px;
+  }
+
+  .modal-close {
+    font-size: 37px;
+    line-height: 0.8;
+  }
+
+  .modal-header {
+    padding: 0;
+    border-bottom: 1px solid $light-gray;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    height: 100%;
+  }
+
+  .modal-footer {
+    height: 15%;
+  }
+
+  .btn {
+    padding: 12px 36px;
+    font-size: 18px;
+  }
 
 }
