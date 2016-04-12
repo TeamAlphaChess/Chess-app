@@ -21,10 +21,15 @@ class King < Piece
     # this is where we will update the database for the move.
     return unless can_castle?(rook_position)
 
+    if rook_position.kingside?
+      castle_kingside(rook_position)
+    else
+      castle_queenside(rook_position)
+    end
   end
 
   def castle_kingside(rook_position)
-    
+
   end
 
   def castle_queenside(rook_position)
