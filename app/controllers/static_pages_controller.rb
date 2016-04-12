@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Controller for static html content pages
 class StaticPagesController < ApplicationController
   include HighVoltage::StaticPage

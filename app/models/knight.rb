@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Knight < Piece
   def valid_move?(destination_row, destination_col)
     return false unless valid_coordinates?(destination_row, destination_col)
