@@ -1,8 +1,30 @@
 /* =============================================
-App Layout Template
+Hover States
 ==============================================*/
 
 .navbar-avatar-container:hover {
   background-color: $yellow;
+  cursor: pointer;
+}
+
+.footer-links a:hover {
+  color: $yellow;
+}
+
+.home-button:hover {
+  border-color: white;
+  color: white;
+}
+
+.main-sidenav-links a:hover {
+  background-color: $yellow;
+}
+
+.modal-close:hover {
+  color: $yellow;
+}
+
+.form-footer-links-and-statuses a:hover {
+  color: $red;
   cursor: pointer;
 }

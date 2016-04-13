@@ -7,6 +7,7 @@ App Layout Template
   right: 0px;
   height: 100%;
   position: relative;
+  margin: none;
 }
 
 body, html {
@@ -22,4 +23,25 @@ body, html {
 .main-container {
   height: calc(100vh - ( #{$navbar-height} + #{$footer-height} ) );
   position: relative;
+}
+
+.home-container {
+  padding: 15px 0px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.home-buttons-container {
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
 }

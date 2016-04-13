@@ -1,13 +1,13 @@
+# frozen_string_literal: true
 class Game < ActiveRecord::Base
   belongs_to :white_player, class_name: 'User'
   belongs_to :black_player, class_name: 'User'
   belongs_to :winner, class_name: 'User'
   has_many :pieces, dependent: :destroy
-
   after_create :populate_board!
 
   def self.list_available_games(offset_count = 0, query_limit = 10)
-    Game.where(black_player_id: nil).offset(offset_count).limit(query_limit)
+    Game.where(black_player: nil).offset(offset_count).limit(query_limit)
   end
 
   def populate_board! # rubocop:disable Metrics/AbcSize
