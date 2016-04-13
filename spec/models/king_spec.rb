@@ -110,4 +110,14 @@ RSpec.describe King, type: :model do
       expect(white_king.valid_move?(1, 3)).to eq false
     end
   end
+
+  describe 'rook_king_side' do
+    # Tests for castling and associated methods
+
+    it 'should return true for a rook that is in column 7' do
+      game = FactoryGirl.create(:game)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0,7)
+      expect(white_rook.rook_king_side(0,7)).to eq true
+    end
+  end
 end

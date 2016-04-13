@@ -8,32 +8,40 @@ class King < Piece
     !same_color?(destination_row, destination_col) && distance(destination_row, destination_col) == 1
   end
 
-  def can_castle?(rook_position)
+  def can_castle?(rook)
     # Is the path between king & rook obstructed?
-    return false if rook_position.has_moved?
+    return false if rook.has_moved?
     return false if has_moved?
 
     # Is the king in check?
     check?()
   end
 
-  def castle!(rook_position)
+  def castle!(rook)
     # this is where we will update the database for the move.
-    return unless can_castle?(rook_position)
+    return if !can_castle?(rook_position)
 
-    if rook_position.kingside?
+    if rook.kingside?
       castle_kingside(rook_position)
     else
       castle_queenside(rook_position)
     end
   end
 
-  def castle_kingside(rook_position)
-
+  def castle_kingside(rook)
+    # Rook will always end up in either row_index 3 or 5
+     move_to!(destination_row, destination_col)
+     rook.move_to!(0,5)
+     rook.rook_position(0,7) || rook.rook_position(7,7)
   end
 
-  def castle_queenside(rook_position)
+  def castle_queenside(rook)
+    rook.rook_position(7,0) || rook.rook_position(0,0)
+  end
 
+  def rook_king_side(row,col)
+    return false if rook.has_moved?
+    return true if game.pieces.find_by(current_row_index: row, current_column_index: col, type: 'Rook')
   end
 
 end
