@@ -9,7 +9,7 @@ class King < Piece
   end
 
   def can_castle?(rook)
-    # Is the path between king & rook obstructed?
+    # Are king and rook in original positions?
     return false if rook.has_moved?
     return false if has_moved?
 
@@ -39,7 +39,7 @@ class King < Piece
     rook.rook_position(7,0) || rook.rook_position(0,0)
   end
 
-  def rook_king_side(row,col)
+  def rook_king_side(rook)
     return false if rook.has_moved?
     return true if game.pieces.find_by(current_row_index: row, current_column_index: col, type: 'Rook')
   end

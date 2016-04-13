@@ -98,7 +98,7 @@ class Piece < ActiveRecord::Base
       # can be sure that the other is equal.
       return (destination_col - current_column_index).abs
     else
-      raise 'Not Allowed' # Raise error message instead
+      return false 
     end
   end
 

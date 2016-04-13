@@ -11,7 +11,7 @@ class Rook < Piece
   end
 
   def is_kingside?
-    current_row_index == 7
+    current_column_index == 7
   end
 
   private
