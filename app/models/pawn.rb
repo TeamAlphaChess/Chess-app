@@ -4,14 +4,9 @@ class Pawn < Piece
   # rubocop:disable PerceivedComplexity
   # rubocop:disable AbcSize
   def valid_move?(destination_row, destination_col)
-    # Dont allow horizontal moves
-    return false if horizontal?(destination_row, destination_col)
-    # Returns false if you try to move forward and the spot is obstructed
-    return false if vertical?(destination_row, destination_col) && spot_taken?(destination_row, destination_col)
-
     if current_row_index == 1 || current_row_index == 6
       # Returns false if you try to move more then 2 spots when not in the pawn spawn rows
-      return false if distance(destination_row, destination_col) > 2
+      return false if distance(destination_row, destination_col) > 2 || invalid_input?(destination_row, destination_col)
     elsif distance(destination_row, destination_col) > 1
       # Returns false if you try to move more then 1 spot
       return false
@@ -24,15 +19,10 @@ class Pawn < Piece
       return false if destination_row > current_row_index
     end
 
-    if diagonal?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col)
-      # Returns false if trying to move diagonal and there is no piece there
+    if vertical?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col) || diagonal?(destination_row, destination_col) && spot_taken?(destination_row, destination_col) && !same_color?(destination_row, destination_col)
+      true
+    else
       false
-    elsif vertical?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col)
-      # Returns true if it can move forward one space or two
-      true
-    elsif diagonal?(destination_row, destination_col) && spot_taken?(destination_row, destination_col) && !same_color?(destination_row, destination_col)
-      # Returns true if it can move diagonal to capture a piece
-      true
     end
   end
 
@@ -50,5 +40,4 @@ class Pawn < Piece
 
   # and opponent pawn gets captured (current_row_index: nil, current_column_index: nil, captured: true)
   end
-
 end
