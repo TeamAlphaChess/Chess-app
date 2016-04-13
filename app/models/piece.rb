@@ -98,7 +98,7 @@ class Piece < ActiveRecord::Base
       # can be sure that the other is equal.
       return (destination_col - current_column_index).abs
     else
-      raise 'Not Allowed' # Raise error message instead
+      return false 
     end
   end
 
@@ -123,4 +123,9 @@ class Piece < ActiveRecord::Base
       update_attributes(current_row_index: destination_row, current_column_index: destination_col)
     end
   end
+
+  def has_moved?
+    updated_at != created_at
+  end
+  
 end
