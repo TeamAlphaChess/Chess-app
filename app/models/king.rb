@@ -82,18 +82,6 @@ class King < Piece
     end
   end
 
-
-  # def castle_kingside(rook)
-  #   # Rook will always end up in either row_index 3 or 5
-  #    move_to!(destination_row, destination_col)
-  #    rook.move_to!(0,5)
-  #    rook.rook_position(0,7) || rook.rook_position(7,7)
-  # end
-
-  # def castle_queenside(rook)
-  #   rook.rook_position(7,0) || rook.rook_position(0,0)
-  # end
-
   def rook_castle_kingside(destination_row, destination_col)
     game.pieces.find_by(
       current_row_index: destination_row, 
@@ -104,10 +92,9 @@ class King < Piece
 
   def rook_castle_queenside(destination_row, destination_col)
     game.pieces.find_by(
-        current_row_index: current_row_index,
-        current_column_index: destination_col,
-        type: 'Rook', 
-        updated_at: nil).unmoved?
+      current_row_index: destination_row,
+      current_column_index: 0,
+      type: 'Rook').unmoved?
   end
 
   
