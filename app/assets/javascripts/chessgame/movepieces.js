@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+  /* ******************************
+  THIS FILE WILL BE REFACTORED
+  AND DATA WILL BE DIFFERENT
+  DO NOT REFERENCE YET!!!
+  *********************************/
+
   // Move Chesspieces
   var isPieceSelected = false;
   var initialSquare;
@@ -16,9 +22,9 @@ $(document).ready(function() {
         initialSquare = $(this);
         initialSelectedPiece = initialSquare.children(':first');
         initialSquareColorBegin = initialSquare.css('background-color');
-        initialSquareRowIndex = initialSquare.parent().data('rowindex');
-        initialSquareColumnIndex = initialSquare.data('columnindex');
-        initialSelectedPieceId = initialSelectedPiece.data('pieceid');
+        initialSquareRowIndex = initialSquare.parent().data('row-index');
+        initialSquareColumnIndex = initialSquare.data('column-index');
+        initialSelectedPieceId = initialSelectedPiece.data('piece-id');
 
         initialSquare.css('background-color', 'rgb(248, 155, 56)');
         isPieceSelected = true;
@@ -26,10 +32,10 @@ $(document).ready(function() {
     } else {
       initialSquare.css('background-color', initialSquareColorBegin);
       var finalSquare = $(this);
-      var finalSquareRowIndex = finalSquare.parent().data('rowindex');
-      var finalSquareColumnIndex = finalSquare.data('columnindex');
+      var finalSquareRowIndex = finalSquare.parent().data('row-index');
+      var finalSquareColumnIndex = finalSquare.data('column-index');
 
-      if ( finalSquare.children(':first').data('pieceid') != initialSelectedPieceId ) {
+      if ( finalSquare.children(':first').data('piece-id') != initialSelectedPieceId ) {
         var params = {
           initial_square_row_index: initialSquareRowIndex,
           initial_square_column_index: initialSquareColumnIndex,

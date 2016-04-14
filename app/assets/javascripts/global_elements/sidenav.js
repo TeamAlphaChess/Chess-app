@@ -6,6 +6,7 @@ $(document).ready(function() {
   var mainSideNav = $('#mainSideNav');
   var mainContentContainer = $('#mainContentContainer');
   var mainSideNavOpen = false;
+  var timer = 550;
 
   // Listeners
   mainSideNavTrigger.on('click', function() {
@@ -13,18 +14,18 @@ $(document).ready(function() {
     if (mainSideNavOpen === false) {
       mainContentContainer.animate({
         right: mainSideNav.width()
-      }, 'slow', function() {
-        mainSideNav.fadeIn('slow');
+      }, timer, function() {
+        mainSideNav.fadeIn(timer);
       });
 
       mainSideNavOpen = true;
 
     } else {
 
-      mainSideNav.fadeOut('slow', function() {
+      mainSideNav.fadeOut(timer, function() {
         mainContentContainer.animate({
           right: '0'
-        }, 'slow' );
+        }, timer );
       });
 
       mainSideNavOpen = false;

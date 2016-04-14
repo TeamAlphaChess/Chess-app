@@ -18,7 +18,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @pieces = Piece.where(game_id: @game.id)
+    @pieces = @game.pieces
   end
 
   def update

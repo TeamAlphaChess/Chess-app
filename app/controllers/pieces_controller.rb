@@ -3,6 +3,11 @@ class PiecesController < ApplicationController
     @piece = Piece.find(params[:id])
 
     if request.xhr?
+      ##############################################################
+      # DO NOT REFERENCE THIS FILE YET!!!!!
+      # EVERYTHING BELOW WILL BE REFACTORED
+      # WITH DIFFERENT DATA SOON
+      ##############################################################
 
       # These are only for validation purposes.
       # selected_piece_id can be used to check if same as @piece.id.

@@ -7,7 +7,7 @@ class Game < ActiveRecord::Base
   after_create :populate_board!
 
   def self.list_available_games(offset_count = 0, query_limit = 10)
-    Game.where(black_player: nil).offset(offset_count).limit(query_limit)
+    Game.where(black_player_id: nil).offset(offset_count).limit(query_limit)
   end
 
   def populate_board! # rubocop:disable Metrics/AbcSize
