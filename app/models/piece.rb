@@ -124,8 +124,8 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def has_moved?
-    updated_at != created_at
+  def unmoved?
+    updated_at == created_at
   end
   
 end

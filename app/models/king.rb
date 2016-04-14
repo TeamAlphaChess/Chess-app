@@ -95,20 +95,20 @@ class King < Piece
   # end
 
   def rook_castle_kingside(destination_row, destination_col)
-    return false if !can_castle?(destination_row, destination_col)
-    game.pieces.where(
+    game.pieces.find_by(
       current_row_index: destination_row, 
       current_column_index: 7, 
-      type: 'Rook').exists?
+      type: 'Rook').unmoved?
   end
 
 
   def rook_castle_queenside(destination_row, destination_col)
-    return false if !can_castle?(destination_row, destination_col)
-    game.pieces.where(
+    game.pieces.find_by(
         current_row_index: current_row_index,
         current_column_index: destination_col,
         type: 'Rook', 
-        updated_at: nil).exists?
+        updated_at: nil).unmoved?
   end
+
+  
 end
