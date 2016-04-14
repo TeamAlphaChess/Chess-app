@@ -71,10 +71,10 @@ class Piece < ActiveRecord::Base
   end
 
   def piece_present?(array)
-    return false if array.empty?
-    array.map do |row, col|
-      game.pieces.where(current_row_index: row, current_column_index: col)
-    end.inject(&:or).count > 0
+    array.each do |row, col|
+      return true if game.pieces.where(current_row_index: row, current_column_index: col).exists?
+    end
+    false
   end
 
   def invalid_input?(destination_row, destination_col)
@@ -126,6 +126,10 @@ class Piece < ActiveRecord::Base
 
   def unmoved?
     updated_at == created_at
+  end
+
+  def update_position(destination_row, destination_col)
+    update_attributes(current_row_index: destination_row, current_column_index: destination_col)
   end
   
 end

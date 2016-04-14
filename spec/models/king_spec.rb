@@ -112,11 +112,13 @@ RSpec.describe King, type: :model do
   end
 
   # Tests for castling and associated methods
+
+  # Tests for rook_castle_queenside method
   describe 'rook_castle_kingside' do
     it 'should return true for a Kingside rook that is in column 7 and has not moved' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      expect(white_king.rook_castle_kingside(0,7)).to eq true
+      expect(white_king.rook_castle_kingside).to eq true
     end
 
     it 'should return false for a Kingside rook that has moved before and is in column 7' do
@@ -125,15 +127,15 @@ RSpec.describe King, type: :model do
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
       white_rook.update_attributes(current_row_index: 3, current_column_index: 4)
       white_rook.update_attributes(current_row_index: 0, current_column_index: 7)
-      expect(white_king.rook_castle_kingside(0,7)).to eq false
+      expect(white_king.rook_castle_kingside).to eq false
     end
   end
-
-    describe 'rook_castle_queenside' do
+  # Tests for rook_castle_queenside method
+  describe 'rook_castle_queenside' do
     it 'should return true for a Queenside rook that is in column 0 and has not moved' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      expect(white_king.rook_castle_queenside(0,0)).to eq true
+      expect(white_king.rook_castle_queenside).to eq true
     end
 
     it 'should return false for a Queenside rook that has moved before and is in column 0' do
@@ -142,7 +144,34 @@ RSpec.describe King, type: :model do
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
       white_rook.update_attributes(current_row_index: 3, current_column_index: 4)
       white_rook.update_attributes(current_row_index: 0, current_column_index: 0)
-      expect(white_king.rook_castle_queenside(0,0)).to eq false
+      expect(white_king.rook_castle_queenside).to eq false
+    end
+  end
+
+# Tests for valid_castle_move? method
+  describe 'valid_castle_move?' do
+    it 'should return true for a kingside rook' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
+      
+      expect(white_king.valid_castle_move?(0, 6)).to eq true
+    end
+  end
+  # Tests for rook castle
+  describe 'rook_castle' do
+    it 'should return true for a Kingside rook that is in column 7 and has not moved' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
+      expect(white_king.rook_castle('King')).to eq true
+    end
+
+    it 'should return true for a Queenside rook that is in column 0 and has not moved' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+      expect(white_king.rook_castle('Queen')).to eq true
     end
   end
 
