@@ -24,9 +24,14 @@ class Pawn < Piece
     else
       false
     end
+
   end
 
-  def en_passant?
+  def en_passant?(destination_row)
+
+    y_diff = (destination_row - current_row_index).abs
+    first_move?(destination_row) ? (y_diff == 1 || y_diff == 2) : false
+
   # en passant pseudo-code:
 
   # store last_move in database
@@ -39,5 +44,15 @@ class Pawn < Piece
   # then current pawn moves to opponent pawn column, and - 1 row if current pawn is black or +1 row if current pawn is white
 
   # and opponent pawn gets captured (current_row_index: nil, current_column_index: nil, captured: true)
+  
+    def first_move?(_destination_row)
+      (current_row_index == 1 && 'white')  || (current_row_index == 6 && 'black')
+    end
   end
 end
+
+
+
+
+
+
