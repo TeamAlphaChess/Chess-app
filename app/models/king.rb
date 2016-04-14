@@ -5,7 +5,8 @@ class King < Piece
     # Evaluate piece with invalid_destination to make sure there is not already a piece in the
     # destination_row/destination_column of the same color
     # Check to see if the king is only moving exactly one space in any direction on the board
-    !same_color?(destination_row, destination_col) && distance(destination_row, destination_col) == 1
+    !same_color?(destination_row, destination_col) && 
+    distance(destination_row, destination_col) == 1
   end
 
   # Check to see if King can castle move to destination_row, destination_col
@@ -22,12 +23,31 @@ class King < Piece
 
   def castle!(rook)
     # this is where we will update the database for the move.
-    return false if !can_castle?
+    # return false if !can_castle?
 
     if rook.kingside?
       castle_kingside(rook_position)
     else
       castle_queenside(rook_position)
+    end
+  end
+
+  def valid_castle_move?(destination_row, destination_col)
+    # check that king hasn't moved
+
+    # check that king moves exactly two spaces
+
+    # check that current_row_index is the same
+    #if current_row_index == destination_row
+    # select rook from queenside or kingside
+    if destination_col > current_column_index
+      # castle on kingside
+      #castle_kingside
+
+    else 
+      # castle on queenside
+      #castle_queenside
+
     end
   end
 
@@ -43,34 +63,20 @@ class King < Piece
     rook.rook_position(7,0) || rook.rook_position(0,0)
   end
 
-  def rook_king_side(destination_row, destination_col)
-    return false if has_moved?
-    return true if game.pieces.find_by(current_row_index: destination_row, current_column_index: 7, type: 'Rook')
+  def rook_castle_kingside(destination_row, destination_col)
+    return false if !can_castle?(destination_row, destination_col)
+    game.pieces.where(
+      current_row_index: destination_row, 
+      current_column_index: destination_col, 
+      type: 'Rook').exists?
   end
 
 
-
-  # Locate rook in corner spot with when case logic 
-  # Takes 'King' or 'Queen' as argument
-  def rook_can_castle(side)
-    case side
-    when 'King'
-      game.pieces.find_by(
+  def rook_castle_queenside(destination_row, destination_col)
+    return false if !can_castle?(destination_row, destination_col)
+    game.pieces.where(
         current_row_index: current_row_index,
-        current_column_index: 7,
-        type: 'Rook')
-
-    when 'Queen'
-      game.pieces.find_by(
-        current_row_index: current_row_index,
-        current_column_index: 0,
-        type: 'Rook')
-
-    else 
-      return false
-    end
+        current_column_index: destination_col,
+        type: 'Rook').exists?
   end
-
 end
-
-
