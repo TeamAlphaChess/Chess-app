@@ -76,4 +76,7 @@ RSpec.describe Pawn, type: :model do
       expect(white_pawn.valid_move?(2, 1)).to eq true
     end
   end
+
+  describe 'en_passant' do
+  end
 end
