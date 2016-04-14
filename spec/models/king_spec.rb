@@ -119,7 +119,7 @@ RSpec.describe King, type: :model do
       expect(white_king.rook_castle_kingside(0,7)).to eq true
     end
 
-    it 'should return false for a Kingside rook that has moved and is in column 7' do
+    it 'should return false for a Kingside rook that has moved before and is in column 7' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)

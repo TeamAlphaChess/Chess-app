@@ -12,7 +12,7 @@ class King < Piece
   # Check to see if King can castle move to destination_row, destination_col
   def can_castle?(destination_row, destination_col)
     # Check to see if king and rook are in original positions
-    return false if rook.has_moved?
+    #return false if @rook_castle.has_moved?
     return false if has_moved?
 
 
@@ -42,32 +42,63 @@ class King < Piece
     # select rook from queenside or kingside
     if destination_col > current_column_index
       # castle on kingside
+      @rook_castle = rook_castle('King')
+      @update_king_destination_col = 6
+      @update_rook_destination_col = 5
       #castle_kingside
 
     else 
       # castle on queenside
+      @rook_castle = rook_castle('Queen')
+      @update_king_destination_col = 2
+      @update_rook_destination_col = 3
       #castle_queenside
 
     end
   end
 
+  def rook_castle(side)
+    case side
+      # when case is King
+    when 'King'
+      # return kingside rook object
+      game.pieces.find_by(
+        current_row_index: destination_row, 
+        current_column_index: 7, 
+        type: 'Rook',
+        updated_at: nil)
 
-  def castle_kingside(rook)
-    # Rook will always end up in either row_index 3 or 5
-     move_to!(destination_row, destination_col)
-     rook.move_to!(0,5)
-     rook.rook_position(0,7) || rook.rook_position(7,7)
+    when 'Queen'
+      # return queenside rook object
+      game.pieces.find_by(
+        current_row_index: destination_row, 
+        current_column_index: 0, 
+        type: 'Rook', 
+        updated_at: nil)
+
+    else
+      # return nil if there is no rook there so we pass it into valid_castle_move_method
+      return nil
+    end
   end
 
-  def castle_queenside(rook)
-    rook.rook_position(7,0) || rook.rook_position(0,0)
-  end
+
+  # def castle_kingside(rook)
+  #   # Rook will always end up in either row_index 3 or 5
+  #    move_to!(destination_row, destination_col)
+  #    rook.move_to!(0,5)
+  #    rook.rook_position(0,7) || rook.rook_position(7,7)
+  # end
+
+  # def castle_queenside(rook)
+  #   rook.rook_position(7,0) || rook.rook_position(0,0)
+  # end
 
   def rook_castle_kingside(destination_row, destination_col)
     return false if !can_castle?(destination_row, destination_col)
     game.pieces.where(
       current_row_index: destination_row, 
-      current_column_index: destination_col, 
+      current_column_index: 7, 
       type: 'Rook').exists?
   end
 
@@ -77,6 +108,7 @@ class King < Piece
     game.pieces.where(
         current_row_index: current_row_index,
         current_column_index: destination_col,
-        type: 'Rook').exists?
+        type: 'Rook', 
+        updated_at: nil).exists?
   end
 end
