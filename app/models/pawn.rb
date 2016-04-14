@@ -26,7 +26,7 @@ class Pawn < Piece
     end
   end
 
-  def en_passant
+  def en_passant?
   # en passant pseudo-code:
 
   # store last_move in database
