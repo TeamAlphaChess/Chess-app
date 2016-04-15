@@ -149,29 +149,71 @@ RSpec.describe King, type: :model do
   end
 
 # Tests for valid_castle_move? method
-  describe 'valid_castle_move?' do
-    it 'should return true for a kingside rook' do
+  describe 'can_castle?' do
+    it 'should return true for an unmoved kingside rook with no obstructions in-between' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      
-      expect(white_king.valid_castle_move?(0, 6)).to eq true
-    end
-  end
-  # Tests for rook castle
-  describe 'rook_castle' do
-    it 'should return true for a Kingside rook that is in column 7 and has not moved' do
-      game = FactoryGirl.create(:game)
-      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      expect(white_king.rook_castle('King')).to eq true
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
+      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      expect(white_king.can_castle?(0, 6)).to eq true
     end
 
-    it 'should return true for a Queenside rook that is in column 0 and has not moved' do
+    it 'should return true for an unmoved queenside rook with no obstructions in-between' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
-      expect(white_king.rook_castle('Queen')).to eq true
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 2)
+      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
+      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+      white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
+      expect(white_king.can_castle?(0, 2)).to eq true
+    end
+
+    it 'should return false for an unmoved kingside rook with obstructions in-between' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
+      expect(white_king.can_castle?(0, 6)).to eq false
+    end
+
+    it 'should return false for an unmoved queenside rook with obstructions in-between' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+      expect(white_king.can_castle?(0, 2)).to eq false
+    end
+
+    it 'should return false for a moved kingside rook with no obstructions in-between' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
+      white_rook.update_attributes(current_row_index: 4, current_column_index: 4)
+      white_rook.update_attributes(current_row_index: 0, current_column_index: 7)
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
+      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      expect(white_king.can_castle?(0, 6)).to eq false
+    end
+
+    it 'should return false for a moved queenside rook with no obstructions in-between' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+      white_rook.update_attributes(current_row_index: 4, current_column_index: 4)
+      white_rook.update_attributes(current_row_index: 0, current_column_index: 0)
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 2)
+      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
+      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+      white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
+      expect(white_king.can_castle?(0, 2)).to eq false
     end
   end
 
