@@ -158,7 +158,7 @@ RSpec.describe King, type: :model do
       white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      expect(white_king.can_castle?(0, 6)).to eq true
+      expect(white_king.can_castle?(0, 7)).to eq true
     end
 
     it 'should return true for an unmoved queenside rook with no obstructions in-between' do
@@ -171,21 +171,21 @@ RSpec.describe King, type: :model do
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
       white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
-      expect(white_king.can_castle?(0, 2)).to eq true
+      expect(white_king.can_castle?(0, 0)).to eq true
     end
 
     it 'should return false for an unmoved kingside rook with obstructions in-between' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      expect(white_king.can_castle?(0, 6)).to eq false
+      expect(white_king.can_castle?(0, 7)).to eq false
     end
 
     it 'should return false for an unmoved queenside rook with obstructions in-between' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
-      expect(white_king.can_castle?(0, 2)).to eq false
+      expect(white_king.can_castle?(0, 0)).to eq false
     end
 
     it 'should return false for a moved kingside rook with no obstructions in-between' do
@@ -198,7 +198,7 @@ RSpec.describe King, type: :model do
       white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      expect(white_king.can_castle?(0, 6)).to eq false
+      expect(white_king.can_castle?(0, 7)).to eq false
     end
 
     it 'should return false for a moved queenside rook with no obstructions in-between' do
@@ -213,7 +213,7 @@ RSpec.describe King, type: :model do
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
       white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
-      expect(white_king.can_castle?(0, 2)).to eq false
+      expect(white_king.can_castle?(0, 0)).to eq false
     end
 
     it 'should return false for a king move to another row' do

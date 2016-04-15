@@ -14,7 +14,7 @@ class King < Piece
     can_castle?(destination_row, destination_col)
     
     update_position(current_row_index, @updated_king_destination_col)
-    @rook_castle.update_position(current_row_index, @updated_rook_destination_col)
+    @rook_castled.update_position(current_row_index, @updated_rook_destination_col)
   end
 
   def can_castle?(destination_row, destination_col)
@@ -24,26 +24,24 @@ class King < Piece
     return false if obstructed?(destination_row, destination_col)
     # check that current_row_index is the same
     return false if current_row_index != destination_row
-    # check distance is 2 spaces
-    return false unless (destination_col - current_column_index).abs 
     # select rook from queenside or kingside
     if destination_col > current_column_index
       # castle on kingside
       # get the rook on kingside and save to variable 
-      @rook_castle = rook_castle('King')
+      @rook_castled = rook_castle('King')
       @updated_king_destination_col = 6
       @updated_rook_destination_col = 5
 
     else 
       # castle on queenside
       # get the rook on queenside and save to variable
-      @rook_castle = rook_castle('Queen')
+      @rook_castled = rook_castle('Queen')
       @updated_king_destination_col = 2
       @updated_rook_destination_col = 3
     end
-    return false if @rook_castle.nil?
+    return false if @rook_castled.nil?
     return false unless (@updated_king_destination_col - current_column_index).abs == 2
-    return false unless @rook_castle.unmoved?
+    return false unless @rook_castled.unmoved?
     true
   end
 
@@ -67,7 +65,8 @@ class King < Piece
         type: 'Rook')
       
     else
-      # return nil if there is no rook there so we pass it into valid_castle_move_method
+      # return nil if there is no rook there so we pass it into can_castle? method
+      # otherwise throws error for false
       return nil
     end
   end

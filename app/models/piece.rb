@@ -128,8 +128,8 @@ class Piece < ActiveRecord::Base
     updated_at == created_at
   end
 
-  def update_position(destination_row, destination_col)
-    update_attributes(current_row_index: destination_row, current_column_index: destination_col)
-  end
+  # def update_position(destination_row, destination_col)
+  #   update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+  # end
   
 end
