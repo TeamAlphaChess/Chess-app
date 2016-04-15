@@ -96,8 +96,8 @@ RSpec.describe Pawn, type: :model do
       black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 1)
       # Move black pawn to be in the way
       black_pawn.update_attributes(current_row_index: 3, current_column_index: 1)
-      white_pawn.update_attributes(current_row_index: 3, current_column_index: 0)
-      expect(black_pawn.valid_move?(2, 0)).to eq true
+      white_pawn.update_attributes(current_row_index: 3, current_column_index: 0, move_count: 1)
+      expect(black_pawn.en_passant?(2, 0)).to eq true
     end
 
     it 'should return false if white_pawn takes 2 (1 square) moves forward instead of one (2 square) move' do
@@ -108,8 +108,8 @@ RSpec.describe Pawn, type: :model do
       # Move black pawn to be in the way
       black_pawn.update_attributes(current_row_index: 3, current_column_index: 1)
       white_pawn.move_to!(2, 0)
-      white_pawn.move_to!(3, 0)       
-      expect(black_pawn.valid_move?(2, 0)).to eq false
+      white_pawn.move_to!(3, 0)      
+      expect(black_pawn.en_passant?(2, 0)).to eq false
     end
 
     # it 'should return false if move is not an en_passant move' do
