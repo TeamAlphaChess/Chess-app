@@ -12,76 +12,117 @@ class King < Piece
   def castle!(destination_row, destination_col)
     # this is where we will update the database for the move.
     can_castle?(destination_row, destination_col)
-    
-    update_position(current_row_index, @updated_king_destination_col)
-    @rook_castled.update_position(current_row_index, @updated_rook_destination_col)
+    #update_position(current_row_index, king_new_destination_col)
+    # rook.update_position(current_row_index, update_rook_column)
   end
 
   def can_castle?(destination_row, destination_col)
-    # check that king hasn't moved
+    # check that king and rook hasn't moved
     return false if !unmoved?
     # check that king moves not obstructed
     return false if obstructed?(destination_row, destination_col)
     # check that current_row_index is the same
     return false if current_row_index != destination_row
-    # select rook from queenside or kingside
+    # select rook 
+
+    # determine if rook is from queenside or kingside
+
     if destination_col > current_column_index
       # castle on kingside
       # get the rook on kingside and save to variable 
-      @rook_castled = rook_castle('King')
-      @updated_king_destination_col = 6
-      @updated_rook_destination_col = 5
-
-    else 
-      # castle on queenside
-      # get the rook on queenside and save to variable
-      @rook_castled = rook_castle('Queen')
-      @updated_king_destination_col = 2
-      @updated_rook_destination_col = 3
-    end
-    return false if @rook_castled.nil?
-    return false unless (@updated_king_destination_col - current_column_index).abs == 2
-    return false unless @rook_castled.unmoved?
-    true
-  end
-
-  def rook_castle(side)
-    case side
-
-    when 'King'
-      # return kingside rook object to pass into next method
-      return nil unless rook_castle_kingside
-      game.pieces.find_by(
+      return false unless rook_kingside_unmoved?
+      rook = game.pieces.find_by(
         current_row_index: current_row_index, 
         current_column_index: 7, 
         type: 'Rook')
-
-    when 'Queen'
-      # return queenside rook object to pass into next method
-      return nil unless rook_castle_queenside
-      game.pieces.find_by(
+      rook.update_position(current_row_index, 3) 
+      updated_king = self.update_position(current_row_index, 6)
+      
+    elsif destination_col < current_column_index
+      # castle on queenside
+      # get the rook on queenside and save to variable
+      return false unless rook_queenside_unmoved?
+      rook = game.pieces.find_by(
         current_row_index: current_row_index, 
         current_column_index: 0, 
         type: 'Rook')
-      
-    else
-      # return nil if there is no rook there so we pass it into can_castle? method
-      # otherwise throws error for false
-      return nil
+      rook.update_position(current_row_index, 3) 
+      updated_king = update_position(current_row_index, 2)
+    else nil
     end
+    
+    return false if rook.nil?
+    #return false unless (king_new_destination_col - current_column_index).abs == 2
+    true
   end
 
-  def rook_castle_kingside
+  def king_new_destination_kingside
+    update_position(current_row_index, 6)
+  end
+
+  def king_new_destination_queenside
+    update_position(current_row_index, 2)
+  end
+
+  def rook_new_destination_kingside
+    update_position(current_row_index, 5)
+  end
+
+  def rook_new_destination_queenside
+    update_position(current_row_index, 3)
+  end
+
+  # def rook_castle(destination_row, destination_col)
+  #   case side
+
+  #   when 'King'
+  #     # return kingside rook object to pass into next method
+  #     return nil unless rook_kingside_unmoved?
+  #     game.pieces.find_by(
+  #       current_row_index: current_row_index, 
+  #       current_column_index: 7, 
+  #       type: 'Rook')
+
+  #   when 'Queen'
+  #     # return queenside rook object to pass into next method
+  #     return nil unless rook_queenside_unmoved?
+  #     game.pieces.find_by(
+  #       current_row_index: current_row_index, 
+  #       current_column_index: 0, 
+  #       type: 'Rook')
+      
+  #   else
+  #     # return nil if there is no rook there so we pass it into can_castle? method
+  #     # otherwise throws error for false
+  #     return nil
+  #   end
+  # end
+
+  def rook_kingside_unmoved?
     game.pieces.find_by(
       current_row_index: current_row_index, 
       current_column_index: 7, 
       type: 'Rook').unmoved?
   end
 
-  def rook_castle_queenside
+  def rook_queenside_unmoved?
     game.pieces.find_by(
       current_row_index: current_row_index,
       current_column_index: 0,
       type: 'Rook').unmoved?
   end
+
+  # def rook_kingside
+  #   game.pieces.find_by(
+  #     current_row_index: current_row_index, 
+  #     current_column_index: 7, 
+  #     type: 'Rook')
+  # end
+
+  # def rook_queenside
+  #   game.pieces.find_by(
+  #     current_row_index: current_row_index,
+  #     current_column_index: 0,
+  #     type: 'Rook')
+  # end
 end
