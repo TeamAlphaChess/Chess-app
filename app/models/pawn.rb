@@ -29,23 +29,22 @@ class Pawn < Piece
     if color == 'white' && current_row_index == 4
       # check for the pawn that is to be captured(it is behind the spot you are moving too)
       capture_piece = game.pieces.find_by_current_row_index_and_current_column_index(row_index - 1, column_index)
-
-      # If pawn is found in the capture_piece spot check to make sure it got there in one move
-      if capture_piece.type == 'Pawn' && capture_piece.move_count == 1 && capture_piece.color == 'black'
-        true
-      else
-        false
-      end
+      capturable?(capture_piece, 'black')
     elsif color == 'black' && current_row_index == 3
       # check for the pawn that is to be captured(it is behind the spot you are moving too)
       capture_piece = game.pieces.find_by_current_row_index_and_current_column_index(row_index + 1, column_index)
+      capturable?(capture_piece, 'white')
+    else
+      false
+    end
+  end
 
-      # If pawn is found in the capture_piece spot check to make sure it got there in one move
-      if capture_piece.type == 'Pawn' && capture_piece.move_count == 1 && capture_piece.color == 'white'
-        true
-      else
-        false
-      end
+  private
+
+  def capturable?(piece, color)
+    # If pawn is found in the capture_piece spot check to make sure it got there in one move
+    if piece.type == 'Pawn' && piece.move_count == 1 && piece.color == color
+      true
     else
       false
     end
