@@ -89,7 +89,7 @@ RSpec.describe Pawn, type: :model do
   end
 
   describe 'en_passant?' do
-    it 'should return true if en_passant? passes' do
+    it 'should return true if en_passant? passes for (black color making the move)' do
       game = FactoryGirl.create(:game)
       white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       # select black piece
@@ -100,7 +100,7 @@ RSpec.describe Pawn, type: :model do
       expect(black_pawn.en_passant?(2, 0)).to eq true
     end
 
-    it 'should return false if white_pawn takes 2 (1 square) moves forward instead of one (2 square) move' do
+    it 'should return false if white_pawn takes 2 (1 square) moves forward instead of one (2 square) (black color making the move)' do
       game = FactoryGirl.create(:game)
       white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       # select black piece
@@ -108,18 +108,27 @@ RSpec.describe Pawn, type: :model do
       # Move black pawn to be in the way
       black_pawn.update_attributes(current_row_index: 3, current_column_index: 1)
       white_pawn.move_to!(2, 0)
-      white_pawn.move_to!(3, 0)      
+      white_pawn.move_to!(3, 0)
       expect(black_pawn.en_passant?(2, 0)).to eq false
     end
 
-    # it 'should return false if move is not an en_passant move' do
-    #   game = FactoryGirl.create(:game)
-    #   white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
-    #   # select black piece
-    #   black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 1)
-    #   # Move black pawn to be in the way    
-    #   expect(black_pawn.valid_move?(2, 0)).to eq false
-    # end
+    it 'should return true if en_passant? passes for (white color making the move)' do
+      game = FactoryGirl.create(:game)
+      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
+      # select black piece
+      black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 1)
+      # Move black pawn to be in the way
+      black_pawn.update_attributes(current_row_index: 4, current_column_index: 0, move_count: 1)
+      white_pawn.update_attributes(current_row_index: 4, current_column_index: 1)
+      expect(white_pawn.en_passant?(5, 0)).to eq true
+    end
 
+    it 'should return false if move is not an en_passant move' do
+      game = FactoryGirl.create(:game)
+      # select black piece
+      black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 1)
+      # Move black pawn to be in the way
+      expect(black_pawn.en_passant?(5, 0)).to eq false
+    end
   end
 end
