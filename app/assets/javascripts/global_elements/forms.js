@@ -96,7 +96,13 @@ $(document).ready(function() {
     });
   }
 
-  function ajaxRequest()
+  function ajaxRequest(action, method, data, redirect) {
+    $.ajax({
+      action: action,
+      method: method,
+      data: data
+    });
+  }
 
   /* ====================================
   General Event Listeners
@@ -129,9 +135,8 @@ $(document).ready(function() {
     });
   });
 
-  // End Game form
-  $('#endGame').on('click', function(e) {
-    debugger;
+  // Custom Modal Action
+  $('.custom-modal-action').on('click', function(e) {
     var modal = $($(this).data('modal-id'));
   });
 
