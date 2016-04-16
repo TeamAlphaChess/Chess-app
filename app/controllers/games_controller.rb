@@ -22,9 +22,7 @@ class GamesController < ApplicationController
 
   def forfeit
     # Allow people to concede the game
-
     # Add a #forfeit method to `game`. This will end the game and set the other player as the winner.
-
     # Can add a button for this on `Games#Show` and add a `forfeit` action to the `games_controller`
   end
 
