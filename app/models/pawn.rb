@@ -25,8 +25,6 @@ class Pawn < Piece
     end
   end
 
-# Piece.order("updated_at").last
-
   def en_passant?(row_index, column_index)
     if color == 'white' && current_row_index == 4
       # check for the pawn that is to be captured(it is behind the spot you are moving too)
