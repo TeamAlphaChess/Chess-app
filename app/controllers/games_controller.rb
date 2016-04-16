@@ -30,7 +30,8 @@ class GamesController < ApplicationController
     else
       @game.update_attributes(winner_id: white_player_id)
     end
-    @game.destroy
+    current_user.games_won = current_user.games_won + 1
+    # @game.destroy
   end
 
   def destroy
