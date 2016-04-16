@@ -128,8 +128,12 @@ class Piece < ActiveRecord::Base
     updated_at == created_at
   end
 
-  def update_position(destination_row, destination_col)
-    update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+  def update_rook_kingside(destination_row, destination_col)
+    update_attributes(current_row_index: 0, current_column_index: 5)
   end
   
+  def update_rook_queenside(destination_row, destination_col)
+    update_attributes(current_row_index: 0, current_column_index: 3)
+  end
+
 end
