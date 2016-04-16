@@ -25,6 +25,8 @@ class Pawn < Piece
     end
   end
 
+# Piece.order("updated_at").last
+
   def en_passant?(row_index, column_index)
     if color == 'white' && current_row_index == 4
       # check for the pawn that is to be captured(it is behind the spot you are moving too)
@@ -42,8 +44,10 @@ class Pawn < Piece
   private
 
   def capturable?(piece, color)
-    # If pawn is found in the capture_piece spot check to make sure it got there in one move
-    if piece.type == 'Pawn' && piece.move_count == 1 && piece.color == color
+    # Find last move made in game
+    last_updated = game.pieces.order('updated_at').last
+    # If pawn is found in the capture_piece spot check to make sure it got there in one move and it is of the opposite color and it was the last move made
+    if piece.type == 'Pawn' && piece.move_count == 1 && piece.color == color && piece == last_updated
       true
     else
       false

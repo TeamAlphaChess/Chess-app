@@ -112,14 +112,14 @@ RSpec.describe Pawn, type: :model do
       expect(black_pawn.en_passant?(2, 0)).to eq false
     end
 
-    it 'should return true if en_passant? passes for (white color making the move)' do
+    it 'should return true if en_passant? passes for a white color pawn making the move' do
       game = FactoryGirl.create(:game)
       white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
       # select black piece
       black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 1)
+      white_pawn.update_attributes(current_row_index: 4, current_column_index: 1)
       # Move black pawn to be in the way
       black_pawn.update_attributes(current_row_index: 4, current_column_index: 0, move_count: 1)
-      white_pawn.update_attributes(current_row_index: 4, current_column_index: 1)
       expect(white_pawn.en_passant?(5, 0)).to eq true
     end
 
