@@ -15,9 +15,11 @@ class King < Piece
     #rook_move!(destination_row, destination_col)
     if destination_col > current_column_index
       self.move_to!(current_row_index, 6)
+      rook_move!(destination_row, destination_col)
 
     elsif  destination_col < current_column_index
       self.move_to!(current_row_index, 2)
+      rook_move!(destination_row, destination_col)
     else
       nil
     end
@@ -41,13 +43,13 @@ class King < Piece
   end
 
   
-  def rook_position(destination_row, destination_col)
-    rook = game.pieces.find_by(
-      current_row_index: destination_row, 
-      current_column_index: destination_col, 
-      type: 'Rook')
+  # def rook_position(destination_row, destination_col)
+  #   rook = game.pieces.find_by(
+  #     current_row_index: destination_row, 
+  #     current_column_index: destination_col, 
+  #     type: 'Rook')
   
-  end
+  # end
 
   def rook_kingside_unmoved?
     game.pieces.find_by(
@@ -64,16 +66,10 @@ class King < Piece
   end
 
   def rook_move!(destination_row, destination_col)
-
     if destination_col > current_column_index
       rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 7)
-
-      rook = Rook.new
-      rook.update_rook_kingside(0,7)
-      
-
+      rook.update_rook_kingside(0,7)   
     elsif  destination_col < current_column_index
-
       rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 0)
       rook.update_rook_queenside(0,0)
     else
