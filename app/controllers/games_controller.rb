@@ -24,7 +24,22 @@ class GamesController < ApplicationController
     # Allow people to concede the game
     # Add a #forfeit method to `game`. This will end the game and set the other player as the winner.
     # Can add a button for this on `Games#Show` and add a `forfeit` action to the `games_controller`
+    @game = Game.find(params[:id])
+    if current_user.id == white_player_id
+      @game.update_attributes(winner_id: black_player_id)
+    else
+      @game.update_attributes(winner_id: white_player_id)
+    end
+    @game.destroy
   end
+
+  def destroy
+    @game = Game.find(params[:id])
+    return render_not_found if @game.blank?
+    @game.destroy
+    redirect_to root_path
+  end
+
 
   def update
     @game = Game.find(params[:id])
