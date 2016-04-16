@@ -96,6 +96,8 @@ $(document).ready(function() {
     });
   }
 
+  function ajaxRequest()
+
   /* ====================================
   General Event Listeners
   ======================================*/
@@ -126,4 +128,11 @@ $(document).ready(function() {
       ajaxResponse(modal, form);
     });
   });
+
+  // End Game form
+  $('#endGame').on('click', function(e) {
+    debugger;
+    var modal = $($(this).data('modal-id'));
+  });
+
 });
