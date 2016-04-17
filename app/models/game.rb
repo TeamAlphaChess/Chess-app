@@ -29,9 +29,9 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'white', type: 'Bishop', current_row_index: 0, current_column_index: 2)
     pieces.create(color: 'white', type: 'Bishop', current_row_index: 0, current_column_index: 5)
 
-    pieces.create(color: 'white', type: 'Queen', current_row_index: 0, current_column_index: 4)
+    pieces.create(color: 'white', type: 'Queen', current_row_index: 0, current_column_index: 3)
 
-    pieces.create(color: 'white', type: 'King', current_row_index: 0, current_column_index: 3)
+    pieces.create(color: 'white', type: 'King', current_row_index: 0, current_column_index: 4)
 
     (0..7).each do |i|
       pieces.create(color: 'black', type: 'Pawn', current_row_index: 6,
@@ -47,8 +47,8 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'Bishop', current_row_index: 7, current_column_index: 2)
     pieces.create(color: 'black', type: 'Bishop', current_row_index: 7, current_column_index: 5)
 
-    pieces.create(color: 'black', type: 'Queen', current_row_index: 7, current_column_index: 4)
+    pieces.create(color: 'black', type: 'Queen', current_row_index: 7, current_column_index: 3)
 
-    pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 3)
+    pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 end

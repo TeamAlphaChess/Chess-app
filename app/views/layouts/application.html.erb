@@ -2,10 +2,10 @@
 <html>
 <head>
   <title>ChessMaster - <%= yield(:page_title) %></title>
-
   <%= favicon_link_tag 'logos/favicon.png' %>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -19,39 +19,37 @@
         <% end %>
       </div>
       <div class="navbar-avatar-container pull-right" id="mainSideNavTrigger">
-
         <%= gravatar_for(current_user) %>
-
       </div>
     </div>
   </nav>
-
-
+  <% if user_signed_in? %>
+    <%= render partial: 'header_signed_in' %>
+  <% else %>
+    <%= render partial: 'header_not_signed_in' %>
+  <% end %>
   <div class="container main-container">
-
-      <div id="mainSideNav" class="main-sidenav">
-      </div>
-
+      <% if user_signed_in? %>
+        <%= render partial: 'main_sidenav' %>
+      <% end %>
       <div class="container-fluid" id="mainContentContainer">
-
-        <% if notice.present? %>
+        <!-- <% if notice.present? %>
           <p class="alert alert-info"><%= notice %></p>
         <% end %>
         <% if alert.present? %>
           <p class="alert alert-danger"><%= alert %></p>
-        <% end %>
-
+        <% end %> -->
         <%= yield %>
       </div>
     </div>
   </div>
-
   <footer class="footer">
-    <div class="container">
-
+    <div class="container footer-container">
+      <ul class="footer-links">
+        <li>&copy 2016</li>
+      </li><%= link_to 'Meet the Team', page_path(:the_team) %></li>
+      </ul>
     </div>
   </footer>
-
-
 </body>
 </html>
