@@ -14,7 +14,12 @@
     <%= f.input :password_confirmation, required: false %>
     <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
 
-    
+
+          <%= f.input :avatar %>
+
+      <div class="modal-footer">
+         <%= f.submit "Add Avatar", class: 'btn btn-primary' %>
+      </div>
 
 
   </div>
