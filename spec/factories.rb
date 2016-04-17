@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 FactoryGirl.define do
+  factory :avatar do
+    
+  end
   factory :user do
     sequence :email do |n|
       "dummyEmail#{n}@gmail.com"
