@@ -31,11 +31,14 @@ Top Navbar
 }
 
 .navbar-avatar {
+  background: url('icons/avatar.svg') no-repeat;
   height: 40px;
   width: 30px;
   top: 10px;
   position: relative;
   margin: auto;
+  border-radius: 50%;
+  text-align: center;
 }
 
 .navbar-avatar-container {
