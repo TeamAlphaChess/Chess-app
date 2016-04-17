@@ -2,11 +2,10 @@
 <%= content_for :page_title, @game.name %>
 
 <div class="chessgame-container">
-  <div class="game-bar" id="gameBarTop">
-  </div>
-  <table class="chessboard" id="chessBoard">
-    <%= render_board(@pieces, @game) %>
-  </table>
-  <div class="game-bar" id="gameBarBottom">
-  </div>
+  <%= content_tag(:div, '', class: 'game-bar', id: 'gameBarBottom', data: { other_player_color: determine_player_id(@game)[1] }) %>
+
+  <%= render_board(@pieces, @game) %>
+
+
+  <%= content_tag(:div, '', class: 'game-bar', id: 'gameBarBottom', data: { current_player_color: determine_player_id(@game)[0] }) %>
 </div>

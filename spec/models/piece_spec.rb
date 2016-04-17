@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 RSpec.describe Piece, type: :model do
+
   describe 'obstructed?' do
     it 'returns true for horizontal-right obstructions' do
       game = FactoryGirl.create(:game) # Would do this using FactoryGirl

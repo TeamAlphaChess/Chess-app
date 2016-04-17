@@ -6,6 +6,12 @@ $(document).ready(function() {
   DO NOT REFERENCE YET!!!
   *********************************/
 
+  // Make sure to detach all pieces before moving them
+  // Select the first piece in each square
+  // when doing castling, append the piece such that when the next
+  // move is done, it selects the first piece.
+
+
   // Move Chesspieces
   var isPieceSelected = false;
   var initialSquare;

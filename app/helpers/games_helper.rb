@@ -32,12 +32,12 @@ module GamesHelper
     range = 0..7
     column_iteration = (range.first).upto(range.last)
 
-    if current_user == game.white_player_id
+    if current_user.id == game.white_player_id
       row_iteration = (range.last).downto(range.first)
     else
       row_iteration = (range.first).upto(range.last)
     end
-    data = '<tbody>'
+    data = "<table class='chessboard' id='chessBoard'><tbody>"
     row_iteration.each do |row_index|
       data << "<tr data-row-index='#{row_index}'>"
       column_iteration.each do |column_index|
@@ -55,8 +55,20 @@ module GamesHelper
       end
       data << "</tr>"
     end
-    data << '</tbody>'
+    data << '</tbody></table>'
 
     return data.html_safe
+  end
+
+  def determine_player_id(game)
+    if current_user.id == game.black_player_id
+      return ['black', 'white']
+
+    elsif current_user.id == game.white_player_id
+      return ['white', 'black']
+
+    else
+      return ['none', 'none']
+    end
   end
 end
