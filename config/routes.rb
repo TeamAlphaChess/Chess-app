@@ -5,7 +5,13 @@ TeamAlphaChess::Application.routes.draw do
   root to: 'static_pages#show', id: 'home'
   
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
-  resources :games
+  resources :games do
+  member do
+    put 'forfeit'
+    patch 'forfeit'
+  end
+end
+
 end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

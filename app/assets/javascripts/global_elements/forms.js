@@ -96,6 +96,14 @@ $(document).ready(function() {
     });
   }
 
+  function ajaxRequest(action, method, data, redirect) {
+    $.ajax({
+      action: action,
+      method: method,
+      data: data
+    });
+  }
+
   /* ====================================
   General Event Listeners
   ======================================*/
@@ -126,4 +134,10 @@ $(document).ready(function() {
       ajaxResponse(modal, form);
     });
   });
+
+  // Custom Modal Action
+  $('.custom-modal-action').on('click', function(e) {
+    var modal = $($(this).data('modal-id'));
+  });
+
 });
