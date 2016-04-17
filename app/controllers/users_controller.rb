@@ -11,9 +11,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if @user != current_user
-      return render text: 'Not Allowed', status: :forbidden
-    end
+    # if @user != current_user
+    #   return render text: 'Not Allowed', status: :forbidden
+    # end
   end
 
   helper_method :current_user
