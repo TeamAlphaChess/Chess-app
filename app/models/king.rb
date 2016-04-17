@@ -10,7 +10,6 @@ class King < Piece
 
   def castle!(destination_row, destination_col)
     # this is where we will update the database for the move.
-    can_castle?(destination_row, destination_col)
     if destination_col > current_column_index
       move_to!(current_row_index, 6)
       rook_move!(destination_row, destination_col)
