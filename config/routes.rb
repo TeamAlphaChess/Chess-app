@@ -6,6 +6,7 @@ TeamAlphaChess::Application.routes.draw do
   
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
   resources :games
+  resources :users, only: [:show, :edit]
 end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

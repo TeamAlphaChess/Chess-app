@@ -4,7 +4,7 @@
   <title>ChessMaster - <%= yield(:page_title) %></title>
   <%= favicon_link_tag 'logos/favicon.png' %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= stylesheet_link_tag "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -19,7 +19,7 @@
         <% end %>
       </div>
       <div class="navbar-avatar-container pull-right" id="mainSideNavTrigger">
-        <%= gravatar_for(current_user) %>
+        <%= gravatar_for(current_user) %> 
       </div>
     </div>
   </nav>
