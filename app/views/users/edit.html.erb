@@ -1,4 +1,4 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
@@ -15,9 +15,17 @@
     <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
 
     
+      <%= simple_form_for @avatar, url: '#' do |f| %>
+        <div class="modal-body">
+          <%= f.input :avatar %>
+        </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <%= f.submit "Add Avatar", class: 'btn btn-primary' %>
+      </div>
+      <% end %>
 
 
-  </div>
 
   <div class="form-actions">
     <%= f.button :submit, "Update" %>
