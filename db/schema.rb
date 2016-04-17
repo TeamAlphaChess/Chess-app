@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20160417042339) do
 
   create_table "avatars", force: true do |t|
     t.string   "email"
-    t.integer  "avatar_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
