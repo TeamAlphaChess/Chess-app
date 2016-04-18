@@ -33,11 +33,10 @@ class GamesController < ApplicationController
       end
       # increment other player games_won by 1
       current_user.games_won += 1
-      
       respond_to do |format|
-        format.json do 
+        format.json do
           render json: {
-            response: "hello"
+            response: 'hello'
           }
         end
       end
@@ -51,7 +50,6 @@ class GamesController < ApplicationController
     @game.destroy
     redirect_to root_path
   end
-
 
   def update
     @game = Game.find(params[:id])
