@@ -123,4 +123,16 @@ class Piece < ActiveRecord::Base
       update_attributes(current_row_index: destination_row, current_column_index: destination_col, move_count: move_count + 1)
     end
   end
+
+  def unmoved?
+    updated_at == created_at
+  end
+
+  def update_rook_kingside(*)
+    update_attributes(current_row_index: 0, current_column_index: 5)
+  end
+
+  def update_rook_queenside(*)
+    update_attributes(current_row_index: 0, current_column_index: 3)
+  end
 end

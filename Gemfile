@@ -49,6 +49,9 @@ gem 'high_voltage', '~> 2.4.0'
 # Icon fonts for App (not using bootstrap icons)
 gem 'ionicons-rails'
 
+# Gravatar for user avatars
+gem 'gravatar'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'factory_girl_rails', '~> 4.0'
