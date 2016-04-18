@@ -29,7 +29,6 @@ class GamesController < ApplicationController
     else
       @game.update_attributes(winner_id: @game.white_player_id)
     end
-    puts current_user.games_won
     current_user.games_won = current_user.games_won + 1
     # @game.destroy
   end
@@ -40,7 +39,6 @@ class GamesController < ApplicationController
     @game.destroy
     redirect_to root_path
   end
-
 
   def update
     @game = Game.find(params[:id])
