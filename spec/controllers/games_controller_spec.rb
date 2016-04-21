@@ -28,6 +28,5 @@ RSpec.describe GamesController, type: :controller do
       # sign_in user
       # expect(game.user).to eq(user)
     end
-
   end
 end
