@@ -76,10 +76,9 @@ function ajaxResponse(modal, form) {
   $(form).bind('ajax:complete', function(event, response) {
     if (response.status === 422) {
       insertStatusMessages(response.responseJSON.errors, 'failure', modal, 'inputs');
-      debugger;
     } else if (response.status === 401) {
       insertStatusMessages('Email or password is invalid', 'failure', modal, 'footer');
-      
+
     } else if (response.status === 201) {
       insertStatusMessages('Submission is successful!', 'success', modal, 'footer');
       var redirectOnSuccess = form.data('redirect-on-success');

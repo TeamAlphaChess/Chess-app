@@ -37,11 +37,13 @@ $(document).ready(function() {
     var piece;
     if (!jQuery.isEmptyObject(instructions)) {
       for (var instruction in instructions) {
-        piece = $('tbody').find('tr[data-row-index="' + instructions[instruction].rowIndex + '"]').find('td[data-column-index="' + instructions[instruction].columnIndex + '"]').children(':first');
-        piece.fadeOut('fast', function() {
-          // Add piece to the game sidebar
-          piece.remove();
-        });
+        if (instructions.hasOwnProperty(instruction)) {
+          piece = $('tbody').find('tr[data-row-index="' + instructions[instruction].rowIndex + '"]').find('td[data-column-index="' + instructions[instruction].columnIndex + '"]').children(':first');
+          piece.fadeOut('fast', function() {
+            // Add piece to the game sidebar
+            piece.remove();
+          });
+        }
       }
     }
 
@@ -57,28 +59,29 @@ $(document).ready(function() {
       var attributes;
 
       for (var instruction in instructions) {
+        if (instructions.hasOwnProperty(instruction)) {
 
-        // [initialSquare, pieceToMove, intialSquarePosition, destinationSquare, destinationSquarePosition]
-        attributes = []
+          // [initialSquare, pieceToMove, intialSquarePosition, destinationSquare, destinationSquarePosition]
+          attributes = []
 
-        // initialSquare
-        attributes.push($('tbody').find('tr[data-row-index="' + instructions[instruction].initialRow + '"]').find('td[data-column-index="' + instructions[instruction].initialColumn + '"]'));
+          // initialSquare
+          attributes.push($('tbody').find('tr[data-row-index="' + instructions[instruction].initialRow + '"]').find('td[data-column-index="' + instructions[instruction].initialColumn + '"]'));
 
-        // pieceToMove
-        attributes.push(attributes[0].children(':first'));
+          // pieceToMove
+          attributes.push(attributes[0].children(':first'));
 
-        // initialSquarePosition
-        attributes.push(attributes[0].position());
+          // initialSquarePosition
+          attributes.push(attributes[0].position());
 
-        // destinationSquare
-        attributes.push($('tbody').find('tr[data-row-index="' + instructions[instruction].destinationRow + '"]').find('td[data-column-index="' + instructions[instruction].destinationColumn + '"]'));
+          // destinationSquare
+          attributes.push($('tbody').find('tr[data-row-index="' + instructions[instruction].destinationRow + '"]').find('td[data-column-index="' + instructions[instruction].destinationColumn + '"]'));
 
-        // destinationSquarePosition
-        attributes.push(attributes[3].position());
+          // destinationSquarePosition
+          attributes.push(attributes[3].position());
 
-        // processedInstructions becomes a 2D array
-        processedInstructions.push(attributes);
-
+          // processedInstructions becomes a 2D array
+          processedInstructions.push(attributes);
+        }
       }
 
       var piece = $(processedInstructions[0][1]);
@@ -127,9 +130,8 @@ $(document).ready(function() {
         response = response.responseJSON;
 
         if (status === 200) {
-          if (response.actionStatus.pawnPromotion == true) {
-            alert('pawn promotion works. Implement form to select piece to promote');
-
+          if (response.actionStatus.pawnPromotion === true) {
+            // open up form to select promotion piece
 
           } else {
             capturePieces(response.captures, function(){
