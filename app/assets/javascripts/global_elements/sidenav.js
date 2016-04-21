@@ -12,7 +12,7 @@ $(document).ready(function() {
   mainSideNavTrigger.on('click', function() {
 
     if (mainSideNavOpen === false) {
-      mainContentContainer.animate({
+      mainContentContainer.velocity({
         right: mainSideNav.width()
       }, timer, function() {
         mainSideNav.fadeIn(timer);
@@ -23,7 +23,7 @@ $(document).ready(function() {
     } else {
 
       mainSideNav.fadeOut(timer, function() {
-        mainContentContainer.animate({
+        mainContentContainer.velocity({
           right: '0'
         }, timer );
       });

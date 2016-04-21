@@ -212,3 +212,11 @@ class PiecesController < ApplicationController
     # @response[:actionStatus][:pawnPromotion] = true
   end
 end
+
+# ruby render json: {
+#   errors: [
+#     {name: 'can\'t be blank'},
+#     {email: 'can\'t be blank'},
+#     {password: 'can\'t be blank'}
+#   ]
+# }.to_json

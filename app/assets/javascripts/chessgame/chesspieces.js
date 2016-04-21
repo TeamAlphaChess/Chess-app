@@ -81,15 +81,21 @@ $(document).ready(function() {
 
       }
 
-      // for (i = 0; i < processedInstructions.length; i++) {
-      //   processedInstructions[0][1].animate({
-      //     top: processedInstructions[0][4].top - processedInstructions[0][2].top,
-      //     left: processedInstructions[0][4].left - processedInstructions[0][2].left
-      //   }, 'slow').appendTo(processedInstructions[0][3]).height(processedInstructions[0][3].height());
-      // }
-      processedInstructions[0][1].animate({
-        left: '50px'
-      });
+      for (i = 0; i < processedInstructions.length; i++) {
+
+        processedInstructions[0][1]
+        .queue('movePiece', function(next) {
+          $(this).velocity({
+            top: processedInstructions[0][4].top - processedInstructions[0][2].top,
+            left: processedInstructions[0][4].left - processedInstructions[0][2].left
+          }, {queue: false});
+          next();
+        })
+        .dequeue('movePiece');
+        // .css({'top': '0', 'left': '0'})
+        // .appendTo(processedInstructions[0][3])
+        // .height(processedInstructions[0][3].height());
+      }
     }
 
     if (callback && typeof callback === 'function') {
@@ -115,21 +121,22 @@ $(document).ready(function() {
       data: data,
       complete: function(response) {
 
+
         var status = response.status;
         response = response.responseJSON;
 
         if (status === 200) {
-
           if (response.actionStatus.pawnPromotion == true) {
             alert('pawn promotion works. Implement form to select piece to promote');
 
-          } else {
 
-            // capturePieces(response.captures, function(){
-            movePieces(response.moves, destinationSquare, function() {
-              // renderGameBarMessage(response.playerMessages);
+          } else {
+            debugger;
+            capturePieces(response.captures, function(){
+              movePieces(response.moves, destinationSquare, function() {
+                renderGameBarMessage(response.playerMessages);
+              });
             });
-            // });
 
           }
         } else {
