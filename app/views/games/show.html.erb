@@ -1,11 +1,16 @@
 <!-- Passes the current page title to application.html.erb -->
 <%= content_for :page_title, @game.name %>
+<% player = determine_player(@game) %>
 
 <div class="chessgame-container">
-  <%= content_tag(:div, '', class: 'game-bar', id: 'gameBarBottom', data: { other_player_color: determine_player_id(@game)[1] }) %>
+  <%= content_tag(:div, class: 'game-bar', id: 'gameBarTop', data: { other_player_color: player[2] }) do %>
+    <div class="avatar game-bar-avatar"></div>
+  <% end %>
 
   <%= render_board(@pieces, @game) %>
 
+  <%= content_tag(:div, class: 'game-bar', id: 'gameBarBottom', data: { current_player_color: determine_player(@game)[0] }) do %>
 
-  <%= content_tag(:div, '', class: 'game-bar', id: 'gameBarBottom', data: { current_player_color: determine_player_id(@game)[0] }) %>
+  <% end %>
+
 </div>

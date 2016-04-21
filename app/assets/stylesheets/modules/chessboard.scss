@@ -12,8 +12,8 @@ Chessboard
   border: none;
 }
 
-#chessSquareAnimate {
-
+.chess-selected-square {
+  background-color: $yellow !important;
 }
 
 .chessgame-container {
@@ -31,14 +31,6 @@ Chessboard
   padding: 0 13px;
 }
 
-.game-bar {
-  height: 23px;
-  width: 100%;
-  background-color: white;
-  max-width: 132px;
-  box-shadow: $element-shadow;
-}
-
 .chessboard {
   width: 100%;
   max-width: 132px;
@@ -50,7 +42,6 @@ Chessboard
 .chessboard tr {
   height: 12.5%;
   width: 100%;
-
 }
 
 .chessboard tr td {
@@ -63,13 +54,14 @@ Chesspieces
 ======================================*/
 
 .chess-piece {
-  width: 100%;
+  width: 99%;
   height: 99%;
   top: 0;
   left: 0;
   position: relative;
   margin: auto;
   z-index: 1;
+  transition: $linear-transition;
 }
 
 .bishop-black {

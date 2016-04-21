@@ -47,4 +47,12 @@ class Game < ActiveRecord::Base
 
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
+
+  def update_player_turn
+    # if current_user.id == self.white_player_id
+    #   self.update_attributes(current_player_turn_id: self.black_player_id)
+    # else
+    #   self.update_attributes(current_player_turn_id: self.white_player_id)
+    # end
+  end
 end

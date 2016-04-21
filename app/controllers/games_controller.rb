@@ -19,6 +19,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @pieces = @game.pieces
+    redirect_to games_path if current_user.id != @game.black_player_id &&
+                              current_user.id != @game.white_player_id
   end
 
   def update

@@ -117,7 +117,7 @@ class Piece < ActiveRecord::Base
         # Place piece in the removed pieces location
 
         update_attributes(current_row_index: destination_row, current_column_index: destination_col, move_count: move_count + 1)
-        
+
         return blocker_piece
       end
       # There is not a piece in the spot so check the obstructions next

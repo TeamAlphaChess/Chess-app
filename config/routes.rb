@@ -3,8 +3,13 @@ TeamAlphaChess::Application.routes.draw do
   # Renders Static Pages. High_Voltage gem used for this.
   get "/static_pages/*id" => 'static_pages#show', as: :page, format: false
   root to: 'static_pages#show', id: 'home'
-  
-  resources :pieces, only: [:update]
+
+  resources :pieces, only: [:update] do
+    member do
+      patch 'pawn_promotion'
+      put 'pawn_promotion'
+    end
+  end
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
   resources :games
 end
