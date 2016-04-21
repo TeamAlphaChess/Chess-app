@@ -1,0 +1,21 @@
+<!-- Login Modal -->
+<div id="forfeitModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">End Game</h4>
+        <button type="button" class="close-icon modal-close" data-modal-to-close="#forfeitModal"></button>
+      </div>
+      <div class="modal-body">
+      <p>Are you sure you want to forfeit the game?</p>   
+      </div>
+      <div class="modal-footer">
+          <ul class="form-footer-links-and-statuses">
+            <div class="form-footer-status">
+            </div>
+          </ul>
+          <button id="endGame" class="custom-modal-action btn btn-default" data-redirect-on-success=<%= games_path %> data-ajax-method="PATCH" data-ajax-data="" data-ajax-url="/games/2/forfeit">End Game</button>
+      </div>
+    </div>
+  </div>
+</div>

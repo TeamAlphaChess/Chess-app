@@ -96,6 +96,17 @@ $(document).ready(function() {
     });
   }
 
+  function ajaxRequest(redirect, url, method, data) {
+    $.ajax({
+      url: url,
+      method: method,
+      data: data,
+      complete: function(response) {
+        debugger;
+      }
+    });
+  }
+
   /* ====================================
   General Event Listeners
   ======================================*/
@@ -126,4 +137,16 @@ $(document).ready(function() {
       ajaxResponse(modal, form);
     });
   });
+
+  // Custom Modal Action
+  $('.custom-modal-action').on('click', function(e) {
+    var button = $(this);
+    var modal = $(button.data('modal-id'));
+    var url = button.data('ajax-url');
+    var method = button.data('ajax-method');
+    var redirect = button.data('redirect-on-success');
+    var data = button.data('ajax-data');
+    ajaxRequest(redirect, url, method, data);
+  });
+
 });

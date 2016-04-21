@@ -7,6 +7,8 @@
 <!-- Even though the divs are indented, ruby will indent
      them back to the left -->
 <div class="chessgame-container">
+  <button class="home-button modal-trigger" data-modal-to-open="#forfeitModal" type="button">End Game</button> 
+
   <div class="game-bar">
   </div>
 <% if current_user == @game.black_player_id %>
@@ -100,3 +102,5 @@
   <div class="game-bar">
   </div>
 </div>
+
+<%= render partial: 'forfeit_game' %>

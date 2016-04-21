@@ -108,6 +108,15 @@ RSpec.describe Piece, type: :model do
   end
 
   describe 'move_to!' do
+    it 'should allow a move if the current-player-turn-id player tries to make a move' do
+    end
+
+    it 'should return false if any other player but the current-player-turn-id player tries to make a move' do
+    end
+
+    it 'should change the current-player-turn-id to the other player after a move' do
+    end
+
     it 'moves the piece if the spot is empty' do
       game = FactoryGirl.create(:game)
       piece = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
