@@ -165,4 +165,16 @@ RSpec.describe Piece, type: :model do
       # it raises an error because there is a piece in the destination.
     end
   end
+
+  describe 'white?' do
+    it 'returns true if the piece is white' do
+      piece = FactoryGirl.create(:piece, color: 'white')
+      expect(piece.white?).to eq true
+    end
+
+    it 'returns false if the piece is black' do
+      piece = FactoryGirl.create(:piece, color: 'black')
+      expect(piece.white?).to eq false
+    end
+  end
 end

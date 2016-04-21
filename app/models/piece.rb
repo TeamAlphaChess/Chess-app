@@ -128,6 +128,14 @@ class Piece < ActiveRecord::Base
     updated_at == created_at
   end
 
+  def white?
+    color == 'white'
+  end
+
+  def black?
+    !white?
+  end
+
   def update_rook_kingside(*)
     update_attributes(current_row_index: 0, current_column_index: 5)
   end
