@@ -37,4 +37,19 @@ RSpec.describe Game, type: :model do
       expect(game.reload.pieces.count).to eq 32
     end
   end
+
+  describe 'check?' do
+    it 'should return true' do
+      game = FactoryGirl.create(:game)
+      expect(game.check?).to eq true
+    end
+  end
+
+  describe 'checkmate?' do
+    it 'should return true if game is in check and the king can\'t move' do
+      game = FactoryGirl.create(:game)
+      expect(game.checkmate?).to eq true
+    end
+
+  end
 end
