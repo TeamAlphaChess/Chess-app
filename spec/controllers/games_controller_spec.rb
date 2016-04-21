@@ -14,16 +14,20 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe 'games#forfeit action' do
-    it 'should allow the current user to forfeit a game' do
+    it 'should return true if the current user forfeits a game' do
     end
 
-    it 'should increment the other players games_won count by 1' do
+    it 'should return false if the other user in the game tries to forfeit if it is not their turn' do
     end
 
-    it 'should return false if a user is not logged in' do
+    it 'should increment the other players games_won count by 1 when forfeiting' do
+    end
+
+    it 'should return false if a user tries to forfeit a game they are not a part of' do
       # user = FactoryGirl.create(:user)
       # sign_in user
-
       # expect(game.user).to eq(user)
     end
+
+  end
 end
