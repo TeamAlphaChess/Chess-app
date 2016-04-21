@@ -5,7 +5,7 @@ engines:
   bundler-audit:
     enabled: true
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - ruby
@@ -41,3 +41,4 @@ exclude_paths:
 - spec/
 - test/
 - vendor/
+- app/assets/javascripts/velocity.js
