@@ -103,7 +103,6 @@ class PiecesController < ApplicationController
   end
 
   def initialize_response_object
-
     @response = {
       actionStatus: {
         pawnPromotion: false,
@@ -164,24 +163,6 @@ class PiecesController < ApplicationController
     if @piece.type == 'King'
       if @piece.can_castle?(@destination_row, @destination_column)
         @piece.castle!(@destination_row, @destination_column)
-
-        return_data = [
-          {
-            initialRow: 1,
-            initialColumn: 2,
-            destinationRow: 3,
-            destinationColumn: 4
-          },
-          {
-            initialRow: 1,
-            initialColumn: 2,
-            destinationRow: 3,
-            destinationColumn: 4
-          }
-        ]
-
-        return_data
-
         add_player_messages!('Other player\'s turn', 'Your turn')
         check_game_status
         @game.update_player_turn
