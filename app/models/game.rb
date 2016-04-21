@@ -51,4 +51,19 @@ class Game < ActiveRecord::Base
 
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
+
+
+  def checkmate?
+    # Determine if king is in check and king's move is obstructed
+    return true if pieces.king.check? && pieces.king.obstructed?
+
+
+    && obstructed?
+
+  end
+
+  def check?
+    # placeholder for check method
+    # returns true with no other logic so I can create tests for checkmate? in game_spec.rb
+  end
 end
