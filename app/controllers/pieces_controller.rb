@@ -103,17 +103,15 @@ class PiecesController < ApplicationController
   end
 
   def initialize_response_object
-    @current_player_message = 'No Message'
-    @other_player_message = 'No Message'
 
     @response = {
       actionStatus: {
         pawnPromotion: false,
         statusForPlayer: ''
       },
-      captures: {},
-      moves: {},
-      createPieces: {},
+      captures: [],
+      moves: [],
+      createPieces: [],
       playerMessages: {
         white: '',
         black: ''
@@ -136,22 +134,22 @@ class PiecesController < ApplicationController
       blocker_piece = @piece.move_to!(@destination_row, @destination_column)
 
       if blocker_piece.is_a? Piece
-        @response[:captures] = {
-          capture1: {
+        @response[:captures] = [
+          {
             rowIndex: @destination_row,
             columnIndex: @destination_column
           }
-        }
+        ]
       end
 
-      @response[:moves] = {
-        move1: {
+      @response[:moves] = [
+        {
           initialRow: @initial_row,
           initialColumn: @initial_column,
           destinationRow: @destination_row,
           destinationColumn: @destination_column
         }
-      }
+      ]
 
       add_player_messages!('Other player\'s turn', 'Your turn')
       check_game_status
@@ -166,20 +164,24 @@ class PiecesController < ApplicationController
     if @piece.type == 'King'
       if @piece.can_castle?(@destination_row, @destination_column)
         @piece.castle!(@destination_row, @destination_column)
-        @response[:moves] = {
-          move1: {
-            initialRow: @initial_row,
-            initialColumn: @initial_column,
-            destinationRow: @destination_row,
-            destinationColumn: @destination_column
+
+        return_data = [
+          {
+            initialRow: 1,
+            initialColumn: 2,
+            destinationRow: 3,
+            destinationColumn: 4
           },
-          move2: {
-            initialRow: @destination_row,
-            initialColumn: @destination_column,
-            destinationRow: @initial_row,
-            destinationColumn: @initial_column
+          {
+            initialRow: 1,
+            initialColumn: 2,
+            destinationRow: 3,
+            destinationColumn: 4
           }
-        }
+        ]
+
+        return_data
+
         add_player_messages!('Other player\'s turn', 'Your turn')
         check_game_status
         @game.update_player_turn
@@ -195,7 +197,6 @@ class PiecesController < ApplicationController
   def check_game_status
     # call stuff here
     # @game is available to use
-
     # call add_player_messages! to
     # changes the player messages
     # depending on the game status
@@ -212,11 +213,3 @@ class PiecesController < ApplicationController
     # @response[:actionStatus][:pawnPromotion] = true
   end
 end
-
-# ruby render json: {
-#   errors: [
-#     {name: 'can\'t be blank'},
-#     {email: 'can\'t be blank'},
-#     {password: 'can\'t be blank'}
-#   ]
-# }.to_json

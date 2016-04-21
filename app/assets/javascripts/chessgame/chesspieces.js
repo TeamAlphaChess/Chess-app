@@ -81,20 +81,21 @@ $(document).ready(function() {
 
       }
 
+      var piece = $(processedInstructions[0][1]);
       for (i = 0; i < processedInstructions.length; i++) {
 
-        processedInstructions[0][1]
-        .queue('movePiece', function(next) {
-          $(this).velocity({
-            top: processedInstructions[0][4].top - processedInstructions[0][2].top,
-            left: processedInstructions[0][4].left - processedInstructions[0][2].left
-          }, {queue: false});
-          next();
+        piece
+        .velocity({
+          top: processedInstructions[0][4].top - processedInstructions[0][2].top,
+          left: processedInstructions[0][4].left - processedInstructions[0][2].left
         })
-        .dequeue('movePiece');
-        // .css({'top': '0', 'left': '0'})
-        // .appendTo(processedInstructions[0][3])
-        // .height(processedInstructions[0][3].height());
+        .queue(function() {
+          $(this)
+          .appendTo(processedInstructions[0][3])
+          .css({'top': '0', 'left': '0' })
+          .height(processedInstructions[0][3].height())
+          .dequeue();
+        });
       }
     }
 
@@ -131,7 +132,6 @@ $(document).ready(function() {
 
 
           } else {
-            debugger;
             capturePieces(response.captures, function(){
               movePieces(response.moves, destinationSquare, function() {
                 renderGameBarMessage(response.playerMessages);
