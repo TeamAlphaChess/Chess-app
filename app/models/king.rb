@@ -10,35 +10,26 @@ class King < Piece
 
   def castle!(destination_row, destination_col)
     # Create hash table for frontend logic
+    @rook_data = {:initialRow => 0, 
+      :initialColumn => 7,
+      :destinationRow => current_row_index,
+      :destinationColumn => 5}
+    # @king_data = {
+    # :initialRow' => current_row_index, 
+    # :initialColumn' => current_column_index}
     
-    @king_data = {
-      'initialRow' => current_row_index, 
-      'initialColumn' => current_column_index}
-    #@rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row)
-    @rook_data = {
-      'initialRow' => @rook.current_row_index, 
-      'initialColumn' => @rook.current_column_index}
     # This is where we will update the database for the move.
     if destination_col > current_column_index
-      move_to!(current_row_index, 4)
+      #update_rook_kingside(current_row_index, 7)
+      move_to!(current_row_index, 6)
       rook_move!(destination_row, destination_col)
-      destinationRow = @rook.current_row_index
-      destinationColumn = @rook.current_column_index
-
-      @king_data['destinationRow'] = destination_row
-      @king_data['destinationColumn'] = 6
-
-      # rook_data[:destinationRow] = current_row_index
-      # rook_data[:destinationColumn] = 5
-      @rook_data
+  
     elsif destination_col < current_column_index
+      #update_rook_queenside(current_row_index, 0)
       move_to!(current_row_index, 2)
       rook_move!(destination_row, destination_col)
 
-      @king_data['destinationRow'] = destination_row
-      @king_data['destinationColumn'] = 2
-      @rook_data['destinationRow'] = current_row_index
-      @rook_data['destinationColumn'] = 3
+   
 
     end
 
@@ -80,11 +71,11 @@ class King < Piece
 
   def rook_move!(_destination_row, destination_col)
     if destination_col > current_column_index
-      @rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 7)
-      @rook.update_rook_kingside(current_row_index, 7)
+      game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 7)
+      update_rook_kingside(current_row_index, 7)
     elsif  destination_col < current_column_index
-      @rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 0)
-      @rook.update_rook_queenside(current_row_index, 0)
+      game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 0)
+      update_rook_queenside(current_row_index, 0)
     end
   end
 end

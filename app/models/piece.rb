@@ -130,10 +130,24 @@ class Piece < ActiveRecord::Base
 
   def update_rook_kingside(*)
     update_attributes(current_row_index: current_row_index, current_column_index: 5)
+    @rook_data = {
+      :initialRow => current_row_index, 
+      :initialColumn => current_column_index,
+      :destinationRow => current_row_index,
+      :destinationColumn => 5
+      }
+    @rook_data
   end
 
   def update_rook_queenside(*)
     update_attributes(current_row_index: current_row_index, current_column_index: 3)
+    @rook_data = {
+      :initialRow => current_row_index, 
+      :initialColumn => current_column_index,
+      :destinationRow => current_row_index,
+      :destinationColumn => 3
+      }
+    @rook_data
   end
 
   def initialRow
@@ -149,5 +163,7 @@ class Piece < ActiveRecord::Base
   end
 
   def destinationColumn
+    # king
+    6
   end
 end
