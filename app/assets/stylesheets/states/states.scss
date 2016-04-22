@@ -7,6 +7,16 @@ Hover States
   cursor: pointer;
 }
 
+.navbar-avatar {
+  background: url('icons/avatar.svg') no-repeat;
+  height: 40px;
+  width: 30px;
+  top: 10px;
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+
 .footer-links a:hover {
   color: $yellow;
 }
