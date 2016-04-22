@@ -8,7 +8,6 @@ class PiecesController < ApplicationController
       # if @game.current_player_turn_id == current_user.id
       # do stuff below. Else, @current_player message = 'Not your turn!'
       # and render status: 422, json: @response.to_json.
-      # Perhaps put this functionality into a before_action when ready.
 
       @initial_row = @piece.current_row_index
       @initial_column = @piece.current_column_index
