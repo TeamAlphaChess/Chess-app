@@ -1,102 +1,16 @@
 <!-- Passes the current page title to application.html.erb -->
 <%= content_for :page_title, @game.name %>
+<% player = determine_player(@game) %>
 
-<!-- <h1><%= @game.name %></h1>
-     <h2><%= @game.inspect %></h2> -->
-
-<!-- Even though the divs are indented, ruby will indent
-     them back to the left -->
 <div class="chessgame-container">
-  <div class="game-bar">
-  </div>
-<% if current_user == @game.black_player_id %>
-  <table class="chessboard chessboard-rotate" id="chessBoard">
-<% else %>
-  <table class="chessboard" id="chessBoard">
-<% end %>
-    <tbody>
-      <tr>
-        <td class="chess-light-square" id="row7col7"></td>
-        <td class="chess-dark-square" id="row7col6"></td>
-        <td class="chess-light-square" id="row7col5"></td>
-        <td class="chess-dark-square" id="row7col4"></td>
-        <td class="chess-light-square" id="row7col3"></td>
-        <td class="chess-dark-square" id="row7col2"></td>
-        <td class="chess-light-square" id="row7col1"></td>
-        <td class="chess-dark-square" id="row7col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-dark-square" id="row6col7"></td>
-        <td class="chess-light-square" id="row6col6"></td>
-        <td class="chess-dark-square" id="row6col5"></td>
-        <td class="chess-light-square" id="row6col4"></td>
-        <td class="chess-dark-square" id="row6col3"></td>
-        <td class="chess-light-square" id="row6col2"></td>
-        <td class="chess-dark-square" id="row6col1"></td>
-        <td class="chess-light-square" id="row6col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-light-square" id="row5col7"></td>
-        <td class="chess-dark-square" id="row5col6"></td>
-        <td class="chess-light-square" id="row5col5"></td>
-        <td class="chess-dark-square" id="row5col4"></td>
-        <td class="chess-light-square" id="row5col3"></td>
-        <td class="chess-dark-square" id="row5col2"></td>
-        <td class="chess-light-square" id="row5col1"></td>
-        <td class="chess-dark-square" id="row5col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-dark-square" id="row4col7"></td>
-        <td class="chess-light-square" id="row4col6"></td>
-        <td class="chess-dark-square" id="row4col5"></td>
-        <td class="chess-light-square" id="row4col4"></td>
-        <td class="chess-dark-square" id="row4col3"></td>
-        <td class="chess-light-square" id="row4col2"></td>
-        <td class="chess-dark-square" id="row4col1"></td>
-        <td class="chess-light-square" id="row4col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-light-square" id="row3col7"></td>
-        <td class="chess-dark-square" id="row3col6"></td>
-        <td class="chess-light-square" id="row3col5"></td>
-        <td class="chess-dark-square" id="row3col4"></td>
-        <td class="chess-light-square" id="row3col3"></td>
-        <td class="chess-dark-square" id="row3col2"></td>
-        <td class="chess-light-square" id="row3col1"></td>
-        <td class="chess-dark-square" id="row3col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-dark-square" id="row2col7"></td>
-        <td class="chess-light-square" id="row2col6"></td>
-        <td class="chess-dark-square" id="row2col5"></td>
-        <td class="chess-light-square" id="row2col4"></td>
-        <td class="chess-dark-square" id="row2col3"></td>
-        <td class="chess-light-square" id="row2col2"></td>
-        <td class="chess-dark-square" id="row2col1"></td>
-        <td class="chess-light-square" id="row2col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-light-square" id="row1col7"></td>
-        <td class="chess-dark-square" id="row1col6"></td>
-        <td class="chess-light-square" id="row1col5"></td>
-        <td class="chess-dark-square" id="row1col4"></td>
-        <td class="chess-light-square" id="row1col3"></td>
-        <td class="chess-dark-square" id="row1col2"></td>
-        <td class="chess-light-square" id="row1col1"></td>
-        <td class="chess-dark-square" id="row1col0"></td>
-      </tr>
-      <tr>
-        <td class="chess-dark-square" id="row0col7"></td>
-        <td class="chess-light-square" id="row0col6"></td>
-        <td class="chess-dark-square" id="row0col5"></td>
-        <td class="chess-light-square" id="row0col4"></td>
-        <td class="chess-dark-square" id="row0col3"></td>
-        <td class="chess-light-square" id="row0col2"></td>
-        <td class="chess-dark-square" id="row0col1"></td>
-        <td class="chess-light-square" id="row0col0"></td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="game-bar">
-  </div>
+  <%= content_tag(:div, class: 'game-bar', id: 'gameBarTop', data: { other_player_color: player[2] }) do %>
+    <div class="avatar game-bar-avatar"></div>
+  <% end %>
+
+  <%= render_board(@pieces, @game) %>
+
+  <%= content_tag(:div, class: 'game-bar', id: 'gameBarBottom', data: { current_player_color: determine_player(@game)[0] }) do %>
+
+  <% end %>
+
 </div>
