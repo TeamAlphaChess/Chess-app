@@ -135,4 +135,19 @@ class Piece < ActiveRecord::Base
   def update_rook_queenside(*)
     update_attributes(current_row_index: current_row_index, current_column_index: 3)
   end
+
+  def initialRow
+    current_row_index
+  end
+
+  def initialColumn
+    current_column_index
+  end
+
+  def destinationRow
+    current_row_index
+  end
+
+  def destinationColumn
+  end
 end
