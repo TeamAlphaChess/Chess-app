@@ -86,20 +86,47 @@ class PiecesController < ApplicationController
   private
 
   def pawn_en_passant!
-    # Variables available:
-    # - @piece
-    # - @game
-    # - @destination_row
-    # - @destination_column
-
-    # Run this code if valid
-    # add_player_messages!('Other player\'s turn', 'Your turn')
-    # check_game_status
-    # @game.update_player_turn
-    # return 200
-
-    # else
-    # return 422
+    # return 422 if @piece.type != 'Pawn'
+    # if pawn_can_en_passant?
+    #   data = en_passant!(@destination_row, @destination_column)
+    #   ##################################################
+    #   # in your en_passant! method (or whatever you want it named)
+    #   # in the model, the following needs
+    #   # to be returned to pawn_en_passant!
+    #
+    #   # array = []
+    #
+    #   # # This is the location of the piece that is captured.
+    #   # # Tells javascript which piece to fadeOut and remove
+    #   # # from the DOM (or move to the game sidebar)
+    #   # return false unless en passant is valid
+    #   # array <<  [
+    #   #             {
+    #   #               rowIndex: 'populate me with integer!',
+    #   #               columnIndex: 'populate me with integer!'
+    #   #             }
+    #   #           ]
+    #   #
+    #   # # Information telling javascript where to move a piece
+    #   # array <<  [
+    #   #             {
+    #   #               initialRow: 'populate me with integer!',
+    #   #               initialColumn: 'populate me with integer!',
+    #   #               destinationRow: 'populate me with integer!',
+    #   #               destinationColumn: 'populate me with integer!'
+    #   #             }
+    #   #           ]
+    #   # return array
+    #   #################################################
+    #
+    #   return 422 unless data != false
+    #   @response[:captures] = data[0]
+    #   @response[:moves] = data[1]
+    #   add_player_messages!('Other player\'s turn', 'Your turn')
+    #   check_game_status
+    #   @game.update_player_turn
+    #   return 200
+    # end
   end
 
   def initialize_response_object
