@@ -216,6 +216,7 @@ RSpec.describe King, type: :model do
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       white_king.rook_move!(0, 7)
+      # Must reload white rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
@@ -235,6 +236,7 @@ RSpec.describe King, type: :model do
       white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
       white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
       white_king.rook_move!(0, 0)
+      # Must reload white rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
@@ -320,6 +322,7 @@ RSpec.describe King, type: :model do
       black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
       black_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       black_king.castle!(7, 7)
+      # Must reload rook pieces
       black_rook.reload.current_row_index
       black_rook.reload.current_column_index
       expect(black_rook.current_row_index).to eq 7
@@ -337,6 +340,7 @@ RSpec.describe King, type: :model do
       white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
       white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
       white_king.castle!(0, 0)
+      # Must reload rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
@@ -354,6 +358,7 @@ RSpec.describe King, type: :model do
       black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
       black_queen.update_attributes(current_row_index: nil, current_column_index: nil)
       black_king.castle!(7, 0)
+      # Must reload rook pieces
       black_rook.reload.current_row_index
       black_rook.reload.current_column_index
       expect(black_rook.current_row_index).to eq 7
@@ -369,6 +374,7 @@ RSpec.describe King, type: :model do
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       white_king.castle!(0, 7)
+      # Must reload rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
@@ -386,13 +392,15 @@ RSpec.describe King, type: :model do
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
       white_king.castle!(0, 7)
-      @rook_data = {}
+      # Must reload rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
-      expect(@rook_data["destinationRow"]).to eq 0
-      # expect(rook_data["destinationColumn"].to eq 5
+      expect(rook_data.initialRow).to eq 0
+      expect(rook_data.initialColumn).to eq 7
+      expect(rook_data.destinationRow).to eq 0
+      expect(rook_data.destinationColumn).to eq 5
     end
   end
 end

@@ -128,42 +128,57 @@ class Piece < ActiveRecord::Base
     updated_at == created_at
   end
 
-  def update_rook_kingside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 5)
-    @rook_data = {
+  def update_rook_kingside(destination_row, destination_col)
+    # must be called on rook
+    rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+    rook.update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+    rook_data = {
       :initialRow => current_row_index, 
       :initialColumn => current_column_index,
       :destinationRow => current_row_index,
       :destinationColumn => 5
       }
-    @rook_data
+    rook_data
   end
 
-  def update_rook_queenside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 3)
-    @rook_data = {
+  def update_rook_queenside(destination_row, destination_col)
+     # must be called on rook
+    rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+    rook.update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+    rook_data = {
       :initialRow => current_row_index, 
       :initialColumn => current_column_index,
       :destinationRow => current_row_index,
       :destinationColumn => 3
       }
-    @rook_data
+    rook_data
+  end
+
+  def rook_data
+    rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+    rook.update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+    rook_data = {
+      :initialRow => current_row_index, 
+      :initialColumn => current_column_index,
+      :destinationRow => current_row_index,
+      :destinationColumn => 3
+      }
+    rook_data
   end
 
   def initialRow
-    current_row_index
+    return current_row_index
   end
 
   def initialColumn
-    current_column_index
+    return current_column_index
   end
 
-  def destinationRow
-    current_row_index
-  end
+  # def destinationRow
+  #   return destination_row
+  # end
 
-  def destinationColumn
-    # king
-    6
-  end
+  # def destinationColumn
+  #   # king
+  # end
 end
