@@ -53,14 +53,15 @@ class Game < ActiveRecord::Base
   end
 
 
-  def checkmate?
+  def checkmate?(destination_row, destination_col)
     # Determine if king is in check and king's move is obstructed
-    return true if pieces.king.check? && pieces.king.obstructed?
+    return false unless check?
+    return true unless pieces.where(type: 'King', current_row_index: destination_row, current_column_index: destination_col).valid_move?
   end
 
   def check?
     # placeholder for check method
     # returns true with no other logic so I can create tests for checkmate? in game_spec.rb
-    return true
+    true
   end
 end

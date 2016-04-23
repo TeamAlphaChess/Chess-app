@@ -48,8 +48,8 @@ RSpec.describe Game, type: :model do
   describe 'checkmate?' do
     it 'should return true if game is in check and the king can\'t move' do
       game = FactoryGirl.create(:game)
-      expect(game.checkmate?).to eq true
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      expect(white_king.checkmate?(0,4)).to eq true
     end
-
   end
 end
