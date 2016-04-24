@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Queen, type: :model do
   describe 'valid_move?' do
     let(:game) { build :game }
-    let(:queen) { create :queen, game: game }
+    let(:queen) { create :queen, color: 'white', game: game }
     it 'should allow a vertical-up move' do
       queen
 

@@ -51,4 +51,38 @@ class Game < ActiveRecord::Base
 
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
+
+  # def stalemate?(color)
+  #   king = pieces.where(type: King, color: color)
+  # end
+
+  def in_check?(color)
+    #king = pieces.where(type: King, color: color)
+    king = pieces.find_by_type_and_color(King, color)
+    if color == white
+      opposite_color_pieces = pieces.where(color: 'black', captured: false)
+    elsif color == black
+      opposite_color_pieces = pieces.where(color: 'white', captured: false)
+    end
+    items = []
+    opposite_color_pieces.each do |piece|
+      items << pieces.find(piece.id)
+    end
+
+    items.each do |item|
+      return true if item.valid_move?(king.current_row_index, king.current_column_index)
+    end
+  end
+
+
+
+  private
+
+  def white
+    'white'
+  end
+
+  def black
+    'black'
+  end
 end
