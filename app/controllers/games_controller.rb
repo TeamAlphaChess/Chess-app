@@ -35,7 +35,7 @@ class GamesController < ApplicationController
       end
       # increment other player games_won by 1
       @other_user.update_attributes(games_won: games_won + 1)
-      
+
       respond_to do |format|
         format.json do
           render json: {
