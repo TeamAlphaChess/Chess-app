@@ -29,8 +29,8 @@ RSpec.describe GamesController, type: :controller do
       sign_in user
       sign_in second_user
       game = FactoryGirl.create(:game)
-      user.id = game.white_player_id
-      second_user.id = game.black_player_id
+      game.white_player_id = user.id
+      game.black_player_id = second_user.id
       game.current_player_turn_id = game.white_player_id
 
       get :forfeit, id: game.id
@@ -43,8 +43,8 @@ RSpec.describe GamesController, type: :controller do
       sign_in user
       sign_in second_user
       game = FactoryGirl.create(:game)
-      user.id = game.white_player_id
-      second_user.id = game.black_player_id
+      game.white_player_id = user.id
+      game.black_player_id = second_user.id
       second_user.update_attributes(games_won: 0)
       game.current_player_turn_id = game.white_player_id
 
@@ -61,8 +61,8 @@ RSpec.describe GamesController, type: :controller do
       sign_in second_user
       sign_in third_user
       game = FactoryGirl.create(:game)
-      user.id = game.white_player_id
-      second_user.id = game.black_player_id
+      game.white_player_id = user.id
+      game.black_player_id = second_user.id
 
       get :forfeit, id: game.id
       expect(third_user.forfeit).to eq false
