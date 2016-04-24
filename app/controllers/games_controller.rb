@@ -32,7 +32,7 @@ class GamesController < ApplicationController
         @game.update_attributes(winner_id: @game.white_player_id)
       end
       # increment other player games_won by 1
-      # current_user.games_won += 1
+      current_user.update_attributes(games_won: games_won + 1)
       respond_to do |format|
         format.json do
           render json: {
@@ -40,7 +40,7 @@ class GamesController < ApplicationController
           }
         end
       end
-      # @game.destroy
+      # # @game.destroy
     end
   end
 
