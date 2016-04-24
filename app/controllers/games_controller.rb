@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class GamesController < ApplicationController
   before_action :authenticate_user!
-  respond_to :json
 
   def new
     @game = Game.new
@@ -22,28 +21,11 @@ class GamesController < ApplicationController
   end
 
   def forfeit
-    # Add a #forfeit method to `game`. This will end the game and set the other player as the winner.
-    # Can add a button for this on `Games#Show` and add a `forfeit` action to the `games_controller`
-    if request.xhr?
-      @game = Game.find(params[:id])
-      if current_user.id == @game.white_player_id
-        @game.update_attributes(winner_id: @game.black_player_id)
-        @other_user = @game.black_player_id
-      else
-        @game.update_attributes(winner_id: @game.white_player_id)
-        @other_user = @game.white_player_id
-      end
-      # increment other player games_won by 1
-      @other_user.update_attributes(games_won: games_won + 1)
-
-      respond_to do |format|
-        format.json do
-          render json: {
-            response: 'hello'
-          }
-        end
-      end
-      # # @game.destroy
+    @game = Game.find(params[:id])
+    if @game.forfeit
+      render
+    else
+      render
     end
   end
 

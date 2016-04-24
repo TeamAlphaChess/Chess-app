@@ -19,7 +19,6 @@ RSpec.describe GamesController, type: :controller do
       sign_in user
       game = FactoryGirl.create(:game)
 
-      get :forfeit, id: game.id
       expect(user.forfeit).to eq true
     end
 
@@ -33,7 +32,6 @@ RSpec.describe GamesController, type: :controller do
       game.black_player_id = second_user.id
       game.current_player_turn_id = game.white_player_id
 
-      get :forfeit, id: game.id
       expect(second_user.forfeit).to eq false
     end
 
