@@ -22,10 +22,11 @@ class GamesController < ApplicationController
 
   def forfeit
     @game = Game.find(params[:id])
-    if @game.forfeit
-      render
-    else
-      render
+    if @game.forfeit(current_user.id)
+      render status: 200, json: {
+        redirect: games_path,
+        message: 'successful'
+      }
     end
   end
 

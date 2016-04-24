@@ -52,26 +52,28 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
-  def forfeit
-      if current_user.id == white_player_id
+  def forfeit(current_user_id)
+      current_user_id = User.find(current_user_id)
+
+      if current_user_id == white_player_id
         if black_player_id != nil
           update_attributes(winner_id: black_player_id)
-          other_user = black_player_id
+          other_user = User.find(black_player_id)
 
           # increment other player games_won by 1
-          games_won_history = other_user.games_won
-          other_user.update_attributes(games_won: games_won_history + 1)
+          # games_won_history = other_user.games_won
+          other_user.update_attributes(games_won: other_user.games_won + 1)
         else
           destroy
         end
       else
-        if current_user.id == black_player_id
+        if current_user_id == black_player_id
           update_attributes(winner_id: white_player_id)
-          other_user = white_player_id
+          other_user = User.find(white_player_id)
 
           # increment other player games_won by 1
-          games_won_history = other_user.games_won
-          other_user.update_attributes(games_won: games_won_history + 1)
+          # games_won_history = other_user.games_won
+          other_user.update_attributes(games_won: other_user.games_won + 1)
         end
       end
       return true

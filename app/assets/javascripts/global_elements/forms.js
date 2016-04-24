@@ -96,13 +96,15 @@ $(document).ready(function() {
     });
   }
 
-  function ajaxRequest(redirect, url, method, data) {
+  function ajaxRequest(url, method, data) {
     $.ajax({
       url: url,
       method: method,
       data: data,
       complete: function(response) {
-        debugger;
+        if (response.status === 200) {
+          window.location.href = response.responseJSON.redirect;
+        }
       }
     });
   }
@@ -144,9 +146,8 @@ $(document).ready(function() {
     var modal = $(button.data('modal-id'));
     var url = button.data('ajax-url');
     var method = button.data('ajax-method');
-    var redirect = button.data('redirect-on-success');
     var data = button.data('ajax-data');
-    ajaxRequest(redirect, url, method, data);
+    ajaxRequest(url, method, data);
   });
 
 });
