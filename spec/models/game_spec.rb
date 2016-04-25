@@ -63,4 +63,18 @@ RSpec.describe Game, type: :model do
       expect(game.in_check?('white')).to eq false
     end
   end
+
+  describe 'empty_spots' do
+    it 'should return true for having 32 empty spots' do
+      game = FactoryGirl.create(:game)
+      expect(game.empty_spots.count).to eq 32
+    end
+
+    it 'should return true for having 34 empty spots' do
+      game = FactoryGirl.create(:game)
+      game.pieces.last.destroy
+      game.pieces.last.destroy
+      expect(game.reload.empty_spots.count).to eq 34
+    end
+  end
 end

@@ -55,26 +55,34 @@ class Game < ActiveRecord::Base
   def stalemate?(color)
     #king = pieces.find_by_type_and_color(King, color)
     # Can any piece on the board be moved (check different co-ords)
-    check_these_pieces = opposite_remaining_pieces_of(color)
+    check_these_pieces = remaining_pieces_of(color)
     open_spots = empty_spots
 
-    check_these_pieces.each do |piece|
-      open_spots.each do |x,y|
-        if piece.valid_move?(x,y) && !in_check?(color)
-          # a piece can be moved so not a stalemate
-          false
-        else
-          true
+    open_spots.each do |x,y|
+      check_these_pieces.each do |piece|
+        if piece.valid_move?(x,y)
+          false unless in_check?(color)
+
         end
       end
     end
+    # check_these_pieces.each do |piece|
+    #   open_spots.each do |x,y|
+    #     if piece.valid_move?(x,y) && !in_check?(color)
+    #       # a piece can be moved so not a stalemate
+    #       false
+    #     else
+    #       true
+    #     end
+    #   end
+    # end
 
     # For king - if can be moved. Does that move put itself into check?
   end
 
   def in_check?(color)
     king = pieces.find_by_type_and_color(King, color)
-    opponent_pieces = remaining_pieces_of(color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
 
     opponent_pieces.each do |piece|
       return true if piece.valid_move?(king.current_row_index, king.current_column_index)
@@ -82,7 +90,7 @@ class Game < ActiveRecord::Base
     false
   end
 
-  private
+
 
   def opposite_remaining_pieces_of(color)
     remaining_pieces = []
@@ -119,14 +127,16 @@ class Game < ActiveRecord::Base
              [6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],
              [7,0],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,7]]
 
+    taken_spots = []
+
     spots.each do |x,y|
-      pieces.each do |piece|
-        if piece.find_by_current_row_index_and_current_column_index(x,y) != nil
-          spots.delete([x,y])
-        end
+      if pieces.find_by_current_row_index_and_current_column_index(x, y)
+        taken_spots << [x,y]
       end
     end
-    return spots
+
+    empty_spots = spots - taken_spots
+    return empty_spots
   end
 
 
