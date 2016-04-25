@@ -38,16 +38,16 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  # describe 'stalemate?' do
-  #   it 'should return true if the only legal moves put you in check(whites move)' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.destroy_all
-  #     FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7)
-  #     FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_column_index: 6)
-  #     FactoryGirl.create(:queen, color: 'black', current_row_index: 1, current_column_index: 5)
-  #     expect(game.stalemate?('white')).to eq true
-  #   end
-  # end
+  describe 'stalemate?' do
+    it 'should return true if the only legal moves put you in check(whites move)' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+      FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_column_index: 6, game_id: game.id)
+      FactoryGirl.create(:queen, color: 'black', current_row_index: 1, current_column_index: 5, game_id: game.id)
+      expect(game.stalemate?('white')).to eq true
+    end
+  end
 
   describe 'in_check?' do
     it 'should return true if the white king is in check' do

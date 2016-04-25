@@ -89,16 +89,16 @@ class Piece < ActiveRecord::Base
   def distance(destination_row, destination_col)
     if vertical?(destination_row, destination_col)
       return (destination_row - current_row_index).abs
-    elsif horizontal?(destination_row, destination_col)
+    end
+    if horizontal?(destination_row, destination_col)
       return (destination_col - current_column_index).abs
-    elsif diagonal?(destination_row, destination_col)
+    end
+    if diagonal?(destination_row, destination_col)
       # We're taking advantage of the fact that our diagonal? method
       # checks for a true diagonal (Equal up/down and left/right) distance
       # Because of this we can only return one number instead of two, and
       # can be sure that the other is equal.
       return (destination_col - current_column_index).abs
-    else
-      raise 'Not Allowed' # Raise error message instead
     end
   end
 

@@ -30,6 +30,7 @@ FactoryGirl.define do
     current_row_index 4
     current_column_index 4
     color nil
+    game_id nil
   end
 
   factory :bishop, class: Bishop do

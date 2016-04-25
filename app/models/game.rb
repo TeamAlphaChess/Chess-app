@@ -52,48 +52,75 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
-  # def stalemate?(color)
-  #   king = pieces.where(type: King, color: color)
-  # end
+  def stalemate?(color)
+    #king = pieces.find_by_type_and_color(King, color)
+    # Can any piece on the board be moved (check different co-ords)
+    check_these_pieces = opposite_remaining_pieces_of(color)
+    open_spots = empty_spots
 
-  # def in_check?(color)
-  #   king = pieces.find_by_type_and_color(King, color)
-  #   if color == 'white'
-  #     opposite_color_pieces = pieces.where(color: 'black', captured: false)
-  #   else
-  #     opposite_color_pieces = pieces.where(color: 'white', captured: false)
-  #   end
-  #   # Moves the found pieces active relation into the opponient_pieces array
-  #   opponient_pieces = []
-  #   opposite_color_pieces.each do |piece|
-  #     opponient_pieces << pieces.find(piece.id)
-  #   end
-  #
-  #   opponient_pieces.each do |piece|
-  #     return true if piece.valid_move?(king.current_row_index, king.current_column_index)
-  #   end
-  #   false
-  # end
-
-  def in_check?(color)
-    king = pieces.find_by_type_and_color(King, color)
-    opposite_color_pieces = []
-    if color == 'white'
-      pieces.where(color: 'black', captured: false).each do |piece|
-        opposite_color_pieces << piece
-      end
-    else
-      pieces.where(color: 'white', captured: false).each do |piece|
-        opposite_color_pieces << piece
+    check_these_pieces.each do |piece|
+      open_spots.each do |x,y|
+        if piece.valid_move?(x,y) && !in_check?(color)
+          # a piece can be moved so not a stalemate
+          false
+        else
+          true
+        end
       end
     end
 
-    opposite_color_pieces.each do |piece|
+
+
+
+    # For king - if can be moved. Does that move put itself into check?
+  end
+
+  def in_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+
+    opponent_pieces.each do |piece|
       return true if piece.valid_move?(king.current_row_index, king.current_column_index)
     end
     false
   end
 
   private
+
+  def opposite_remaining_pieces_of(color)
+    remaining_pieces = []
+
+    if color == 'white'
+      pieces.where(color: 'black', captured: false).each do |piece|
+        remaining_pieces << piece
+      end
+    else
+      pieces.where(color: 'white', captured: false).each do |piece|
+        remaining_pieces << piece
+      end
+    end
+    return remaining_pieces
+  end
+
+  def empty_spots
+    spots = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+             [1,0],[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],
+             [2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],
+             [3,0],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],
+             [4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],
+             [5,0],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7],
+             [6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],
+             [7,0],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,7]]
+
+    spots.each do |x,y|
+      pieces.each do |piece|
+        if piece.find_by_current_row_index_and_current_column_index(x,y) != nil
+          spots.delete([x,y])
+        end
+      end
+    end
+    return spots
+  end
+
 
 end
