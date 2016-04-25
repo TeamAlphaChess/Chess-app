@@ -60,7 +60,7 @@ class Game < ActiveRecord::Base
         other_user = User.find(black_player_id)
 
         # increment other player games_won by 1
-        other_user.update_attributes(increment(games_won, by = 1))
+        other_user.update_attributes(games_won: games_won + 1)
       else
         destroy
       end
@@ -69,7 +69,7 @@ class Game < ActiveRecord::Base
       other_user = User.find(white_player_id)
 
       # increment other player games_won by 1
-      other_user.update_attributes(increment(games_won, by = 1))
+      other_user.update_attributes(games_won: games_won + 1)
     end
     true
   end
