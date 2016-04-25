@@ -69,15 +69,12 @@ class Game < ActiveRecord::Base
       end
     end
 
-
-
-
     # For king - if can be moved. Does that move put itself into check?
   end
 
   def in_check?(color)
     king = pieces.find_by_type_and_color(King, color)
-    opponent_pieces = opposite_remaining_pieces_of(color)
+    opponent_pieces = remaining_pieces_of(color)
 
     opponent_pieces.each do |piece|
       return true if piece.valid_move?(king.current_row_index, king.current_column_index)
@@ -100,6 +97,16 @@ class Game < ActiveRecord::Base
       end
     end
     return remaining_pieces
+  end
+
+  def remaining_pieces_of(color)
+    the_pieces = []
+
+    pieces.where(color: color, captured: false).each do |piece|
+      the_pieces << piece
+    end
+
+    return the_pieces
   end
 
   def empty_spots
