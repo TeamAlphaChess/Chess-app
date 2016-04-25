@@ -25,7 +25,7 @@ RSpec.describe GamesController, type: :controller do
       user = FactoryGirl.create(:user)
       second_user = FactoryGirl.create(:user)
       sign_in user
-      sign_in second_user
+      # sign_in second_user
       game = FactoryGirl.create(:game)
       game.white_player_id = user.id
       game.black_player_id = second_user.id
