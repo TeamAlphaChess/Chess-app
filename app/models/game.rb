@@ -56,33 +56,44 @@ class Game < ActiveRecord::Base
   #   king = pieces.where(type: King, color: color)
   # end
 
+  # def in_check?(color)
+  #   king = pieces.find_by_type_and_color(King, color)
+  #   if color == 'white'
+  #     opposite_color_pieces = pieces.where(color: 'black', captured: false)
+  #   else
+  #     opposite_color_pieces = pieces.where(color: 'white', captured: false)
+  #   end
+  #   # Moves the found pieces active relation into the opponient_pieces array
+  #   opponient_pieces = []
+  #   opposite_color_pieces.each do |piece|
+  #     opponient_pieces << pieces.find(piece.id)
+  #   end
+  #
+  #   opponient_pieces.each do |piece|
+  #     return true if piece.valid_move?(king.current_row_index, king.current_column_index)
+  #   end
+  #   false
+  # end
+
   def in_check?(color)
-    #king = pieces.where(type: King, color: color)
     king = pieces.find_by_type_and_color(King, color)
-    if color == white
-      opposite_color_pieces = pieces.where(color: 'black', captured: false)
-    elsif color == black
-      opposite_color_pieces = pieces.where(color: 'white', captured: false)
+    opposite_color_pieces = []
+    if color == 'white'
+      pieces.where(color: 'black', captured: false).each do |piece|
+        opposite_color_pieces << piece
+      end
+    else
+      pieces.where(color: 'white', captured: false).each do |piece|
+        opposite_color_pieces << piece
+      end
     end
-    items = []
+
     opposite_color_pieces.each do |piece|
-      items << pieces.find(piece.id)
+      return true if piece.valid_move?(king.current_row_index, king.current_column_index)
     end
-
-    items.each do |item|
-      return true if item.valid_move?(king.current_row_index, king.current_column_index)
-    end
+    false
   end
-
-
 
   private
 
-  def white
-    'white'
-  end
-
-  def black
-    'black'
-  end
 end
