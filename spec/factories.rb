@@ -18,6 +18,15 @@ FactoryGirl.define do
     end
   end
 
+  factory :pawn, class: Pawn do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    captured false
+    user_id nil
+    game_id nil
+  end
+
   factory :piece do
     type nil
     current_row_index nil
@@ -41,13 +50,6 @@ FactoryGirl.define do
   end
 
   factory :king, class: King do
-    current_row_index nil
-    current_column_index nil
-    color nil
-    game_id nil
-  end
-
-  factory :pawn, class: Pawn do
     current_row_index nil
     current_column_index nil
     color nil
