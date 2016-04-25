@@ -15,12 +15,26 @@ class Pawn < Piece
       return false
     end
 
-    if vertical?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col) || diagonal?(destination_row, destination_col) && spot_taken?(destination_row, destination_col) && !same_color?(destination_row, destination_col) || en_passant?(destination_row, destination_col)
+    if can_move_forward?(destination_row, destination_col) || can_capture?(destination_row, destination_col) || en_passant?(destination_row, destination_col)
       true
     else
       false
     end
   end
+
+  def en_passant?(row_index, column_index)
+    if white? && on_fifth_rank?
+      target_piece = find_piece_above_destination(row_index, column_index)
+      capturable?(target_piece, 'black')
+    elsif black? && on_fifth_rank?
+      target_piece = find_piece_under_destination(row_index, column_index)
+      capturable?(target_piece, 'white')
+    else
+      false
+    end
+  end
+
+  private
 
   def first_move?
     if white_pawn_in_starting_row? || black_pawn_in_starting_row?
@@ -36,18 +50,6 @@ class Pawn < Piece
     elsif white? && new_row > current_row_index
       false
     elsif black? && new_row < current_row_index
-      false
-    end
-  end
-
-  def en_passant?(row_index, column_index)
-    if white? && on_fifth_rank?
-      target_piece = find_piece_above_destination(row_index, column_index)
-      capturable?(target_piece, 'black')
-    elsif black? && on_fifth_rank?
-      target_piece = find_piece_under_destination(row_index, column_index)
-      capturable?(target_piece, 'white')
-    else
       false
     end
   end
@@ -72,8 +74,13 @@ class Pawn < Piece
     white? && current_row_index == 4 || black? && current_row_index == 3
   end
 
+  def can_move_forward?(destination_row, destination_col)
+    vertical?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col)
+  end
 
-  private
+  def can_capture?(destination_row, destination_col)
+    diagonal?(destination_row, destination_col) && spot_taken?(destination_row, destination_col) && !same_color?(destination_row, destination_col)
+  end
 
   def capturable?(piece, color)
     # Find last move made in game
