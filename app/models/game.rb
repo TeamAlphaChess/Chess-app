@@ -54,9 +54,9 @@ class Game < ActiveRecord::Base
 
   def forfeit(current_user_id)
     current_user = User.find(current_user_id)
-    if current_user == white_player_id
+    if current_user.id == white_player_id
       if black_player_id.nil?
-        update_attributes(winner_id: black_player_id)
+        update_attributes(winner_id: game.black_player_id)
         other_user = User.find(black_player_id)
 
         # increment other player games_won by 1
@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
       else
         destroy
       end
-    elsif current_user == black_player_id
+    elsif current_user.id == black_player_id
       update_attributes(winner_id: white_player_id)
       other_user = User.find(white_player_id)
 
