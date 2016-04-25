@@ -61,21 +61,19 @@ class Game < ActiveRecord::Base
     open_spots.each do |x,y|
       check_these_pieces.each do |piece|
         if piece.valid_move?(x,y)
-          false unless in_check?(color)
+          # A piece on the board can be moved
 
+          # Does it put me in check?
+          if in_check?(color)
+            # This piece cant help/ Still in stalemate
+            true
+          end
+
+          # If not in check, not a stalemate
+          false
         end
       end
     end
-    # check_these_pieces.each do |piece|
-    #   open_spots.each do |x,y|
-    #     if piece.valid_move?(x,y) && !in_check?(color)
-    #       # a piece can be moved so not a stalemate
-    #       false
-    #     else
-    #       true
-    #     end
-    #   end
-    # end
 
     # For king - if can be moved. Does that move put itself into check?
   end
