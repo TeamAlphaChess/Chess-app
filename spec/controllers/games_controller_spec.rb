@@ -32,7 +32,7 @@ RSpec.describe GamesController, type: :controller do
       second_user.update_attributes(games_won: 0)
       game.current_player_turn_id = game.white_player_id
       game.forfeit(user)
-      expect(second_user.games_won).to eq 1
+      expect(second_user.reload.games_won).to eq 1
     end
   end
 end

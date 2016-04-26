@@ -56,20 +56,14 @@ class Game < ActiveRecord::Base
     current_user = User.find(current_user_id)
     if current_user.id == white_player_id
       if black_player_id.nil?
-        update_attributes(winner_id: game.black_player_id)
-        other_user = User.find(black_player_id)
-
-        # increment other player games_won by 1
-        other_user.update_attributes(games_won: games_won + 1)
-      else
         destroy
+      else
+        update_attributes(winner_id: black_player_id)
+        black_player.update_attributes(games_won: + 1)
       end
     elsif current_user.id == black_player_id
       update_attributes(winner_id: white_player_id)
-      other_user = User.find(white_player_id)
-
-      # increment other player games_won by 1
-      other_user.update_attributes(games_won: games_won + 1)
+      white_player.update_attributes(games_won: + 1)
     end
     true
   end
