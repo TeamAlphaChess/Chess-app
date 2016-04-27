@@ -11,8 +11,4 @@ class Bishop < Piece
       true
     end
   end
-
-  def bishop_can_capture_king?(destination_row, destination_col)
-    valid_move?(destination_row, destination_col)
-  end
 end

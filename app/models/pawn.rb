@@ -52,8 +52,4 @@ class Pawn < Piece
       false
     end
   end
-
-  def pawn_can_capture_king?(destination_row, destination_col)
-    valid_move?(destination_row, destination_col)
-  end
 end
