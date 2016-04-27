@@ -38,17 +38,17 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  describe 'check?' do
-    it 'should return true' do
-      game = FactoryGirl.create(:game)
-      expect(game.check?(0, 5)).to eq true
-    end
+  # describe 'check?' do
+  #   it 'should return true' do
+  #     game = FactoryGirl.create(:game)
+  #     expect(game.check?(0, 5)).to eq true
+  #   end
 
-    it 'should return false for queen' do
-      game = FactoryGirl.create(:game)
-      expect(game.check?(0, 3)).to eq false
-    end
-  end
+  #   it 'should return false for queen' do
+  #     game = FactoryGirl.create(:game)
+  #     expect(game.check?(0, 3)).to eq false
+  #   end
+  # end
 
   # describe 'checkmate?' do
   #   it 'should return true if game is in check and the white king can\'t move' do

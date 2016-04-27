@@ -97,8 +97,8 @@ class Piece < ActiveRecord::Base
       # Because of this we can only return one number instead of two, and
       # can be sure that the other is equal.
       return (destination_col - current_column_index).abs
-    else
-      raise 'Not Allowed'
+    elsif (current_row_index == destination_row) && (current_column_index == destination_col)
+      return 0, false
     end
   end
 
@@ -124,15 +124,37 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  # Here destination_row and destination_col are threatened king's current_row_index and current_column_index
   def can_capture_king?(destination_row, destination_col)
     # !invalid_input?(destination_row, destination_col) ||
-    # !same_color?(destination_row, destination_col)
-    king_threats = []
-    game.pieces.each do |piece|
-      king_threat = piece.valid_move?(destination_row, destination_col)
-      king_threats << king_threat
-    end
-    return true unless king_threats.count == 0
+    # # !same_color?(destination_row, destination_col)
+    
+    # king_can_capture_king?
+    # queen_can_capture_king?
+    # king = game.pieces.where(type: 'King')
+    # return true if king.valid_move?(destination_row, destination_col)
+
+    # queen = game.pieces.where(type: 'Queen')
+    # return true if queen.valid_move?(destination_row, destination_col)
+  
+    bishop = game.pieces.where(type: 'Bishop')
+    return true if bishop_can_capture_king?(destination_row, destination_col)
+    
+    # knight = game.pieces.where(type: 'Knight')
+    # return true if knight.valid_move?(destination_row, destination_col)
+    
+    # rook = game.pieces.where(type: 'Rook').valid_move?(destination_row, destination_col)
+    # return true if rook.valid_move?(destination_row, destination_col)
+
+    # game.pieces.where(type: 'Pawn').valid_move?(destination_row, destination_col)
+    # return true if pawn.valid_move?(destination_row, destination_col)
+    # king_threats = []
+    # game.pieces.each do |piece|
+    #   piece.where
+    #   king_threat = piece.valid_move?(destination_row, destination_col)
+    #   king_threats << king_threat
+    # end
+    # return true unless king_threats.count == 0
   end
   
 

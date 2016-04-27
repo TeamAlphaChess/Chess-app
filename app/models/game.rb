@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   belongs_to :white_player, class_name: 'User'
   belongs_to :black_player, class_name: 'User'
   belongs_to :winner, class_name: 'User'
-  has_many :pieces, dependent: :destroy
+  has_many :pieces #, dependent: :destroy
   after_create :populate_board!
 
   # Ready to get set up for Ajax Requests
@@ -55,8 +55,8 @@ class Game < ActiveRecord::Base
 
   def checkmate?(destination_row, destination_col)
   # Determine if king is in check and if king can move out of check
-  checked_king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
-  return false if checked_king.can_move_out_of_check?
+  # checked_king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
+  return false if can_move_out_of_check?
   #return false unless @checked_king.obstructed_king?(destination_row, destination_col)
     # pieces.each do |piece|
     #   if game.piece.obstructed?(king.current_row_index, king.current_column_index) == false
@@ -83,15 +83,15 @@ class Game < ActiveRecord::Base
     # end
     # false
     #true
-    king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
+    #king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
 
     pieces.each do |piece|
     # king's coordinates are the same as any pieces destination coordinates to try to take the king
       return false unless piece.can_capture_king?(destination_row, destination_col) 
-        king_threats = []
-        @piece_causing_check = piece
-        king_threats << @piece_causing_check
-      return true if king_threats.count > 0
+      #   king_threats = []
+      #   @piece_causing_check = piece
+      #   king_threats << @piece_causing_check
+      # return true if king_threats.count > 0
     end
   end
 

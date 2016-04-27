@@ -170,10 +170,10 @@ RSpec.describe Piece, type: :model do
     it 'returns true if at least one piece of opposite color threatens king' do
       game = FactoryGirl.create(:game) # Would do this using FactoryGirl
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-      black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 4)
-      black_pawn.update_attributes(current_row_index: 1, current_column_index: 4)
-      expect(black_pawn.can_capture_king?(0, 4)).to eq true
+      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 5).destroy
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
+      black_bishop.update_attributes(current_row_index: 1, current_column_index: 5)
+      expect(black_bishop.can_capture_king?(0, 4)).to eq true
 
     end
   end

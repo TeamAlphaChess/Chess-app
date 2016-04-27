@@ -25,6 +25,7 @@ class Pawn < Piece
     end
   end
 
+
   def en_passant?(row_index, column_index)
     if color == 'white' && current_row_index == 4
       # check for the pawn that is to be captured(it is behind the spot you are moving too)
@@ -50,5 +51,9 @@ class Pawn < Piece
     else
       false
     end
+  end
+
+  def pawn_can_capture_king?(destination_row, destination_col)
+    valid_move?(destination_row, destination_col)
   end
 end
