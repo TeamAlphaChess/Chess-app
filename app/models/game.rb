@@ -54,7 +54,7 @@ class Game < ActiveRecord::Base
 
 
   def checkmate?(destination_row, destination_col)
-  # Determine if king is in check and king's move is obstructed
+  # Determine if king is in check and if king can move out of check
   checked_king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
   return false if checked_king.can_move_out_of_check?
   #return false unless @checked_king.obstructed_king?(destination_row, destination_col)
@@ -71,7 +71,7 @@ class Game < ActiveRecord::Base
   end
 
 
-
+  # Pass in king's coordinates
   def check?(destination_row, destination_col)
     # placeholder for check method
     # returns true with no other logic in order to create tests for checkmate? in game_spec.rb
@@ -83,6 +83,14 @@ class Game < ActiveRecord::Base
     # end
     # false
     #true
+    king = pieces.find_by(type: 'King', color: color)
+
+    pieces(color: !color).each do |piece|
+    # king's coordinates are the same as any pieces destination coordinates to try to take the king
+      if piece.valid_move?(king.current_row_index, king.current_column_index) 
+        @piece_causing_check = piece
+      return true
+    end
   end
 
   # def not_opponent(color)

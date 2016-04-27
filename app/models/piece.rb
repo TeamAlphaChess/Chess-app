@@ -124,6 +124,14 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def piece_valid_move?
+    !invalid_input?(destination_row, destination_col) ||
+      !invalid_horizontal_move?(destination_row, destination_col) ||
+      !invalid_vertical_move?(destination_row, destination_col) ||
+      !invalid_diagonal_move?(destination_row, destination_col) ||
+      !same_color?(destination_row, destination_col)
+  end
+
   def unmoved?
     updated_at == created_at
   end
