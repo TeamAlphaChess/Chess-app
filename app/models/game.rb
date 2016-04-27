@@ -87,12 +87,11 @@ class Game < ActiveRecord::Base
 
     pieces.each do |piece|
     # king's coordinates are the same as any pieces destination coordinates to try to take the king
-      if piece.can_capture_king?(king.current_row_index, king.current_column_index) 
+      return false unless piece.can_capture_king?(destination_row, destination_col) 
+        king_threats = []
         @piece_causing_check = piece
-      return true
-      else
-        false
-      end
+        king_threats << @piece_causing_check
+      return true if king_threats.count > 0
     end
   end
 
