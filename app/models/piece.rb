@@ -124,13 +124,19 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  def piece_valid_move?
-    !invalid_input?(destination_row, destination_col) ||
-      !invalid_horizontal_move?(destination_row, destination_col) ||
-      !invalid_vertical_move?(destination_row, destination_col) ||
-      !invalid_diagonal_move?(destination_row, destination_col) ||
-      !same_color?(destination_row, destination_col)
+  def can_capture_king?(destination_row, destination_col)
+    # !invalid_input?(destination_row, destination_col) ||
+    # !same_color?(destination_row, destination_col)
+    king_threats = []
+    game.pieces.each do |piece|
+      king_threat = piece.valid_move?(destination_row, destination_col)
+      king_threats << king_threat
+    end
+    return true unless king_threats.count == 0
+  else
+    false
   end
+  
 
   def unmoved?
     updated_at == created_at

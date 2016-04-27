@@ -83,13 +83,16 @@ class Game < ActiveRecord::Base
     # end
     # false
     #true
-    king = pieces.find_by(type: 'King', color: color)
+    king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
 
-    pieces(color: !color).each do |piece|
+    pieces.each do |piece|
     # king's coordinates are the same as any pieces destination coordinates to try to take the king
-      if piece.valid_move?(king.current_row_index, king.current_column_index) 
+      if piece.can_capture_king?(king.current_row_index, king.current_column_index) 
         @piece_causing_check = piece
       return true
+      else
+        false
+      end
     end
   end
 
