@@ -88,17 +88,17 @@ class Piece < ActiveRecord::Base
 
   def distance(destination_row, destination_col)
     if vertical?(destination_row, destination_col)
-      return (destination_row - current_row_index).abs
+      return distance = (destination_row - current_row_index).abs
     elsif horizontal?(destination_row, destination_col)
-      return (destination_col - current_column_index).abs
+      return distance = (destination_col - current_column_index).abs
     elsif diagonal?(destination_row, destination_col)
       # We're taking advantage of the fact that our diagonal? method
       # checks for a true diagonal (Equal up/down and left/right) distance
       # Because of this we can only return one number instead of two, and
       # can be sure that the other is equal.
-      return (destination_col - current_column_index).abs
+      return distance = (destination_col - current_column_index).abs
     elsif (current_row_index == destination_row) && (current_column_index == destination_col)
-      return 0, false
+      return distance = 0
     end
   end
 
@@ -126,7 +126,10 @@ class Piece < ActiveRecord::Base
 
   # Here destination_row and destination_col is threatened king's position
   def can_capture_king?(destination_row, destination_col)
-    valid_move?(destination_row, destination_col)
+    game.pieces.each do
+    return true if valid_move?(destination_row, destination_col)
+    end
+    false
   end
 
   def unmoved?

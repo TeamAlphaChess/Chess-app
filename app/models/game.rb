@@ -85,14 +85,17 @@ class Game < ActiveRecord::Base
     #true
     #king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
 
-    pieces.each do |piece|
+    self.pieces.each do |piece|
     # king's coordinates are the same as any pieces destination coordinates to try to take the king
-      return false unless piece.can_capture_king?(destination_row, destination_col) 
+      if piece.can_capture_king?(destination_row, destination_col)
+        @piece_causing_check = piece
       #   king_threats = []
       #   @piece_causing_check = piece
       #   king_threats << @piece_causing_check
       # return true if king_threats.count > 0
+      end
     end
+    true
   end
 
   # def not_opponent(color)
