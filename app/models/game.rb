@@ -54,28 +54,32 @@ class Game < ActiveRecord::Base
 
   def stalemate?(color)
     #king = pieces.find_by_type_and_color(King, color)
-    # Can any piece on the board be moved (check different co-ords)
+
     check_these_pieces = remaining_pieces_of(color)
-    open_spots = empty_spots
+    check_these_coords = all_coords
 
-    open_spots.each do |x,y|
-      check_these_pieces.each do |piece|
+    check_these_pieces.each do |piece|
+      check_these_coords.each do |x,y|
+        # Check to see if the piece will can move to that coord
         if piece.valid_move?(x,y)
-          # A piece on the board can be moved
+          # A piece on the board CAN be moved to the coord
 
-          # Does it put me in check?
+          # The problem is im checking in_check? on the board when the
+          # pieces move is valid and not after the piece actually moves
           if in_check?(color)
-            # This piece cant help/ Still in stalemate
-            true
+            # Moving this piece will cause us to be in check, if all the pieces cause this
+            # to happen its a stalemate
+          else
+            # Moving this piece does not put us in check
           end
 
-          # If not in check, not a stalemate
-          false
+          # Determine if the game is in the state of a stalemate.
+          # A stalemate happens when a player cannot make a legal move without
+          # moving themself into check.
+
         end
       end
     end
-
-    # For king - if can be moved. Does that move put itself into check?
   end
 
   def in_check?(color)
@@ -87,8 +91,6 @@ class Game < ActiveRecord::Base
     end
     false
   end
-
-
 
   def opposite_remaining_pieces_of(color)
     remaining_pieces = []
@@ -135,6 +137,18 @@ class Game < ActiveRecord::Base
 
     empty_spots = spots - taken_spots
     return empty_spots
+  end
+
+  def all_coords
+    coords = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],
+             [1,0],[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],
+             [2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],
+             [3,0],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],
+             [4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],
+             [5,0],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7],
+             [6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],
+             [7,0],[7,1],[7,2],[7,3],[7,4],[7,5],[7,6],[7,7]]
+    return coords
   end
 
 

@@ -124,6 +124,17 @@ class Piece < ActiveRecord::Base
     end
   end
 
+  def move
+
+  end
+
+
+  def move_to_check_move_back(x,y, color)
+    move(x,y)
+    in_check?(color)
+    move_back(x,y)
+  end
+
   def unmoved?
     updated_at == created_at
   end
