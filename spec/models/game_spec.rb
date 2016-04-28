@@ -38,16 +38,20 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  describe 'check?' do
-    it 'should return true' do
+  describe 'in_check?' do
+    it 'should return true if king is in check' do
       game = FactoryGirl.create(:game)
-      expect(game.check?(0, 4)).to eq true
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_row_index: 4)
+      FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_row_index: 6)
+      expect(game.in_check?('white')).to eq false
     end
 
-  #   it 'should return false for queen' do
-  #     game = FactoryGirl.create(:game)
-  #     expect(game.check?).to eq false
-  #   end
+
+    it 'should return false if king is not in check' do
+      game = FactoryGirl.create(:game)
+      expect(game.in_check?('white')).to eq false
+    end
   end
 
   # describe 'checkmate?' do

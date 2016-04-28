@@ -63,42 +63,33 @@ class Game < ActiveRecord::Base
     #     @piece_causes_check = piece
     #   end
     # end
-
-
   # Here obstructed is a piece class method so its not recognized (seen as nil class) and tests fail
-  return false unless check?(destination_row, destination_col)
+  return false unless in_check?(color)
     true
   end
 
+  def in_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
 
-  # Pass in king's coordinates
-  def check?(destination_row, destination_col)
-    # placeholder for check method
-    # returns true with no other logic in order to create tests for checkmate? in game_spec.rb
-    # king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
+    opponent_pieces.each do |piece|
+      return true if piece.valid_move?(king.current_row_index, king.current_column_index)
+    end
+    false
+  end
 
-    # if piece.valid_move?(king.current_row_index, king.current_column_index)
-    #     @piece_causes_check = piece
-    #     return true
-    # end
-    # false
-    #true
-    #king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
+  def opposite_remaining_pieces_of(color)
+    remaining_pieces = []
 
-    self.pieces.each do |piece|
-    # king's coordinates are the same as any pieces destination coordinates to try to take the king
-      if piece.can_capture_king?(destination_row, destination_col)
-        @piece_causing_check = piece
-      #   king_threats = []
-      #   @piece_causing_check = piece
-      #   king_threats << @piece_causing_check
-      # return true if king_threats.count > 0
+    if color == 'white'
+      pieces.where(color: 'black', captured: false).each do |piece|
+        remaining_pieces << piece
+      end
+    else
+      pieces.where(color: 'white', captured: false).each do |piece|
+        remaining_pieces << piece
       end
     end
-    true
+    return remaining_pieces
   end
-
-  # def not_opponent(color)
-  #   pieces.find_by(captured: false, color: color).to_a
-  # end 
 end
