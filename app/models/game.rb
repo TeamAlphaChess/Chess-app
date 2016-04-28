@@ -53,19 +53,19 @@ class Game < ActiveRecord::Base
   end
 
 
-  def checkmate?(destination_row, destination_col)
-  # Determine if king is in check and if king can move out of check
-  # checked_king = pieces.find_by(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
-  return false if can_move_out_of_check?
-  #return false unless @checked_king.obstructed_king?(destination_row, destination_col)
-    # pieces.each do |piece|
-    #   if game.piece.obstructed?(king.current_row_index, king.current_column_index) == false
-    #     @piece_causes_check = piece
-    #   end
-    # end
-  # Here obstructed is a piece class method so its not recognized (seen as nil class) and tests fail
-  return false unless in_check?(color)
-    true
+  def checkmate?(color)
+    # Determine if king is in check and if king can move out of check
+    # checked_king = pieces.find_by_type_and_color(King, color)
+    # return false if checked_king.can_move_out_of_check?(color)
+    #return false unless @checked_king.obstructed_king?(destination_row, destination_col)
+      # pieces.each do |piece|
+      #   if game.piece.obstructed?(king.current_row_index, king.current_column_index) == false
+      #     @piece_causes_check = piece
+      #   end
+      # end
+    # Here obstructed is a piece class method so its not recognized (seen as nil class) and tests fail
+    return false unless in_check?(color)
+      true
   end
 
   def in_check?(color)
