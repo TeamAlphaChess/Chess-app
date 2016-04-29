@@ -166,74 +166,62 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  describe 'pieces_remaining' do
-    it 'lists the pieces left on the board of a given color'
-    
-
-  end 
-
-  describe 'capturable?' do
+  describe 'can_be_captured?' do
     it 'returns true if piece that threatens king can be captured' do
       game = FactoryGirl.create(:game)
       # game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
       black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
       black_knight.update_attributes(current_row_index: 2, current_column_index: 5)
-      expect(black_knight.capturable?).to eq true
+      expect(black_knight.can_be_captured?).to eq true
     end
 
-  #   it 'returns true if queen of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 5).destroy
-  #     black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
-  #     black_queen.update_attributes(current_row_index: 1, current_column_index: 5)
-  #     expect(black_queen.can_capture_king?(0, 4)).to eq true
-  #   end
+    it 'returns false if queen of opposite color threatens king but is not capturable' do
+      game = FactoryGirl.create(:game)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 5).destroy
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
+      black_queen.update_attributes(current_row_index: 3, current_column_index: 7)
+      expect(black_queen.can_be_captured?).to eq false
+    end
 
-  #   it 'returns true if bishop of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 5).destroy
-  #     black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
-  #     black_bishop.update_attributes(current_row_index: 1, current_column_index: 5)
-  #     expect(black_bishop.can_capture_king?(0, 4)).to eq true
-  #   end
+    it 'returns true if white rook threatens black king but is capturable' do
+      game = FactoryGirl.create(:game)
+      game.pieces.find_by_current_row_index_and_current_column_index(6, 4).destroy
+      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+      white_rook.update_attributes(current_row_index: 5, current_column_index: 4)
+      expect(white_rook.can_be_captured?).to eq true
+    end
 
-  #   it 'returns true if knight of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
-  #     black_knight.update_attributes(current_row_index: 2, current_column_index: 5)
-  #     expect(black_knight.can_capture_king?(0, 4)).to eq true
-  #   end
+    it 'returns true if white bishop of threatens black king but can be captured' do
+      game = FactoryGirl.create(:game)
+      game.pieces.find_by_current_row_index_and_current_column_index(6, 5).destroy
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+      white_bishop.update_attributes(current_row_index: 5, current_column_index: 6)
+      expect(white_bishop.can_be_captured?).to eq true
+    end
 
-  #   it 'returns false if knight of opposite color does not threaten king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-  #     black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
-  #     black_knight.update_attributes(current_row_index: 2, current_column_index: 6)
-  #     expect(black_knight.can_capture_king?(0, 4)).to eq false
-  #   end
+    it 'returns false if white bishop of threatens black king but can\'t be captured' do
+      game = FactoryGirl.create(:game)
+      game.pieces.find_by_current_row_index_and_current_column_index(6, 5).destroy
+      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+      white_bishop.update_attributes(current_row_index: 3, current_column_index: 7)
+      expect(white_bishop.current_row_index).to eq 3
+    end
 
-  #   it 'returns true if rook of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-  #     black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 7)
-  #     black_rook.update_attributes(current_row_index: 1, current_column_index: 4)
-  #     expect(black_rook.can_capture_king?(0, 4)).to eq true
-  #   end
+    it 'returns true if rook of opposite color threatens king but can be captured' do
+      game = FactoryGirl.create(:game)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 7)
+      black_rook.update_attributes(current_row_index: 1, current_column_index: 4)
+      expect(black_rook.can_be_captured?).to eq true
+    end
 
-  #   it 'returns false if rook of opposite color does not threaten king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-  #     black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 7)
-  #     black_rook.update_attributes(current_row_index: 2, current_column_index: 5)
-  #     expect(black_rook.can_capture_king?(0, 4)).to eq false
-  #   end
-
-  #   it 'returns true if pawn of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-  #     black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
-  #     black_pawn.update_attributes(current_row_index: 1, current_column_index: 4)
-  #     expect(black_pawn.can_capture_king?(0, 4)).to eq true
-  #   end
+    it 'returns false if rook of opposite color threatens king but can\'t be captured' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 4, current_column_index: 4, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 7, captured: false, color: 'white')
+      expect(black_rook.can_be_captured?).to eq false
+    end
   end
 end

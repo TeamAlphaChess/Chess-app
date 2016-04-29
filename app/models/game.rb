@@ -65,6 +65,7 @@ class Game < ActiveRecord::Base
     # Determine if king can move out of check to escape
     checked_king = pieces.find_by_type_and_color(King, color)
     return false if checked_king.can_move_out_of_check?
+    # here threatening piece is opposite color of checked king
     return false if @threatening_piece.capturable?
     true
   end
@@ -82,7 +83,7 @@ class Game < ActiveRecord::Base
   end
 
   def pieces_remaining(color)
-    pieces.where(captured: false, color: color).to_a
+    pieces.where(captured: false).to_a
   end
 
   def opposite_remaining_pieces_of(color)
