@@ -55,15 +55,21 @@ RSpec.describe Game, type: :model do
 
   describe 'checkmate?' do
 
-    it 'should return false if game is in check and the white king can move out of check' do
+    it 'should return false if white king can move out of check' do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
-      
       expect(game.checkmate?('white')).to eq false
     end
 
-    it 'should return true if game is in check and the white king can\'t move out of check' do
+    it 'should return false if black king can move out of check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'black', current_row_index: 7, current_column_index: 4, game_id: game.id)
+      expect(game.checkmate?('black')).to eq false
+    end
+
+    it 'should return true if game if white king can\'t move out of check' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
@@ -74,8 +80,22 @@ RSpec.describe Game, type: :model do
       white_pawn2 = game.pieces.find_by_current_row_index_and_current_column_index(1, 5)
       black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
       black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
-
       expect(game.checkmate?('white')).to eq true
     end
+
+    it 'should return true if black king can\'t move out of check' do
+      game = FactoryGirl.create(:game)
+      black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
+      black_pawn3 = game.pieces.find_by_current_row_index_and_current_column_index(6, 3)
+      black_pawn1 = game.pieces.find_by_current_row_index_and_current_column_index(6, 4)
+      black_pawn1.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_pawn2 = game.pieces.find_by_current_row_index_and_current_column_index(6, 5)
+      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+      white_queen.update_attributes(current_row_index: 4, current_column_index: 4)
+      expect(game.checkmate?('black')).to eq true
+    end
+
   end
 end
