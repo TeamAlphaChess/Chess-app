@@ -127,7 +127,7 @@ class Piece < ActiveRecord::Base
   # Here destination_row and destination_col is threatened king's position
   def can_capture_king?(destination_row, destination_col)
     game.pieces.each do
-    return true if valid_move?(destination_row, destination_col)
+      return true if valid_move?(destination_row, destination_col)
     end
     false
   end

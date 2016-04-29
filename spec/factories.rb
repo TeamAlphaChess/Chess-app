@@ -39,21 +39,21 @@ FactoryGirl.define do
     color nil
     game_id nil
   end
-  
+
   factory :king, class: King do
     current_row_index nil
     current_column_index nil
     color nil
     game_id nil
   end
-  
+
   factory :rook, class: Rook do
     current_row_index nil
     current_column_index nil
     color nil
     game_id nil
   end
-  
+
   factory :knight, class: Knight do
     current_row_index nil
     current_column_index nil

@@ -307,21 +307,21 @@ RSpec.describe King, type: :model do
     it 'should allow king to move out of check when pawn in front removed' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 4)
-      white_pawn.update_attributes(current_row_index: nil, current_column_index: nil)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      # white_pawn.update_attributes(current_row_index: nil, current_column_index: nil)
       expect(white_king.can_move_out_of_check?).to eq true
       expect(white_king.current_row_index).to eq 0
     end
 
     it 'should NOT allow king to move out of check when king doesn\'t have valid move' do
-      game = FactoryGirl.create(:game)    
+      game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
-      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
-      white_pawn3 = game.pieces.find_by_current_row_index_and_current_column_index(1, 3)
-      white_pawn1 = game.pieces.find_by_current_row_index_and_current_column_index(1, 4)
-      white_pawn1.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_pawn2 = game.pieces.find_by_current_row_index_and_current_column_index(1, 5)
+      # white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+      # white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+      # white_pawn3 = game.pieces.find_by_current_row_index_and_current_column_index(1, 3)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      # white_pawn1.update_attributes(current_row_index: nil, current_column_index: nil)
+      # white_pawn2 = game.pieces.find_by_current_row_index_and_current_column_index(1, 5)
       black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
       black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
       expect(white_king.can_move_out_of_check?).to eq false

@@ -13,28 +13,17 @@ class King < Piece
     start_row = current_row_index
     start_col = current_column_index
     success = true
-    ((current_row_index-1)..(current_row_index+1)).each do |destination_row|
-      ((current_column_index-1)..(current_column_index+1)).each do |destination_col|
-        
-          update_attributes(current_row_index: destination_row, current_column_index: destination_col) if valid_move?(destination_row, destination_col)
-
-        # success is changed to true value unless the updated position still puts king in check  
-          if game.in_check?(color) then success = false
-          end
-          # Reset attributes since this method is only supposed to check to see if king can move not actually move it
-          update_attributes(current_row_index: start_row, current_column_index: start_col)
-
+    ((current_row_index - 1)..(current_row_index + 1)).each do |destination_row|
+      ((current_column_index - 1)..(current_column_index + 1)).each do |destination_col|
+        update_attributes(current_row_index: destination_row, current_column_index: destination_col) if valid_move?(destination_row, destination_col)
+        # success is changed to true value unless the updated position still puts king in check
+        success = false if game.in_check?(color)
+        # Reset attributes since this method is only supposed to check to see if king can move not actually move it
+        update_attributes(current_row_index: start_row, current_column_index: start_col)
       end
     end
     success
   end
-
-  # def obstructed_king?(destination_row, destination_col)
-  #   @checked_king = game.pieces.where(type: 'King', current_row_index: destination_row, current_column_index: destination_col)
-  #   return true if @checked_king.obstructed?
-  #   false
-  # end
-
 
   def castle!(destination_row, destination_col)
     # this is where we will update the database for the move.

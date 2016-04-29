@@ -2,11 +2,11 @@
 class Pawn < Piece
   # rubocop:disable CyclomaticComplexity
   # rubocop:disable PerceivedComplexity
+  # rubocop:disable Metrics/AbcSize
   def valid_move?(destination_row, destination_col)
     if current_row_index == 1 || current_row_index == 6
       # Returns false if you try to move more then 2 spots when not in the pawn spawn rows
-      return false if !distance(destination_row, destination_col) == 2 || 
-      invalid_input?(destination_row, destination_col)
+      return false if !distance(destination_row, destination_col) == 2 || invalid_input?(destination_row, destination_col)
     elsif distance(destination_row, destination_col) > 1
       # Returns false if you try to move more then 1 spot
       return false
@@ -25,7 +25,6 @@ class Pawn < Piece
       false
     end
   end
-
 
   def en_passant?(row_index, column_index)
     if color == 'white' && current_row_index == 4
