@@ -53,35 +53,35 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  describe 'checkmate?' do
-    it 'should return false if white king can move out of check' do
-      game = FactoryGirl.create(:game)
-      game.pieces.destroy_all
-      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
-      expect(game.checkmate?('white')).to eq false
-    end
+  # describe 'checkmate?' do
+  #   it 'should return false if white king can move out of check' do
+  #     game = FactoryGirl.create(:game)
+  #     game.pieces.destroy_all
+  #     FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+  #     expect(game.checkmate?('white')).to eq false
+  #   end
 
-    it 'should return false if black king can move out of check' do
-      game = FactoryGirl.create(:game)
-      game.pieces.destroy_all
-      FactoryGirl.create(:king, color: 'black', current_row_index: 7, current_column_index: 4, game_id: game.id)
-      expect(game.checkmate?('black')).to eq false
-    end
+  #   it 'should return false if black king can move out of check' do
+  #     game = FactoryGirl.create(:game)
+  #     game.pieces.destroy_all
+  #     FactoryGirl.create(:king, color: 'black', current_row_index: 7, current_column_index: 4, game_id: game.id)
+  #     expect(game.checkmate?('black')).to eq false
+  #   end
 
-    it 'should return true if game if white king can\'t move out of check' do
-      game = FactoryGirl.create(:game)
-      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
-      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
-      black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
-      expect(game.checkmate?('white')).to eq true
-    end
+  #   it 'should return true if game if white king can\'t move out of check' do
+  #     game = FactoryGirl.create(:game)
+  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+  #     black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+  #     black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
+  #     expect(game.checkmate?('white')).to eq true
+  #   end
 
-    it 'should return true if black king can\'t move out of check' do
-      game = FactoryGirl.create(:game)
-      game.pieces.find_by_current_row_index_and_current_column_index(6, 4).destroy
-      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
-      white_queen.update_attributes(current_row_index: 4, current_column_index: 4)
-      expect(game.checkmate?('black')).to eq true
-    end
-  end
+  #   it 'should return true if black king can\'t move out of check' do
+  #     game = FactoryGirl.create(:game)
+  #     game.pieces.find_by_current_row_index_and_current_column_index(6, 4).destroy
+  #     white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+  #     white_queen.update_attributes(current_row_index: 4, current_column_index: 4)
+  #     expect(game.checkmate?('black')).to eq true
+  #   end
+  # end
 end

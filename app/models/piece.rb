@@ -144,13 +144,13 @@ class Piece < ActiveRecord::Base
 
   def capturable?
     opponents = game.pieces_remaining(!color)
+    success = false
     opponents.each do |opponent|
-      # Determine if any opponent piece (same color as checked king) can capture threatening piece
-      if opponent.valid_move?(current_row_index, current_column_index)
-        true
-      end
-        false
+    # Determine if any opponent piece (same color as checked king) can capture threatening piece
+    success = true if opponent.valid_move?(current_row_index, current_column_index)
     end
+    # False must be returned outside of each do loop
+    success
   end
 
   def unmoved?

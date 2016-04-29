@@ -166,14 +166,20 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  # describe 'can_capture_king?' do
-  #   it 'returns true if king of opposite color threatens king' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.find_by_current_row_index_and_current_column_index(1, 5).destroy
-  #     black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
-  #     black_king.update_attributes(current_row_index: 1, current_column_index: 5)
-  #     expect(black_king.can_capture_king?(0, 4)).to eq true
-  #   end
+  describe 'pieces_remaining' do
+    it 'lists the pieces left on the board of a given color'
+    
+
+  end 
+
+  describe 'capturable?' do
+    it 'returns true if piece that threatens king can be captured' do
+      game = FactoryGirl.create(:game)
+      # game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
+      black_knight.update_attributes(current_row_index: 2, current_column_index: 5)
+      expect(black_knight.capturable?).to eq true
+    end
 
   #   it 'returns true if queen of opposite color threatens king' do
   #     game = FactoryGirl.create(:game)
@@ -229,5 +235,5 @@ RSpec.describe Piece, type: :model do
   #     black_pawn.update_attributes(current_row_index: 1, current_column_index: 4)
   #     expect(black_pawn.can_capture_king?(0, 4)).to eq true
   #   end
-  # end
+  end
 end
