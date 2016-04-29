@@ -124,12 +124,33 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # Here destination_row and destination_col is threatened king's position
-  def can_capture_king?(destination_row, destination_col)
-    game.pieces.each do
-      return true if valid_move?(destination_row, destination_col)
+  # Here destination_row and destination_col is threatening_piece's position
+  # def can_capture_threat?(destination_row, destination_col)
+  #   game.pieces.each do
+  #     own_color = game.pieces_remaining(color)
+  #   own_team.each do |piece|
+
+
+  #     opponents = game.pieces_remaining(!color)
+  #   }
+  #   opponents.each do |opponent|
+  #     # Determine if each piece can be captured
+
+  #   end
+  #     return true if valid_move?(destination_row, destination_col)
+  #   end
+  #   false
+  # end
+
+  def capturable?
+    opponents = game.pieces_remaining(!color)
+    opponents.each do |opponent|
+      # Determine if any opponent piece (same color as checked king) can capture threatening piece
+      if opponent.valid_move?(current_row_index, current_column_index)
+        true
+      end
+        false
     end
-    false
   end
 
   def unmoved?
