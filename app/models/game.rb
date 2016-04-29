@@ -57,29 +57,80 @@ class Game < ActiveRecord::Base
 
     check_these_pieces = remaining_pieces_of(color)
     check_these_coords = all_coords
+    pieces_that_cause_check = []
 
-    check_these_pieces.each do |piece|
+    # Determine if the game is in the state of a stalemate.
+    # A stalemate happens when a player cannot make a legal move without
+    # moving themself into check.
+
+    check_these_pieces.each do |our_piece|
       check_these_coords.each do |x,y|
         # Check to see if the piece will can move to that coord
-        if piece.valid_move?(x,y)
+        if our_piece.valid_move?(x,y)
           # A piece on the board CAN be moved to the coord
 
-          # The problem is im checking in_check? on the board when the
-          # pieces move is valid and not after the piece actually moves
-          if in_check?(color)
-            # Moving this piece will cause us to be in check, if all the pieces cause this
-            # to happen its a stalemate
-          else
-            # Moving this piece does not put us in check
+          # # If a enemy piece is in a spot that is a valid move, this acts like it takes the piece temp
+          # old_piece = pieces.find_by_current_row_index_and_current_column_index(x,y)
+          # if !old_piece.nil?
+          #   old_piece.current_row_index = nil
+          #   old_piece.current_column_index = nil
+          # end
+          #
+          # our_piece.current_row_index = x
+          # our_piece.current_column_index = y
+
+          #return our_piece
+
+          # If it causes check
+          if temp_move_piece_and_then_check(color, our_piece, x, y)
+            pieces_that_cause_check << our_piece
           end
 
-          # Determine if the game is in the state of a stalemate.
-          # A stalemate happens when a player cannot make a legal move without
-          # moving themself into check.
+          # if in_check_for_stalemate?(color, piece, x, y)
+          #   # Moving this piece will cause us to be in check, if all the pieces cause this
+          #   # to happen its a stalemate
+          #   #true
+          #
+          # else
+          #   # Moving this piece does not put us in check, so not a stalemate
+          #    #return piece
+          # end
 
         end
       end
+      return pieces_that_cause_check
     end
+  end
+
+  def temp_move_piece_and_then_check(color, move_piece, x, y)
+
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+
+    # Check for an old piece in the coords and then remove it from the checked set
+    old_piece = pieces.find_by_current_row_index_and_current_column_index(x,y)
+
+    if !old_piece.nil?
+      opponent_pieces.delete(old_piece)
+    end
+
+    # Remember the pieces original spot
+    old_x_position_of_piece_to_move = move_piece.current_row_index
+    old_y_position_of_piece_to_move = move_piece.current_column_index
+
+    # Change the row and column of the piece we are moving
+    move_piece.update_attributes(current_row_index: x)
+    move_piece.update_attributes(current_column_index: y)
+
+    # Check to see if in check?
+    opponent_pieces.each do |piece|
+      if piece.valid_move?(king.current_row_index, king.current_column_index)
+        move_piece.update_attributes(current_row_index: old_x_position_of_piece_to_move)
+        move_piece.update_attributes(current_column_index: old_y_position_of_piece_to_move)
+        return true
+      end
+    end
+    false
   end
 
   def in_check?(color)
