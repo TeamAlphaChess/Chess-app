@@ -55,7 +55,7 @@ class Game < ActiveRecord::Base
 
   def checkmate?(color)
     # Determine if king is in check and if king can move out of check
-    # checked_king = pieces.find_by_type_and_color(King, color)
+    #checked_king = pieces.find_by_type_and_color(King, color)
     # return false if checked_king.can_move_out_of_check?(color)
     #return false unless @checked_king.obstructed_king?(destination_row, destination_col)
       # pieces.each do |piece|

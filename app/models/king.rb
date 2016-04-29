@@ -12,15 +12,18 @@ class King < Piece
   def can_move_out_of_check?
     start_row = current_row_index
     start_col = current_column_index
-    success = false
+    success = true
     ((current_row_index-1)..(current_row_index+1)).each do |destination_row|
       ((current_column_index-1)..(current_column_index+1)).each do |destination_col|
         
           update_attributes(current_row_index: destination_row, current_column_index: destination_col) if valid_move?(destination_row, destination_col)
-          
-          success = true unless game.in_check?(destination_row, destination_col)
+
+        # success is changed to true value unless the updated position still puts king in check  
+          if game.in_check?(color) then success = false
+          end
           # Reset attributes since this method is only supposed to check to see if king can move not actually move it
           update_attributes(current_row_index: start_row, current_column_index: start_col)
+
       end
     end
     success

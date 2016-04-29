@@ -54,34 +54,17 @@ RSpec.describe Game, type: :model do
   end
 
   # describe 'checkmate?' do
-  #   it 'should return true if game is in check and the white king can\'t move' do
+
+  #   it 'should return true if game is in check and the black king can\'t move out of check' do
   #     game = FactoryGirl.create(:game)
-  #     #@checked_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-  #     expect(game.checkmate?('white')).to eq false
+  #     game.pieces.destroy_all
+  #     FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+      
+  #     expect(game.checkmate?('white')).to eq true
   #   end
 
   #   it 'should return true if game is in check and the black king can\'t move' do
-  #     game = FactoryGirl.create(:game)
-  #     checked_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-  #     expect(game.checkmate?('black')).to eq false
-  #   end
 
-    # it 'should return false if game is in check and the black king can move' do
-    #   game = FactoryGirl.create(:game)
-    #   checked_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
-    #   black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 7)
-    #   black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
-    #   black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
-    #   black_bishop.update_attributes(current_row_index: 4, current_column_index: 4)
-    #   expect(game.checkmate?('black')).to eq false
-    # end
-
-  #   it 'should return true if game is in check and the black king can\'t move' do
-  #     game = FactoryGirl.create(:game)
-  #     # checked_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
-  #     # black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 4)
-
-  #     expect(game.checkmate?('black')).to eq true
   #   end
   # end
 end
