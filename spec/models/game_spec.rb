@@ -37,4 +37,29 @@ RSpec.describe Game, type: :model do
       expect(game.reload.pieces.count).to eq 32
     end
   end
+
+  describe 'forfeit method' do
+    it 'should increment the other players games_won count by 1 when forfeiting' do
+      user = FactoryGirl.create(:user)
+      second_user = FactoryGirl.create(:user)
+      game = FactoryGirl.create(:game)
+      game.white_player_id = user.id
+      game.black_player_id = second_user.id
+      second_user.update_attributes(games_won: 0)
+      game.current_player_turn_id = game.white_player_id
+      game.forfeit(user)
+      expect(second_user.reload.games_won).to eq 1
+    end
+
+    it 'should return true if the current user forfeits a game' do
+      user = FactoryGirl.create(:user)
+      second_user = FactoryGirl.create(:user)
+      game = FactoryGirl.create(:game, white_player_id: user.id, black_player_id: second_user.id)
+
+      game.white_player_id = user.id
+      game.current_player_turn_id = game.white_player_id
+
+      expect(game.forfeit(user)).to eq true
+    end
+  end
 end
