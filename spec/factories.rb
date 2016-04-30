@@ -29,6 +29,44 @@ FactoryGirl.define do
   factory :queen, class: Queen do
     current_row_index 4
     current_column_index 4
-    color 'white'
+    color nil
+    game_id nil
+  end
+
+  factory :bishop, class: Bishop do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    game_id nil
+  end
+
+  factory :king, class: King do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    game_id nil
+  end
+
+  factory :rook, class: Rook do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    game_id nil
+  end
+
+  factory :knight, class: Knight do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    game_id nil
+  end
+
+  factory :pawn, class: Pawn do
+    current_row_index nil
+    current_column_index nil
+    color nil
+    captured false
+    user_id nil
+    game_id nil
   end
 end

@@ -51,4 +51,45 @@ class Game < ActiveRecord::Base
 
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
+
+  def checkmate?(color)
+    return false unless in_check?(color)
+    # Determine if king can move out of check to escape
+    checked_king = pieces.find_by_type_and_color(King, color)
+    return false if checked_king.can_move_out_of_check?
+    # here threatening piece is opposite color of checked king
+    return false if @threatening_piece.can_be_captured?
+    return false if @threatening_piece.can_be_blocked?(checked_king)
+    true
+  end
+
+  def in_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+    opponent_pieces.each do |piece|
+      if piece.valid_move?(king.current_row_index, king.current_column_index)
+        @threatening_piece = piece
+        return true
+      end
+    end
+    false
+  end
+
+  def pieces_remaining(*)
+    pieces.where(captured: false).to_a
+  end
+
+  def opposite_remaining_pieces_of(color)
+    remaining_pieces = []
+    if color == 'white'
+      pieces.where(color: 'black', captured: false).find_each do |piece|
+        remaining_pieces << piece
+      end
+    else
+      pieces.where(color: 'white', captured: false).find_each do |piece|
+        remaining_pieces << piece
+      end
+    end
+    remaining_pieces
+  end
 end
