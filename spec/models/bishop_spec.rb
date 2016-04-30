@@ -58,7 +58,7 @@ RSpec.describe Bishop, type: :model do
       black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
       
-      expect(black_bishop.obstructed_spots(0, 4)).to eq 7
+      expect(black_bishop.obstructed_spots(0, 4)).to eq [ [2, 6], [1, 5] ]
 
     end
   end

@@ -23,7 +23,7 @@ module Obstructions
 
   # Create an array of square locations [destination_row, destination_col] that will be checked later for obstruction
   # Method checks for diagonal paths such as those used by Queen and Bishop
-  def diagonal_obstruction_array(destination_col, destination_row)
+  def diagonal_obstruction_array(destination_row, destination_col)
 
     # Store threatening piece's current_row_index and current_column_index into local variables
     new_row_position = current_row_index
@@ -37,11 +37,10 @@ module Obstructions
     return [] if new_column_position == destination_col
 
     # Determine vertical and horizontal increments
-    row_increment = destination_row > current_row_index ? 1 : -1
-    column_increment = destination_col > current_column_index ? 1 : -1
+    row_increment = destination_row > new_row_position ? 1 : -1
+    column_increment = destination_col > new_column_position ? 1 : -1
 
-    
-
+  
     # Make initial move of one towards destination
     new_row_position += row_increment
     new_column_position += column_increment
@@ -53,7 +52,6 @@ module Obstructions
       new_column_position += column_increment
     end
     # return obstruction array (values will be checked later )
-
     obstruction_array
   end
 
