@@ -62,7 +62,7 @@ RSpec.describe Rook, type: :model do
       black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'black')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
       
-      expect(black_rook.obstructed_spots(0, 4)).to eq 5
+      expect(black_rook.obstructed_spots(0, 4)).to eq [ [0, 1], [0, 2], [0, 3] ]
     end
   end
 end

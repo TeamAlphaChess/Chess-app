@@ -27,4 +27,14 @@ RSpec.describe Queen, type: :model do
       expect(queen.valid_move?(6, 5)).to eq false
     end
   end
+
+  describe 'obstructed_spots' do
+    it 'returns pieces of threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_queen = FactoryGirl.create(:queen, game: game, current_row_index: 4, current_column_index: 4, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      expect(black_queen.obstructed_spots(0, 4)).to eq [ [3, 4], [2, 4], [1, 4] ]
+    end
+  end
 end

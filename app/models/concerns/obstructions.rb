@@ -32,13 +32,13 @@ module Obstructions
 
     obstruction_array = []
 
-    # Remove non-diagonal move squares
+    # Return empty array for non-diagonal move squares
     return [] if new_row_position == destination_row
     return [] if new_column_position == destination_col
 
     # Determine vertical and horizontal increments
-    row_increment = current_row_index < destination_row ? 1 : -1
-    column_increment = current_column_index < destination_col ? 1 : -1
+    row_increment = destination_row > current_row_index ? 1 : -1
+    column_increment = destination_col > current_column_index ? 1 : -1
 
     
 
@@ -68,7 +68,7 @@ module Obstructions
     # Determine horizontalincrements
     if new_row_position == destination_row # protector piece is on same row with king 
       # begin moving across column positions
-      column_increment = destination_col < new_column_position ? 1 : -1
+      column_increment = destination_col > new_column_position ? 1 : -1
 
       new_column_position += column_increment
 
@@ -89,7 +89,6 @@ module Obstructions
       end
     end
       # return obstruction array (values will be checked later )
-      #obstruction_array
-      new_row_position
+      obstruction_array
   end
 end
