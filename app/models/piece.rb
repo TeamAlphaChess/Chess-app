@@ -3,6 +3,10 @@ class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :user, class_name: 'User'
 
+
+  # Include Obstructions conernfor can_be_blocked? methods
+  include Obstructions
+
   def obstructed?(destination_row, destination_col)
     invalid_input?(destination_row, destination_col) ||
       invalid_horizontal_move?(destination_row, destination_col) ||

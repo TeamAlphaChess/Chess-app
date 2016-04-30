@@ -23,20 +23,20 @@ module Obstructions
 
   # Create an array of square locations [destination_row, destination_col] that will be checked later for obstruction
   # Method checks for diagonal paths such as those used by Queen and Bishop
-  def diagonal_obstructions(destination_col, destination_row)
+  def diagonal_obstruction_array(destination_col, destination_row)
 
-    # Store current_row_index and current_column_index into local variables
+    # Store threatening piece's current_row_index and current_column_index into local variables
     new_row_position = current_row_index
     new_column_position = current_column_index
 
 
     obstruction_array = []
 
-    # Check non-diagonal moves
-    return [nil] if new_row_position = destination_row
-    return [nil] if new_column_position = destination_col
+    # Remove non-diagonal move squares
+    return [] if new_row_position == destination_row
+    return [] if new_column_position == destination_col
 
-    # Determine horizontal and vertical increments
+    # Determine vertical and horizontal increments
     row_increment = current_row_index < destination_row ? 1 : -1
     column_increment = current_column_index < destination_col ? 1 : -1
 
@@ -53,12 +53,13 @@ module Obstructions
       new_column_position += column_increment
     end
     # return obstruction array (values will be checked later )
+
     obstruction_array
   end
 
   # Create an array of square locations [destination_row, destination_col] that will be checked later for obstruction
   # Method checks for rectilinear paths such as those used by Queen, Rook
-  def rectilinear_obstructions(destination_row, destination_col)
+  def rectilinear_obstruction_array(destination_row, destination_col)
     # Store initial variables
     new_row_position = current_row_index
     new_column_position = current_column_index
@@ -86,16 +87,9 @@ module Obstructions
         obstruction_array << [new_row_position, new_column_position]
         new_row_position += row_increment
       end
-      # return obstruction array (values will be checked later )
-      obstruction_array
     end
+      # return obstruction array (values will be checked later )
+      #obstruction_array
+      new_row_position
   end
-
-
-
-
-
-
-
-
 end

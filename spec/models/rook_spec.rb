@@ -54,4 +54,15 @@ RSpec.describe Rook, type: :model do
       expect(white_rook.valid_move?(2, 0)).to eq false
     end
   end
+
+  describe 'obstructed_spots' do
+    it 'returns pieces of threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      
+      expect(black_rook.obstructed_spots(0, 4)).to eq 5
+    end
+  end
 end

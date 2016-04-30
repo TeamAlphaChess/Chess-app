@@ -12,7 +12,7 @@ class Bishop < Piece
     end
   end
 
-  def obstructed_spots?(destination_row, destination_col)
-    diagonal_obstructions(destination_row, destination_col)
+  def obstructed_spots(destination_row, destination_col)
+    diagonal_obstruction_array(destination_row, destination_col)
   end
 end

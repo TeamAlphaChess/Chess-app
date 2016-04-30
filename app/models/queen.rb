@@ -12,7 +12,7 @@ class Queen < Piece
       diagonal?(destination_row, destination_col)
   end
 
-  def obstructed_spots?(destination_row, destination_col)
-    rectilinear_obstructions(destination_row, destination_col).concat diagonal_obstructions(destination_row, destination_col)
+  def obstructed_spots(destination_row, destination_col)
+    rectilinear_obstruction_array(destination_row, destination_col).concat diagonal_obstruction_array(destination_row, destination_col)
   end
 end
