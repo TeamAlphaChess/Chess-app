@@ -42,10 +42,21 @@ RSpec.describe Game, type: :model do
     it 'should return true if the only legal moves put you in check(whites move)' do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
+      game.reload
       FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
       FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_column_index: 6, game_id: game.id)
       FactoryGirl.create(:queen, color: 'black', current_row_index: 1, current_column_index: 5, game_id: game.id)
       expect(game.stalemate?('white')).to eq true
+    end
+
+    it 'should return true for this stalemate' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      game.reload
+      FactoryGirl.create(:king, color: 'black', current_row_index: 0, current_column_index: 0, game_id: game.id)
+      FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 7, game_id: game.id)
+      FactoryGirl.create(:rook, color: 'white', current_row_index: 7, current_column_index: 1, game_id: game.id)
+      expect(game.stalemate?('black')).to eq true
     end
 
     it 'should return true if the only legal moves put you in check(whites move)' do
@@ -110,6 +121,39 @@ RSpec.describe Game, type: :model do
                          [4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],
                          [5,0],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7]]
       expect(game.empty_spots).to eq empty_locations
+    end
+  end
+
+  describe 'move_puts_king_in_check?' do
+    it 'should return true since im moving the king into check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      king = FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
+      FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 1, game_id: game.id)
+      expect(game.move_puts_king_in_check?('white', king, 0, 1 )).to eq true
+    end
+
+    it 'should return true since im moving a piece to cause check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
+      blocker = FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 0, game_id: game.id)
+      FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 0, game_id: game.id)
+      expect(game.move_puts_king_in_check?('white', blocker, 1, 5 )).to eq true
+      expect(blocker.current_row_index).to eq 1
+      expect(blocker.current_column_index).to eq 0
+    end
+
+    it 'should return false since im moving a piece but it wont cause check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
+      blocker = FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 0, game_id: game.id)
+      FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 1, game_id: game.id)
+      expect(game.move_puts_king_in_check?('white', blocker, 1, 5 )).to eq false
+      game.reload
+      expect(blocker.current_row_index).to eq 1
+      expect(blocker.current_column_index).to eq 0
     end
   end
 end

@@ -52,110 +52,16 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
-  # def stalemate?(color)
-  #   #king = pieces.find_by_type_and_color(King, color)
-  #
-  #   check_these_pieces = remaining_pieces_of(color)
-  #   check_these_coords = all_coords
-  #   pieces_that_cause_check = []
-  #   pieces_that_can_be_moved_without_causing_check = []
-  #   valid_moves = []
-  #
-  #   # Determine if the game is in the state of a stalemate.
-  #   # A stalemate happens when a player cannot make a legal move without
-  #   # moving themself into check.
-  #
-  #   check_these_pieces.each do |our_piece|
-  #     check_these_coords.each do |x,y|
-  #       # Check to see if the piece will can move to that coord
-  #       if our_piece.valid_move?(x,y)
-  #         # A piece on the board CAN be moved to the coord
-  #
-  #         valid_moves << [x,y]
-  #         # # If a enemy piece is in a spot that is a valid move, this acts like it takes the piece temp
-  #         # old_piece = pieces.find_by_current_row_index_and_current_column_index(x,y)
-  #         # if !old_piece.nil?
-  #         #   old_piece.current_row_index = nil
-  #         #   old_piece.current_column_index = nil
-  #         # end
-  #         #
-  #         # our_piece.current_row_index = x
-  #         # our_piece.current_column_index = y
-  #
-  #         #return our_piece
-  #
-  #         # # If it causes check
-  #         # if temp_move_piece_and_then_check(color, our_piece, x, y)
-  #         #   pieces_that_cause_check << our_piece
-  #         # else
-  #         #   # Does not cause check so the move is good
-  #         #   pieces_that_can_be_moved_without_causing_check << our_piece
-  #         # end
-  #
-  #         # if in_check_for_stalemate?(color, piece, x, y)
-  #         #   # Moving this piece will cause us to be in check, if all the pieces cause this
-  #         #   # to happen its a stalemate
-  #         #   #true
-  #         #
-  #         # else
-  #         #   # Moving this piece does not put us in check, so not a stalemate
-  #         #    #return piece
-  #         # end
-  #
-  #       end
-  #     end
-  #     return valid_moves
-  #   end
-  # end
-
-  def stalemate?(color)
-    check_these_pieces = remaining_pieces_of(color)
+  def stalemate?(which_color)
+    check_these_pieces = remaining_pieces_of(which_color)
     check_these_coords = all_coords
 
     check_these_pieces.each do |our_piece|
-      check_these_coords.each do |x,y|
-        if our_piece.valid_move?(x,y)
-          # Check to see if moving the piece to the coords causes check
-          if temp_move_piece_and_then_check(color, our_piece, x, y)
-            # Check next piece
-          else
-            # Moving the piece does not cause check so theres no stalemate
-            return false
-          end
-        end
-      end
+      check_these_coords.each { |x,y|
+        return false if our_piece.valid_move?(x,y) && !move_puts_king_in_check?(which_color, our_piece, x, y)
+      }
     end
-  end
-
-  def temp_move_piece_and_then_check(color, move_piece, x, y)
-    king = pieces.find_by_type_and_color(King, color)
-    opponent_pieces = opposite_remaining_pieces_of(color)
-
-    # Check for an old piece in the coords and then remove it from the checked set since were simulating a capture
-    old_piece = pieces.find_by_current_row_index_and_current_column_index(x,y)
-    if !old_piece.nil?
-      opponent_pieces.delete(old_piece)
-    end
-
-    # Remember the pieces original spot
-    old_x_position_of_piece_to_move = move_piece.current_row_index
-    old_y_position_of_piece_to_move = move_piece.current_column_index
-
-    # Change the row and column of the piece we are moving
-    move_piece.update_attributes(current_row_index: x)
-    move_piece.update_attributes(current_column_index: y)
-
-    # Check to see if in check?
-    opponent_pieces.each do |piece|
-      if piece.valid_move?(king.current_row_index, king.current_column_index)
-        move_piece.update_attributes(current_row_index: old_x_position_of_piece_to_move)
-        move_piece.update_attributes(current_column_index: old_y_position_of_piece_to_move)
-        return true
-      end
-    end
-    move_piece.update_attributes(current_row_index: old_x_position_of_piece_to_move)
-    move_piece.update_attributes(current_column_index: old_y_position_of_piece_to_move)
-    false
+    true
   end
 
   def in_check?(color)
@@ -166,6 +72,20 @@ class Game < ActiveRecord::Base
       return true if piece.valid_move?(king.current_row_index, king.current_column_index)
     end
     false
+  end
+
+  def move_puts_king_in_check?(color, piece, x, y)
+   check_state = false
+
+   ActiveRecord::Base.transaction do
+     piece.move_to!(x, y)
+     check_state = in_check?(color)
+     fail ActiveRecord::Rollback
+   end
+
+   piece.reload
+   reload
+   check_state
   end
 
   def opposite_remaining_pieces_of(color)
