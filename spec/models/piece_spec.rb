@@ -219,8 +219,8 @@ RSpec.describe Piece, type: :model do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 4, current_column_index: 4, captured: false, color: 'black')
-      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 7, captured: false, color: 'white')
+      FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 7, captured: false, color: 'white')
       expect(black_rook.can_be_captured?).to eq false
     end
   end
@@ -230,27 +230,27 @@ RSpec.describe Piece, type: :model do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
-      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
-      expect(black_bishop.obstructed_spots(0, 4)).to eq [ [2, 6], [1, 5] ]
+      FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
+      expect(black_bishop.obstructed_spots(0, 4)).to eq [[2, 6], [1, 5]]
     end
 
     it 'returns pieces of threatening piece\'s path to checked king' do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_queen = FactoryGirl.create(:queen, game: game, current_row_index: 2, current_column_index: 2, captured: false, color: 'black')
-      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      expect(black_queen.obstructed_spots(0, 4)).to eq [ [1, 3] ]
+      FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      expect(black_queen.obstructed_spots(0, 4)).to eq [[1, 3]]
     end
-  end
 
     it 'returns pieces of threatening piece\'s path to checked king' do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'black')
-      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      expect(black_rook.obstructed_spots(0, 4)).to eq [ [0, 1], [0, 2], [0, 3] ]
+      FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      expect(black_rook.obstructed_spots(0, 4)).to eq [[0, 1], [0, 2], [0, 3]]
     end
+  end
 
   describe 'can_be_blocked?' do
     it 'should return true if a piece can block check' do
@@ -258,7 +258,7 @@ RSpec.describe Piece, type: :model do
       game.pieces.destroy_all
       black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
+      FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
       expect(black_bishop.can_be_blocked?(white_king)).to eq true
     end
 
@@ -267,7 +267,7 @@ RSpec.describe Piece, type: :model do
       game.pieces.destroy_all
       black_queen = FactoryGirl.create(:queen, game: game, current_row_index: 2, current_column_index: 2, captured: false, color: 'black')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'white')
+      FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'white')
       expect(black_queen.can_be_blocked?(white_king)).to eq false
     end
 
@@ -275,7 +275,7 @@ RSpec.describe Piece, type: :model do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'black')
-      white_pawn = FactoryGirl.create(:rook, game: game, current_row_index: 6, current_column_index: 4, captured: false, color: 'white')
+      FactoryGirl.create(:rook, game: game, current_row_index: 6, current_column_index: 4, captured: false, color: 'white')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
       expect(black_rook.can_be_blocked?(white_king)).to eq false
     end

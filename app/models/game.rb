@@ -69,13 +69,13 @@ class Game < ActiveRecord::Base
     opponent_pieces.each do |piece|
       if piece.valid_move?(king.current_row_index, king.current_column_index)
         @threatening_piece = piece
-      return true 
+        return true
       end
     end
     false
   end
 
-  def pieces_remaining(color)
+  def pieces_remaining(*)
     pieces.where(captured: false).to_a
   end
 

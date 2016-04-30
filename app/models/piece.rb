@@ -127,7 +127,7 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # Here destination_row and destination_col is checked_king's position 
+  # Here destination_row and destination_col is checked_king's position
   def can_be_blocked?(king)
     # Indentify all spots that could obtruct path from threatening piece to checked_king
     obstruction_array = obstructed_spots(king.current_row_index, king.current_column_index)
@@ -135,7 +135,7 @@ class Piece < ActiveRecord::Base
     opponents = game.opposite_remaining_pieces_of(color)
     # Loop thru opponent array
     opponents.each do |opponent|
-      # Skip value if it's king 
+      # Skip value if it's king
       next if opponent.type == 'King'
       # Call valid move on each of the obstruction array values
       obstruction_array.each do |spot|
@@ -150,9 +150,9 @@ class Piece < ActiveRecord::Base
     opponents = game.opposite_remaining_pieces_of(color)
     success = false
     opponents.each do |opponent|
-    # Determine if any opponent piece (same color as checked king) can capture threatening piece
-    # Here current_row_index and current_column_index should refer to the threatening piece
-    success = true if opponent.valid_move?(current_row_index, current_column_index)
+      # Determine if any opponent piece (same color as checked king) can capture threatening piece
+      # Here current_row_index and current_column_index should refer to the threatening piece
+      success = true if opponent.valid_move?(current_row_index, current_column_index)
     end
     # Success must be returned outside of each-do loop
     success
