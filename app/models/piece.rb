@@ -133,13 +133,10 @@ class Piece < ActiveRecord::Base
     obstruction_array = obstructed_spots(king.current_row_index, king.current_column_index)
     # Here opponents are the same color as king
     opponents = game.opposite_remaining_pieces_of(color)
-
- 
     # Loop thru opponent array
     opponents.each do |opponent|
       # Skip value if it's king 
       next if opponent.type == 'King'
-
       # Call valid move on each of the obstruction array values
       obstruction_array.each do |spot|
         return true if opponent.valid_move?(spot[0], spot[1])

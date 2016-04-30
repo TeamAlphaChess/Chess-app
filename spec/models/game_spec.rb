@@ -87,5 +87,23 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:bishop, color: 'white', current_row_index: 6, current_column_index: 2, game_id: game.id)
       expect(game.checkmate?('black')).to eq true
     end
+
+    it 'should return false if a piece can block checkmate' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:bishop, current_row_index: 3, current_column_index: 7, captured: false, color: 'black', game_id: game.id)
+      FactoryGirl.create(:king, current_row_index: 0, current_column_index: 4, captured: false, color: 'white', game_id: game.id)
+      FactoryGirl.create(:rook, current_row_index: 0, current_column_index: 6, captured: false, color: 'white', game_id: game.id)
+      expect(game.checkmate?('white')).to eq false
+    end
+
+    it 'should return false if no piece can block threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:queen, current_row_index: 2, current_column_index: 2, captured: false, color: 'black', game_id: game.id)
+      FactoryGirl.create(:king, current_row_index: 0, current_column_index: 4, captured: false, color: 'white', game_id: game.id)
+      FactoryGirl.create(:rook, current_row_index: 0, current_column_index: 0, captured: false, color: 'white', game_id: game.id)
+      expect(game.checkmate?('white')).to eq true
+    end
   end
 end

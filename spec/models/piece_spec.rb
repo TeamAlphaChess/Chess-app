@@ -254,7 +254,7 @@ RSpec.describe Piece, type: :model do
 
   describe 'can_be_blocked?' do
     it 'should return true if a piece can block check' do
-    game = FactoryGirl.create(:game)
+      game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
       white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
