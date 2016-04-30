@@ -57,7 +57,7 @@ class Game < ActiveRecord::Base
     # return false unless @checked_king.obstructed_king?(destination_row, destination_col)
     # pieces.each do |piece|
     #   if game.piece.obstructed?(king.current_row_index, king.current_column_index) == false
-    #     @piece_causes_check = piece
+    #     @threatening_piece = piece
     #   end
     # end
 
@@ -66,7 +66,7 @@ class Game < ActiveRecord::Base
     checked_king = pieces.find_by_type_and_color(King, color)
     return false if checked_king.can_move_out_of_check?
     # here threatening piece is opposite color of checked king
-    return false if @threatening_piece.capturable?
+    return false if @threatening_piece.can_be_captured?
     true
   end
 
