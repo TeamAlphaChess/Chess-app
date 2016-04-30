@@ -163,10 +163,10 @@ class Piece < ActiveRecord::Base
   end
 
   def update_rook_kingside(*)
-    update_attributes(current_row_index: 0, current_column_index: 5)
+    update_attributes(current_row_index: current_row_index, current_column_index: 5)
   end
 
   def update_rook_queenside(*)
-    update_attributes(current_row_index: 0, current_column_index: 3)
+    update_attributes(current_row_index: current_row_index, current_column_index: 3)
   end
 end
