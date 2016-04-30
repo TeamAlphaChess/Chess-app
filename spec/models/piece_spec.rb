@@ -225,15 +225,30 @@ RSpec.describe Piece, type: :model do
     end
   end
 
-  # describe 'obstructed_spots' do
-  #   it 'returns true if a defending piece of checked white king can block threatening piece\'s path' do
-  #     game = FactoryGirl.create(:game)
-  #     game.pieces.destroy_all
-  #     black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
-  #     white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
-  #     white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
-  #     expect(black_bishop.obstructed_spots(0, 4)).to eq true
+  describe 'obstructed_spots' do
+    it 'returns true if a defending piece of checked white king can block threatening piece\'s path' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_bishop = FactoryGirl.create(:bishop, game: game, current_row_index: 3, current_column_index: 7, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      white_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 6, captured: false, color: 'white')
+      expect(black_bishop.obstructed_spots(0, 4)).to eq [ [2, 6], [1, 5] ]
+    end
 
-  #   end
-  # end
+    it 'returns pieces of threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_queen = FactoryGirl.create(:queen, game: game, current_row_index: 2, current_column_index: 2, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      expect(black_queen.obstructed_spots(0, 4)).to eq [ [1, 3] ]
+    end
+  end
+
+    it 'returns pieces of threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      black_rook = FactoryGirl.create(:rook, game: game, current_row_index: 0, current_column_index: 0, captured: false, color: 'black')
+      white_king = FactoryGirl.create(:king, game: game, current_row_index: 0, current_column_index: 4, captured: false, color: 'white')
+      expect(black_rook.obstructed_spots(0, 4)).to eq [ [0, 1], [0, 2], [0, 3] ]
+    end
 end
