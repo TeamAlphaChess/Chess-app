@@ -1,26 +1,6 @@
 # frozen_string_literal: true
 module Obstructions
 
-  # Here destination_row, destination_col is checked king color
-  # Determine if location is already occupied by piece of same color
-  # def path_obstructed?(destination_row, destination_col)
-  #   checked_king = game.pieces.find_by(current_row_index: destination_row, current_destination_index: destination_col)
-  #     remaining_protectors = pieces_remaining(checked_king.color)
-
-  #     remaining_protectors.each do |piece|
-
-
-
-
-
-
-
-  #   # If piece on square is same color as threatened king, then it is a path_obstruction
-  
-  # end
-
-
-
   # Create an array of square locations [destination_row, destination_col] that will be checked later for obstruction
   # Method checks for diagonal paths such as those used by Queen and Bishop
   def diagonal_obstruction_array(destination_row, destination_col)

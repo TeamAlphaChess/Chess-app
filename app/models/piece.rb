@@ -3,8 +3,7 @@ class Piece < ActiveRecord::Base
   belongs_to :game
   belongs_to :user, class_name: 'User'
 
-
-  # Include Obstructions conernfor can_be_blocked? methods
+  # Include Obstructions conern for can_be_blocked? methods
   include Obstructions
 
   def obstructed?(destination_row, destination_col)
@@ -128,23 +127,26 @@ class Piece < ActiveRecord::Base
     end
   end
 
-  # Here destination_row and destination_col is threatening_piece's position
-  # def can_capture_threat?(destination_row, destination_col)
-  #   game.pieces.each do
-  #     own_color = game.pieces_remaining(color)
-  #   own_team.each do |piece|
+  # Here destination_row and destination_col is checked_king's position 
+  def can_be_blocked?(king)
+    # Indentify all spots that could obtruct path from threatening piece to checked_king
+    obstruction_array = obstructed_spots(king.current_row_index, king.current_column_index)
+    # Here opponents are the same color as king
+    opponents = game.opposite_remaining_pieces_of(color)
 
+ 
+    # Loop thru opponent array
+    opponents.each do |opponent|
+      # Skip value if it's king 
+      next if opponent.type == 'King'
 
-  #     opponents = game.pieces_remaining(!color)
-  #   }
-  #   opponents.each do |opponent|
-  #     # Determine if each piece can be captured
-
-  #   end
-  #     return true if valid_move?(destination_row, destination_col)
-  #   end
-  #   false
-  # end
+      # Call valid move on each of the obstruction array values
+      obstruction_array.each do |spot|
+        return true if opponent.valid_move?(spot[0], spot[1])
+      end
+    end
+    false
+  end
 
   def can_be_captured?
     # Here color should refer to color of the threatening piece
