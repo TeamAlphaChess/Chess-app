@@ -10,13 +10,13 @@ RSpec.describe Game, type: :model do
       expect(open_games.length).to eq(0)
     end
 
-    it 'should query a maximum of 20 games' do
-      FactoryGirl.create_list(:game, 21, black_player_id: nil)
+    it 'should query a maximum of 10 games' do
+      FactoryGirl.create_list(:game, 11, black_player_id: nil)
       open_games = Game.list_available_games
-      expect(open_games.length).to eq(20)
+      expect(open_games.length).to eq(10)
     end
 
-    it 'should return 0 out of 2 created games if 1 game is full, while only white is present in other game' do
+    it 'should return 0 out of 2 created games if 1 game is full, while only black is present in other game' do
       FactoryGirl.create(:game, white_player_id: nil)
       FactoryGirl.create(:game)
       open_games = Game.list_available_games

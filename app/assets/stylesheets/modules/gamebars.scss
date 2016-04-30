@@ -1,0 +1,34 @@
+/* ====================================
+Chessgame Gamebars
+======================================*/
+
+.game-bar {
+  height: 23px;
+  width: 100%;
+  background-color: white;
+  max-width: 132px;
+  box-shadow: $element-shadow;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.game-bar-avatar {
+  height: 100%;
+  width: 15%;
+  display: inline-block;
+}
+
+.game-bar-normal-text {
+
+}
+
+.game-bar-status-text {
+
+}
+
+
+/* ====================================
+Chessgame Sidebar
+======================================*/

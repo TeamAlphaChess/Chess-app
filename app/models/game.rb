@@ -6,12 +6,8 @@ class Game < ActiveRecord::Base
   has_many :pieces, dependent: :destroy
   after_create :populate_board!
 
-  # Ready to get set up for Ajax Requests
-  # Need to add json renderer here
-  # In Ajax, make sure on success, the offset count is
-  # incremented by 10
-  def self.list_available_games(offset_count = 0)
-    Game.where(black_player_id: nil).offset(offset_count).limit(20)
+  def self.list_available_games(offset_count = 0, query_limit = 10)
+    Game.where(black_player_id: nil).offset(offset_count).limit(query_limit)
   end
 
   def populate_board! # rubocop:disable Metrics/AbcSize
@@ -52,6 +48,7 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
+<<<<<<< HEAD
   def checkmate?(color)
     return false unless in_check?(color)
     # Determine if king can move out of check to escape
@@ -92,4 +89,14 @@ class Game < ActiveRecord::Base
     end
     remaining_pieces
   end
+=======
+  def update_player_turn
+    # if current_user.id == self.white_player_id
+    #   self.update_attributes(current_player_turn_id: self.black_player_id)
+    # else
+    #   self.update_attributes(current_player_turn_id: self.white_player_id)
+    # end
+  end
+>>>>>>> bb315c75fed333299266ad8ef38e40896f868f6b
+  
 end
