@@ -11,4 +11,8 @@ class Bishop < Piece
       true
     end
   end
+
+  def obstructed_spots?(destination_row, destination_col)
+    diagonal_obstructions(destination_row, destination_col)
+  end
 end

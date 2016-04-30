@@ -13,4 +13,8 @@ class Rook < Piece
   def empty_or_diff_color?(destination_row, destination_col)
     !spot_taken?(destination_row, destination_col) || !same_color?(destination_row, destination_col)
   end
+
+  def obstructed_spots?(destination_row, destination_col)
+    rectilinear_obstructions(destination_row, destination_col)
+  end
 end
