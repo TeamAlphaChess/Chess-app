@@ -48,7 +48,6 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
-<<<<<<< HEAD
   def checkmate?(color)
     return false unless in_check?(color)
     # Determine if king can move out of check to escape
@@ -89,7 +88,7 @@ class Game < ActiveRecord::Base
     end
     remaining_pieces
   end
-=======
+
   def update_player_turn
     # if current_user.id == self.white_player_id
     #   self.update_attributes(current_player_turn_id: self.black_player_id)
@@ -97,6 +96,4 @@ class Game < ActiveRecord::Base
     #   self.update_attributes(current_player_turn_id: self.white_player_id)
     # end
   end
->>>>>>> bb315c75fed333299266ad8ef38e40896f868f6b
-  
 end
