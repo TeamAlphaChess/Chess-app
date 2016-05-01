@@ -58,7 +58,9 @@ class Game < ActiveRecord::Base
 
     check_these_pieces.each do |our_piece|
       check_these_coords.each { |x,y|
-        return false if our_piece.valid_move?(x,y) && !move_puts_king_in_check?(which_color, our_piece, x, y)
+        if our_piece.valid_move?(x,y) && !move_puts_king_in_check?(which_color, our_piece, x, y)
+          return false
+        end
       }
     end
     true
