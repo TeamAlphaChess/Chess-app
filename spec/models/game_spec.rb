@@ -37,4 +37,73 @@ RSpec.describe Game, type: :model do
       expect(game.reload.pieces.count).to eq 32
     end
   end
+
+  describe 'in_check?' do
+    it 'should return true if the white king is in check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+      piece_causing_check = FactoryGirl.create(:bishop, color: 'black', current_row_index: 7, current_column_index: 0, game_id: game.id)
+      expect(game.in_check?('white')).to eq piece_causing_check
+    end
+
+    it 'should return false if king is not in check' do
+      game = FactoryGirl.create(:game)
+      expect(game.in_check?('white')).to eq nil
+    end
+  end
+
+  describe 'checkmate?' do
+    it 'should return false if white king can move out of check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+      expect(game.checkmate?('white')).to eq false
+    end
+
+    it 'should return false if black king can move out of check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'black', current_row_index: 7, current_column_index: 4, game_id: game.id)
+      expect(game.checkmate?('black')).to eq false
+    end
+
+    it 'should return true if game if white king can\'t move out of check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 4, game_id: game.id)
+      FactoryGirl.create(:queen, color: 'black', current_row_index: 2, current_column_index: 4, game_id: game.id)
+      FactoryGirl.create(:bishop, color: 'black', current_row_index: 1, current_column_index: 6, game_id: game.id)
+      FactoryGirl.create(:bishop, color: 'black', current_row_index: 1, current_column_index: 2, game_id: game.id)
+      expect(game.checkmate?('white')).to eq true
+    end
+
+    it 'should return true if black king can\'t move out of check' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:king, color: 'black', current_row_index: 7, current_column_index: 4, game_id: game.id)
+      FactoryGirl.create(:queen, color: 'white', current_row_index: 5, current_column_index: 4, game_id: game.id)
+      FactoryGirl.create(:bishop, color: 'white', current_row_index: 6, current_column_index: 6, game_id: game.id)
+      FactoryGirl.create(:bishop, color: 'white', current_row_index: 6, current_column_index: 2, game_id: game.id)
+      expect(game.checkmate?('black')).to eq true
+    end
+
+    it 'should return false if a piece can block checkmate' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:bishop, current_row_index: 3, current_column_index: 7, captured: false, color: 'black', game_id: game.id)
+      FactoryGirl.create(:king, current_row_index: 0, current_column_index: 4, captured: false, color: 'white', game_id: game.id)
+      FactoryGirl.create(:rook, current_row_index: 0, current_column_index: 6, captured: false, color: 'white', game_id: game.id)
+      expect(game.checkmate?('white')).to eq false
+    end
+
+    it 'should return false if no piece can block threatening piece\'s path to checked king' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      FactoryGirl.create(:queen, current_row_index: 2, current_column_index: 2, captured: false, color: 'black', game_id: game.id)
+      FactoryGirl.create(:king, current_row_index: 0, current_column_index: 4, captured: false, color: 'white', game_id: game.id)
+      FactoryGirl.create(:rook, current_row_index: 0, current_column_index: 0, captured: false, color: 'white', game_id: game.id)
+      expect(game.checkmate?('white')).to eq true
+    end
+  end
 end

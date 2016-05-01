@@ -48,6 +48,48 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
+  def checkmate?(color)
+    piece_causing_check = in_check?(color)
+    return false unless piece_causing_check
+    # Determine if king can move out of check to escape
+    checked_king = pieces.find_by_type_and_color(King, color)
+    return false if checked_king.can_move_out_of_check?
+    # here threatening piece is opposite color of checked king
+    return false if piece_causing_check.can_be_captured?
+    return false if piece_causing_check.can_be_blocked?(checked_king)
+    true
+  end
+
+  def in_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+    opponent_pieces.each do |piece|
+      if piece.valid_move?(king.current_row_index, king.current_column_index)
+        piece_causing_check = piece
+        return piece_causing_check
+      end
+    end
+    nil
+  end
+
+  def pieces_remaining(*)
+    pieces.where(captured: false).to_a
+  end
+
+  def opposite_remaining_pieces_of(color)
+    remaining_pieces = []
+    if color == 'white'
+      pieces.where(color: 'black', captured: false).find_each do |piece|
+        remaining_pieces << piece
+      end
+    else
+      pieces.where(color: 'white', captured: false).find_each do |piece|
+        remaining_pieces << piece
+      end
+    end
+    remaining_pieces
+  end
+
   def update_player_turn
     # if current_user.id == self.white_player_id
     #   self.update_attributes(current_player_turn_id: self.black_player_id)
