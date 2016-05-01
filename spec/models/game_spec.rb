@@ -39,16 +39,6 @@ RSpec.describe Game, type: :model do
   end
 
   describe 'stalemate?' do
-    it 'should return true if the only legal moves put you in check(whites move)' do
-      game = FactoryGirl.create(:game)
-      game.pieces.destroy_all
-      game.reload
-      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
-      FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_column_index: 6, game_id: game.id)
-      FactoryGirl.create(:queen, color: 'black', current_row_index: 1, current_column_index: 5, game_id: game.id)
-      expect(game.stalemate?('white')).to eq true
-    end
-
     it 'should return true for this stalemate' do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
@@ -57,6 +47,16 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 7, game_id: game.id)
       FactoryGirl.create(:rook, color: 'white', current_row_index: 7, current_column_index: 1, game_id: game.id)
       expect(game.stalemate?('black')).to eq true
+    end
+
+    it 'should return true if the only legal moves put you in check(whites move)' do
+      game = FactoryGirl.create(:game)
+      game.pieces.destroy_all
+      game.reload
+      FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
+      FactoryGirl.create(:king, color: 'black', current_row_index: 2, current_column_index: 6, game_id: game.id)
+      FactoryGirl.create(:queen, color: 'black', current_row_index: 1, current_column_index: 5, game_id: game.id)
+      expect(game.stalemate?('white')).to eq true
     end
 
     # it 'should return true if the only legal moves put you in check(whites move)' do
@@ -74,16 +74,16 @@ RSpec.describe Game, type: :model do
     #   FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 6, game_id: game.id)
     #   expect(game.stalemate?('white')).to eq true
     # end
-    #
-    # it 'should return false since this is the start of the game and it cannot be stalemate(whites move)' do
-    #   game = FactoryGirl.create(:game)
-    #   expect(game.stalemate?('white')).to eq false
-    # end
-    #
-    # it 'should return false since this is the start of the game and it cannot be stalemate(blacks move)' do
-    #   game = FactoryGirl.create(:game)
-    #   expect(game.stalemate?('black')).to eq false
-    # end
+
+    it 'should return false since this is the start of the game and it cannot be stalemate(whites move)' do
+      game = FactoryGirl.create(:game)
+      expect(game.stalemate?('white')).to eq false
+    end
+
+    it 'should return false since this is the start of the game and it cannot be stalemate(blacks move)' do
+      game = FactoryGirl.create(:game)
+      expect(game.stalemate?('black')).to eq false
+    end
   end
 
   describe 'in_check?' do
