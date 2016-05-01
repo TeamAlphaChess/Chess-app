@@ -191,8 +191,8 @@ class Piece < ActiveRecord::Base
     rook_data
   end
 
-  def rook_data
-    rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+  def piece_data
+     = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
     rook.update_attributes(current_row_index: destination_row, current_column_index: destination_col)
     rook_data = {
       :initialRow => current_row_index, 
@@ -202,6 +202,18 @@ class Piece < ActiveRecord::Base
       }
     rook_data
   end
+
+  # def rook_data
+  #   rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+  #   rook.update_attributes(current_row_index: destination_row, current_column_index: destination_col)
+  #   rook_data = {
+  #     :initialRow => current_row_index, 
+  #     :initialColumn => current_column_index,
+  #     :destinationRow => current_row_index,
+  #     :destinationColumn => 3
+  #     }
+  #   rook_data
+  # end
 
   def initialRow
     return current_row_index
