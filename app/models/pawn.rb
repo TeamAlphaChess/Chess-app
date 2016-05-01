@@ -7,9 +7,7 @@ class Pawn < Piece
 
     if white_pawn_in_starting_row? || black_pawn_in_starting_row?
       # Returns false if you try to move more then 2 spots when not in the pawn spawn rows
-      if move_distance(destination_row) > 2
-        false
-      end
+      return false if move_distance(destination_row) > 2
     elsif move_distance(destination_row) > 1
       # Returns false if you try to move more then 1 spot
       return false
@@ -34,12 +32,6 @@ class Pawn < Piece
     end
   end
 
-  def first_move?
-    if white_pawn_in_starting_row? || black_pawn_in_starting_row?
-      distance == 2
-    end
-  end
-
   def find_piece_under_destination(row, col)
     game.pieces.find_by_current_row_index_and_current_column_index(row + 1, col)
   end
@@ -55,7 +47,6 @@ class Pawn < Piece
   def black_pawn_in_starting_row?
     current_row_index == 6
   end
-
 
   private
 

@@ -116,10 +116,10 @@ RSpec.describe Game, type: :model do
 
     it 'should return true if the same spots are empty' do
       game = FactoryGirl.create(:game)
-      empty_locations = [[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],
-                         [3,0],[3,1],[3,2],[3,3],[3,4],[3,5],[3,6],[3,7],
-                         [4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],
-                         [5,0],[5,1],[5,2],[5,3],[5,4],[5,5],[5,6],[5,7]]
+      empty_locations = [[2, 0], [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7],
+                         [3, 0], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6], [3, 7],
+                         [4, 0], [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7],
+                         [5, 0], [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6], [5, 7]]
       expect(game.empty_spots).to eq empty_locations
     end
   end
@@ -130,7 +130,7 @@ RSpec.describe Game, type: :model do
       game.pieces.destroy_all
       king = FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
       FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 1, game_id: game.id)
-      expect(game.move_puts_king_in_check?('white', king, 0, 1 )).to eq true
+      expect(game.move_puts_king_in_check?('white', king, 0, 1)).to eq true
     end
 
     it 'should return true since im moving a piece to cause check' do
@@ -139,7 +139,7 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
       blocker = FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 0, game_id: game.id)
       FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 0, game_id: game.id)
-      expect(game.move_puts_king_in_check?('white', blocker, 1, 5 )).to eq true
+      expect(game.move_puts_king_in_check?('white', blocker, 1, 5)).to eq true
       expect(blocker.current_row_index).to eq 1
       expect(blocker.current_column_index).to eq 0
     end
@@ -150,7 +150,7 @@ RSpec.describe Game, type: :model do
       FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 0, game_id: game.id)
       blocker = FactoryGirl.create(:rook, color: 'white', current_row_index: 1, current_column_index: 0, game_id: game.id)
       FactoryGirl.create(:rook, color: 'black', current_row_index: 7, current_column_index: 1, game_id: game.id)
-      expect(game.move_puts_king_in_check?('white', blocker, 1, 5 )).to eq false
+      expect(game.move_puts_king_in_check?('white', blocker, 1, 5)).to eq false
       game.reload
       expect(blocker.current_row_index).to eq 1
       expect(blocker.current_column_index).to eq 0
