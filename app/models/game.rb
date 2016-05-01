@@ -6,12 +6,8 @@ class Game < ActiveRecord::Base
   has_many :pieces, dependent: :destroy
   after_create :populate_board!
 
-  # Ready to get set up for Ajax Requests
-  # Need to add json renderer here
-  # In Ajax, make sure on success, the offset count is
-  # incremented by 10
-  def self.list_available_games(offset_count = 0)
-    Game.where(black_player_id: nil).offset(offset_count).limit(20)
+  def self.list_available_games(offset_count = 0, query_limit = 10)
+    Game.where(black_player_id: nil).offset(offset_count).limit(query_limit)
   end
 
   def populate_board! # rubocop:disable Metrics/AbcSize
@@ -66,7 +62,19 @@ class Game < ActiveRecord::Base
     true
   end
 
-  def in_check?(color)
+  def checkmate?(color)
+    piece_causing_check = in_check?(color)
+    return false unless piece_causing_check
+    # Determine if king can move out of check to escape
+    checked_king = pieces.find_by_type_and_color(King, color)
+    return false if checked_king.can_move_out_of_check?
+    # here threatening piece is opposite color of checked king
+    return false if piece_causing_check.can_be_captured?
+    return false if piece_causing_check.can_be_blocked?(checked_king)
+    true
+  end
+
+  def causes_check?(color)
     king = pieces.find_by_type_and_color(King, color)
     opponent_pieces = opposite_remaining_pieces_of(color)
 
@@ -81,13 +89,30 @@ class Game < ActiveRecord::Base
 
     ActiveRecord::Base.transaction do
       piece.move_to!(x, y)
-      check_state = in_check?(color)
+      check_state = causes_check?(color)
       raise ActiveRecord::Rollback
     end
 
     piece.reload
     reload
     check_state
+  end
+
+  def in_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+
+    opponent_pieces.each do |piece|
+      if piece.valid_move?(king.current_row_index, king.current_column_index)
+        piece_causing_check = piece
+        return piece_causing_check
+      end
+    end
+    nil
+  end
+
+  def pieces_remaining(*)
+    pieces.where(captured: false).to_a
   end
 
   def opposite_remaining_pieces_of(color)
@@ -127,7 +152,6 @@ class Game < ActiveRecord::Base
 
   def empty_spots
     spots = all_coords
-
     taken_spots = []
 
     spots.each do |x, y|
@@ -138,5 +162,13 @@ class Game < ActiveRecord::Base
 
     empty_spots = spots - taken_spots
     empty_spots
+  end
+
+  def update_player_turn
+    # if current_user.id == self.white_player_id
+    #   self.update_attributes(current_player_turn_id: self.black_player_id)
+    # else
+    #   self.update_attributes(current_player_turn_id: self.white_player_id)
+    # end
   end
 end

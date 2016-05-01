@@ -112,7 +112,6 @@ RSpec.describe King, type: :model do
   end
 
   # Tests for castling and associated methods:
-  # Tests for can_castle? method
   describe 'can_castle?' do
     it 'should return true for an unmoved kingside rook with no obstructions in-between' do
       game = FactoryGirl.create(:game)
@@ -244,7 +243,7 @@ RSpec.describe King, type: :model do
 
   # Test for castle!
   describe 'castle!' do
-    it 'should return new king position for a valid castle move with kingside rook' do
+    it 'should return new king position for a valid castle move with white king and kingside rook' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
@@ -256,7 +255,19 @@ RSpec.describe King, type: :model do
       expect(white_king.current_column_index).to eq 6
     end
 
-    it 'should return new king position for a valid castle move with queenside rook' do
+    it 'should return new king position for a valid castle move with black king and kingside rook' do
+      game = FactoryGirl.create(:game)
+      black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
+      black_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
+      black_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_king.castle!(7, 7)
+      expect(black_king.current_row_index).to eq 7
+      expect(black_king.current_column_index).to eq 6
+    end
+
+    it 'should return new king position for a valid castle move with white king and queenside rook' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 2)
@@ -270,7 +281,21 @@ RSpec.describe King, type: :model do
       expect(white_king.current_column_index).to eq 2
     end
 
-    it 'should return new rook position for a valid castle move with kingside rook' do
+    it 'should return new king position for a valid castle move with black king and queenside rook' do
+      game = FactoryGirl.create(:game)
+      black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 2)
+      black_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 1)
+      black_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+      black_queen.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_king.castle!(7, 0)
+      expect(black_king.current_row_index).to eq 7
+      expect(black_king.current_column_index).to eq 2
+    end
+
+    it 'should return new rook position for a valid castle move with white king and kingside rook' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
@@ -285,7 +310,22 @@ RSpec.describe King, type: :model do
       expect(white_rook.current_column_index).to eq 5
     end
 
-    it 'should return new rook position for a valid castle move with queenside rook' do
+    it 'should return new rook position for a valid castle move with black king and kingside rook' do
+      game = FactoryGirl.create(:game)
+      black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
+      black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 7)
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 5)
+      black_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 6)
+      black_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_king.castle!(7, 7)
+      black_rook.reload.current_row_index
+      black_rook.reload.current_column_index
+      expect(black_rook.current_row_index).to eq 7
+      expect(black_rook.current_column_index).to eq 5
+    end
+
+    it 'should return new rook position for a valid castle move with white king and queenside rook' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
       white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
@@ -300,6 +340,42 @@ RSpec.describe King, type: :model do
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 3
+    end
+
+    it 'should return new rook position for a valid castle move with black king and queenside rook' do
+      game = FactoryGirl.create(:game)
+      black_king = game.pieces.find_by_current_row_index_and_current_column_index(7, 4)
+      black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 0)
+      black_bishop = game.pieces.find_by_current_row_index_and_current_column_index(7, 2)
+      black_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_knight = game.pieces.find_by_current_row_index_and_current_column_index(7, 1)
+      black_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+      black_queen.update_attributes(current_row_index: nil, current_column_index: nil)
+      black_king.castle!(7, 0)
+      black_rook.reload.current_row_index
+      black_rook.reload.current_column_index
+      expect(black_rook.current_row_index).to eq 7
+      expect(black_rook.current_column_index).to eq 3
+    end
+  end
+
+  describe 'can_move_out_of_check?' do
+    it 'should allow king to move out of check when pawn in front removed' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      expect(white_king.can_move_out_of_check?).to eq true
+      expect(white_king.current_row_index).to eq 0
+    end
+
+    it 'should NOT allow king to move out of check when king doesn\'t have valid move' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+      black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
+      expect(white_king.can_move_out_of_check?).to eq false
     end
   end
 end

@@ -66,6 +66,10 @@ class Pawn < Piece
     end
   end
 
+  def pawn?
+    true
+  end
+
   def can_move_forward?(destination_row, destination_col)
     vertical?(destination_row, destination_col) && !spot_taken?(destination_row, destination_col)
   end
