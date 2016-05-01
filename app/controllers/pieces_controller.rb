@@ -213,7 +213,16 @@ class PiecesController < ApplicationController
 
     # Methods to call
     # Checkmate, lose or win
-    # Check
+    # Check with in_check? method
+    if game.in_check?(color)
+      add_player_messages('Ugh... Your king is in check!', 'Nice! You\'ve put opponent\'s king in check!')
+      check_game_status
+      @game.update_player_turn
+      200
+    else
+      422
+    end
+
     # Stalemate
     # Pawn Promotion
     # if pawn promotion is pending, make sure to set
