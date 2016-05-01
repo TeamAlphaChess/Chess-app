@@ -43,13 +43,13 @@ RSpec.describe Game, type: :model do
       game = FactoryGirl.create(:game)
       game.pieces.destroy_all
       FactoryGirl.create(:king, color: 'white', current_row_index: 0, current_column_index: 7, game_id: game.id)
-      FactoryGirl.create(:bishop, color: 'black', current_row_index: 7, current_column_index: 0, game_id: game.id)
-      expect(game.in_check?('white')).to eq true
+      threatening_piece = FactoryGirl.create(:bishop, color: 'black', current_row_index: 7, current_column_index: 0, game_id: game.id)
+      expect(game.in_check?('white')).to eq threatening_piece
     end
 
     it 'should return false if king is not in check' do
       game = FactoryGirl.create(:game)
-      expect(game.in_check?('white')).to eq false
+      expect(game.in_check?('white')).to eq nil
     end
   end
 
