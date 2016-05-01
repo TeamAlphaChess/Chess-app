@@ -112,7 +112,6 @@ RSpec.describe King, type: :model do
   end
 
   # Tests for castling and associated methods:
-  # Tests for can_castle? method
   describe 'can_castle?' do
     it 'should return true for an unmoved kingside rook with no obstructions in-between' do
       game = FactoryGirl.create(:game)
@@ -401,6 +400,25 @@ RSpec.describe King, type: :model do
       expect(rook_data.initialColumn).to eq 7
       expect(rook_data.destinationRow).to eq 0
       expect(rook_data.destinationColumn).to eq 5
+    end
+  end
+
+  describe 'can_move_out_of_check?' do
+    it 'should allow king to move out of check when pawn in front removed' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      expect(white_king.can_move_out_of_check?).to eq true
+      expect(white_king.current_row_index).to eq 0
+    end
+
+    it 'should NOT allow king to move out of check when king doesn\'t have valid move' do
+      game = FactoryGirl.create(:game)
+      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+      game.pieces.find_by_current_row_index_and_current_column_index(1, 4).destroy
+      black_queen = game.pieces.find_by_current_row_index_and_current_column_index(7, 3)
+      black_queen.update_attributes(current_row_index: 4, current_column_index: 4)
+      expect(white_king.can_move_out_of_check?).to eq false
     end
   end
 end

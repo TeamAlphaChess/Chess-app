@@ -6,25 +6,26 @@ $(document).ready(function() {
   var mainSideNav = $('#mainSideNav');
   var mainContentContainer = $('#mainContentContainer');
   var mainSideNavOpen = false;
+  var timer = 550;
 
   // Listeners
   mainSideNavTrigger.on('click', function() {
 
     if (mainSideNavOpen === false) {
-      mainContentContainer.animate({
+      mainContentContainer.velocity({
         right: mainSideNav.width()
-      }, 'slow', function() {
-        mainSideNav.fadeIn('slow');
+      }, timer, function() {
+        mainSideNav.fadeIn(timer);
       });
 
       mainSideNavOpen = true;
 
     } else {
 
-      mainSideNav.fadeOut('slow', function() {
-        mainContentContainer.animate({
+      mainSideNav.fadeOut(timer, function() {
+        mainContentContainer.velocity({
           right: '0'
-        }, 'slow' );
+        }, timer );
       });
 
       mainSideNavOpen = false;

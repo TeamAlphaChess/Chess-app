@@ -38,3 +38,8 @@ Hover States
   color: $red;
   cursor: pointer;
 }
+
+.chess-square-states:hover {
+  cursor: pointer;
+  background-color: $yellow;
+}
