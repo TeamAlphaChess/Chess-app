@@ -26,43 +26,25 @@ class King < Piece
   end
 
   def castle!(destination_row, destination_col)
-    # Create hash table for frontend logic
-    rook_data = {
-      :initialRow => destination_row, 
-      :initialColumn => 7,
-      :destinationRow => destination_row,
-      :destinationColumn => 5}
-    king_data = {
-      :initialRow => destination_row, 
-      :initialColumn => 4,
-      :destinationRow => destination_row,
-      :destinationColumn => 6}
-    
+    @startRow = current_row_index
+    @startCol = current_column_index
+
     # This is where we will update the database for the move.
     if destination_col > current_column_index
-      #update_rook_kingside(current_row_index, 7)
       move_to!(destination_row, 6)
       rook_move!(destination_row, 7)
-  
     elsif destination_col < current_column_index
-      #update_rook_queenside(current_row_index, 0)
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
-
     end
-
-    # return_data = []
-    # rook_data.destinationColumn
-    # return_data << king_data
-    # return_data << rook_data
   end
 
   def king_data 
-    king_data = {
-      :initialRow => current_row_index, 
-      :initialColumn => current_column_index,
+    piece_data = {
+      :initialRow => @startRow,
+      :initialColumn => @startCol,
       :destinationRow => current_row_index,
-      :destinationColumn => 3
+      :destinationColumn => current_column_index
       }
   end
 

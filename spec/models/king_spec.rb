@@ -372,16 +372,18 @@ RSpec.describe King, type: :model do
       white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
       white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
       white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+      king_data = []
       white_king.castle!(0, 7)
       # Must reload rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
-      expect(white_king.destinationRow).to eq 0
-      expect(white_king.destinationColumn).to eq 6
+      #expect(white_king.destinationRow).to eq 0
+      expect(white_king.king_data).to eq 6
     end
 
+    # Tests for front end data object returned
     it 'should return a destinationColumn of 5 for white kingside rook' do
       game = FactoryGirl.create(:game)
       white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
@@ -396,10 +398,8 @@ RSpec.describe King, type: :model do
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
-      expect(rook_data.initialRow).to eq 0
-      expect(rook_data.initialColumn).to eq 7
-      expect(rook_data.destinationRow).to eq 0
-      expect(rook_data.destinationColumn).to eq 5
+
+
     end
   end
 
