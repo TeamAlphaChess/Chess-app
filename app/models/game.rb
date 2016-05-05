@@ -48,6 +48,20 @@ class Game < ActiveRecord::Base
     pieces.create(color: 'black', type: 'King', current_row_index: 7, current_column_index: 4)
   end
 
+  def stalemate?(which_color)
+    check_these_pieces = remaining_pieces_of(which_color)
+    check_these_coords = all_coords
+
+    check_these_pieces.each do |our_piece|
+      check_these_coords.each do |x, y|
+        if our_piece.valid_move?(x, y) && !move_puts_king_in_check?(which_color, our_piece, x, y)
+          return false
+        end
+      end
+    end
+    true
+  end
+
   def checkmate?(color)
     piece_causing_check = in_check?(color)
     return false unless piece_causing_check
@@ -60,9 +74,34 @@ class Game < ActiveRecord::Base
     true
   end
 
+  def causes_check?(color)
+    king = pieces.find_by_type_and_color(King, color)
+    opponent_pieces = opposite_remaining_pieces_of(color)
+
+    opponent_pieces.each do |piece|
+      return true if piece.valid_move?(king.current_row_index, king.current_column_index)
+    end
+    false
+  end
+
+  def move_puts_king_in_check?(color, piece, x, y)
+    check_state = false
+
+    ActiveRecord::Base.transaction do
+      piece.move_to!(x, y)
+      check_state = causes_check?(color)
+      raise ActiveRecord::Rollback
+    end
+
+    piece.reload
+    reload
+    check_state
+  end
+
   def in_check?(color)
     king = pieces.find_by_type_and_color(King, color)
     opponent_pieces = opposite_remaining_pieces_of(color)
+
     opponent_pieces.each do |piece|
       if piece.valid_move?(king.current_row_index, king.current_column_index)
         piece_causing_check = piece
@@ -78,6 +117,7 @@ class Game < ActiveRecord::Base
 
   def opposite_remaining_pieces_of(color)
     remaining_pieces = []
+
     if color == 'white'
       pieces.where(color: 'black', captured: false).find_each do |piece|
         remaining_pieces << piece
@@ -88,6 +128,40 @@ class Game < ActiveRecord::Base
       end
     end
     remaining_pieces
+  end
+
+  def remaining_pieces_of(color)
+    the_pieces = []
+
+    pieces.where(color: color, captured: false).find_each do |piece|
+      the_pieces << piece
+    end
+
+    the_pieces
+  end
+
+  def all_coords
+    coords = []
+    0.upto(7).each do |x|
+      0.upto(7).each do |y|
+        coords << [x, y]
+      end
+    end
+    coords
+  end
+
+  def empty_spots
+    spots = all_coords
+    taken_spots = []
+
+    spots.each do |x, y|
+      if pieces.find_by_current_row_index_and_current_column_index(x, y)
+        taken_spots << [x, y]
+      end
+    end
+
+    empty_spots = spots - taken_spots
+    empty_spots
   end
 
   def update_player_turn
