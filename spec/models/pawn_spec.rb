@@ -44,17 +44,6 @@ RSpec.describe Pawn, type: :model do
       expect(white_pawn.valid_move?(4, 0)).to eq false
     end
 
-    it 'should return false if it tries to move two spaces on the opposite row' do
-      game = FactoryGirl.create(:game)
-      white_pawn = game.pieces.find_by_current_row_index_and_current_column_index(1, 0)
-      black_pawn = game.pieces.find_by_current_row_index_and_current_column_index(6, 0)
-      black_rook = game.pieces.find_by_current_row_index_and_current_column_index(7, 0)
-      black_pawn.update_attributes(current_row_index: nil, current_column_index: nil)
-      black_rook.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_pawn.update_attributes(current_row_index: 6, current_column_index: 0)
-      expect(white_pawn.valid_move?(8, 0)).to eq false
-    end
-
     it 'should return true if the first move tries to move two spaces forward(white)' do
       game = FactoryGirl.create(:game)
       # Select pawn
@@ -132,6 +121,30 @@ RSpec.describe Pawn, type: :model do
       white_pawn.move_to!(3, 0)
       other_white_pawn.move_to!(2, 1)
       expect(black_pawn.en_passant?(2, 0)).to eq false
+    end
+  end
+
+  describe 'white_pawn_in_starting_row?' do
+    it 'should return true if the pawn is in the original start position' do
+      pawn = FactoryGirl.create(:pawn, color: 'white', current_row_index: 1, current_column_index: 3)
+      expect(pawn.white_pawn_in_starting_row?).to eq true
+    end
+
+    it 'should return false if the pawn is not in the original start position' do
+      pawn = FactoryGirl.create(:pawn, color: 'white', current_row_index: 3, current_column_index: 3)
+      expect(pawn.white_pawn_in_starting_row?).to eq false
+    end
+  end
+
+  describe 'black_pawn_in_starting_row?' do
+    it 'should return true if the pawn is in the original start position' do
+      pawn = FactoryGirl.create(:pawn, color: 'black', current_row_index: 6, current_column_index: 3)
+      expect(pawn.black_pawn_in_starting_row?).to eq true
+    end
+
+    it 'should return false if the pawn is not in the original start position' do
+      pawn = FactoryGirl.create(:pawn, color: 'black', current_row_index: 4, current_column_index: 3)
+      expect(pawn.black_pawn_in_starting_row?).to eq false
     end
   end
 end

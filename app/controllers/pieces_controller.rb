@@ -212,11 +212,18 @@ class PiecesController < ApplicationController
     # messages in previous methods.
 
     # Methods to call
-    # Checkmate, lose or win
-    # Check
-    # Stalemate
-    # Pawn Promotion
-    # if pawn promotion is pending, make sure to set
-    # @response[:actionStatus][:pawnPromotion] = true
+
+    if @game.in_check?(@piece.color)
+      add_player_messages('Your king is in check!', 'You\'ve put your opponent\'s king in check!')
+
+    # elsif @game.stalemate?
+
+    elsif @game.checkmate?
+
+    elsif @game.pawn_promotion?
+      # Pawn Promotion
+      # if pawn promotion is pending, make sure to set
+      # @response[:actionStatus][:pawnPromotion] = true
+    end
   end
 end
