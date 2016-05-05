@@ -213,10 +213,8 @@ class PiecesController < ApplicationController
 
     # Methods to call
 
-    if @game.in_check?(color)
+    if @game.in_check?(@piece.color)
       add_player_messages('Your king is in check!', 'You\'ve put your opponent\'s king in check!')
-      check_game_status
-      @game.update_player_turn
 
     # elsif @game.stalemate?
 
