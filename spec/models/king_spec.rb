@@ -396,8 +396,6 @@ RSpec.describe King, type: :model do
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
-
-
     end
   end
 
