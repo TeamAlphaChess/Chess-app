@@ -42,10 +42,10 @@ class King < Piece
 
   def king_data 
     piece_data = {
-      :initialRow => @startRow,
-      :initialColumn => @startCol,
-      :destinationRow => current_row_index,
-      :destinationColumn => current_column_index
+      initial_Row: @startRow,
+      initial_Column: @startCol,
+      destination_Row: current_row_index,
+      destination_Column: current_column_index
       }
   end
 
