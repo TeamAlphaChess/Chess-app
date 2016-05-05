@@ -378,7 +378,7 @@ RSpec.describe King, type: :model do
       white_rook.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
-      expect(white_king.current_column_index).to eq 6
+      expect(white_rook.rook_data(0, 7)).to eq false
     end
 
     # Tests for front end data object returned

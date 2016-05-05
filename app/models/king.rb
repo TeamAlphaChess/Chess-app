@@ -37,13 +37,25 @@ class King < Piece
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
     end
-    # king_data
+    king_data
+    rook_data(destination_row, destination_col)
   end
 
   def king_data
     { initial_Row: @start_row_index, initial_Column: @start_col_index, destination_Row: current_row_index, destination_Column: current_column_index }
   end
 
+  def rook_data(destination_row, destination_col)
+    if destination_col > current_column_index
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+      rook.piece_data
+    elsif  destination_col < current_column_index
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+      rook.piece_data
+    end
+  end
+
+  
   def can_castle?(destination_row, destination_col)
     # check that king hasn't moved
     return false unless unmoved?
