@@ -37,6 +37,7 @@ class King < Piece
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
     end
+    #king_data
   end
 
   def king_data 
@@ -79,13 +80,13 @@ class King < Piece
 
   def rook_move!(destination_row, destination_col)
     if destination_col > current_column_index
-      game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
       # parameters passed into method will be new position
-      update_rook_kingside(destination_row, 5)
+      rook.update_rook_kingside(0, 7)
     elsif  destination_col < current_column_index
-      game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
       # parameters passed into method will be new position
-      update_rook_queenside(destination_row, 3)
+      rook.update_rook_queenside(0, 0)
     end
   end
 end
