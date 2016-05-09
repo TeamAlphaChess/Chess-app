@@ -26,35 +26,38 @@ class King < Piece
   end
 
   def castle!(destination_row, destination_col)
+    # Store initial king position values
     @start_row_index = current_row_index
     @start_col_index = current_column_index
-
+    # Store castling rook's initial position values
+    @rook = castling_rook(destination_row, destination_col)
+    @rook_start_row_index = @rook.current_row_index
+    @rook_start_column_index = @rook.current_column_index
     # This is where we will update the database for the move.
     if destination_col > current_column_index
       move_to!(destination_row, 6)
       rook_move!(destination_row, 7)
+      #@rook_data = {initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index, destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index }
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
+     #@rook_data = {initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index, destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index }
     end
     king_data
-    rook_data(destination_row, destination_col)
+    rook_data_returned
   end
 
   def king_data
     { initial_Row: @start_row_index, initial_Column: @start_col_index, destination_Row: current_row_index, destination_Column: current_column_index }
   end
 
-  def rook_data(destination_row, destination_col)
-    if destination_col > current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
-      rook.piece_data
-    elsif  destination_col < current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
-      rook.piece_data
-    end
-  end
+  # def rook_data_initial
+  #   rook_data_initial = [initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index]
+  # end
 
+  # def rook_data_final
+  #   rook_data_final = [destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index]
+  # end
   
   def can_castle?(destination_row, destination_col)
     # check that king hasn't moved
@@ -68,6 +71,14 @@ class King < Piece
       rook_kingside_unmoved?
     else
       rook_queenside_unmoved?
+    end
+  end
+
+  def castling_rook(destination_row, destination_col)
+    if destination_col > current_column_index
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+    elsif  destination_col < current_column_index
+      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
     end
   end
 
@@ -87,13 +98,28 @@ class King < Piece
 
   def rook_move!(destination_row, destination_col)
     if destination_col > current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+      @rook_moved = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+      @rook_data_initial = []
+      @rook_data_initial << @rook_moved.rook_data_initial
+      @rook_moved.update_rook_kingside(0, 7)
+      @rook_data_final = []
+      @rook_data_final << @rook_moved.rook_data_final
+
       # parameters passed into method will be new position
-      rook.update_rook_kingside(0, 7)
     elsif  destination_col < current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
-      # parameters passed into method will be new position
-      rook.update_rook_queenside(0, 0)
+      @rook_moved = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+      @rook_data_initial = []
+      @rook_data_initial << @rook_moved.rook_data_initial
+      @rook_moved.update_rook_queenside(0, 0)
+      @rook_data_final = []
+      @rook_data_final << @rook_moved.rook_data_final
     end
+  end
+
+  def rook_data_returned
+    returned_rook_data = []
+    returned_rook_data << @rook_data_initial
+    returned_rook_data << @rook_data_final
+    returned_rook_data
   end
 end

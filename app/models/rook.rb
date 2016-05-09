@@ -12,6 +12,24 @@ class Rook < Piece
     rectilinear_obstruction_array(destination_row, destination_col)
   end
 
+  # def rook_data_initial_Row
+  #   rook_data_initial_Row = current_row_index
+  # end
+
+  # def rook_data_initial_Column
+  #   rook_data_initial_Column = current_column_index
+  # end
+
+  # def rook_data_final
+  #   rook_data_final = { destination_Row: current_row_index, destination_Column: current_column_index 
+  #   }
+  # end
+
+  # def rook_data
+  #   rook_data_1 = []
+  #   rook_data_1 << rook_data_final
+  # end
+
   private
 
   def empty_or_diff_color?(destination_row, destination_col)

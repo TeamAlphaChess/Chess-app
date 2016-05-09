@@ -205,43 +205,43 @@ RSpec.describe King, type: :model do
   end
 
   # Test for rook_move!
-  describe 'rook_move!' do
-    it 'should return new rook location for kingside rook after method called' do
-      game = FactoryGirl.create(:game)
-      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
-      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
-      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_king.rook_move!(0, 7)
-      # Must reload white rook pieces
-      white_rook.reload.current_row_index
-      white_rook.reload.current_column_index
-      expect(white_rook.current_row_index).to eq 0
-      expect(white_rook.current_column_index).to eq 5
-    end
+  # describe 'rook_move!' do
+  #   it 'should return new rook location for kingside rook after method called' do
+  #     game = FactoryGirl.create(:game)
+  #     white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+  #     white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
+  #     white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
+  #     white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+  #     white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
+  #     white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+  #     white_king.rook_move!(0, 7)
+  #     # Must reload white rook pieces
+  #     white_rook.reload.current_row_index
+  #     white_rook.reload.current_column_index
+  #     expect(white_rook.current_row_index).to eq 0
+  #     expect(white_rook.current_column_index).to eq 5
+  #   end
 
-    it 'should return new rook location for kingside rook after method called' do
-      game = FactoryGirl.create(:game)
-      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
-      white_rook.update_attributes(current_row_index: 4, current_column_index: 4)
-      white_rook.update_attributes(current_row_index: 0, current_column_index: 0)
-      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 2)
-      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
-      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
-      white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_king.rook_move!(0, 0)
-      # Must reload white rook pieces
-      white_rook.reload.current_row_index
-      white_rook.reload.current_column_index
-      expect(white_rook.current_row_index).to eq 0
-      expect(white_rook.current_column_index).to eq 3
-    end
-  end
+  #   it 'should return new rook location for kingside rook after method called' do
+  #     game = FactoryGirl.create(:game)
+  #     white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
+  #     white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 0)
+  #     white_rook.update_attributes(current_row_index: 4, current_column_index: 4)
+  #     white_rook.update_attributes(current_row_index: 0, current_column_index: 0)
+  #     white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 2)
+  #     white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
+  #     white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 1)
+  #     white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
+  #     white_queen = game.pieces.find_by_current_row_index_and_current_column_index(0, 3)
+  #     white_queen.update_attributes(current_row_index: nil, current_column_index: nil)
+  #     white_king.rook_move!(0, 0)
+  #     # Must reload white rook pieces
+  #     white_rook.reload.current_row_index
+  #     white_rook.reload.current_column_index
+  #     expect(white_rook.current_row_index).to eq 0
+  #     expect(white_rook.current_column_index).to eq 3
+  #   end
+  # end
 
   # Test for castle!
   describe 'castle!' do
@@ -364,22 +364,7 @@ RSpec.describe King, type: :model do
       expect(black_rook.current_column_index).to eq 3
     end
 
-    it 'should return a destinationColumn of 6 for white king' do
-      game = FactoryGirl.create(:game)
-      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
-      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
-      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_king.castle!(0, 7)
-      # Must reload rook pieces
-      white_rook.reload.current_row_index
-      white_rook.reload.current_column_index
-      expect(white_rook.current_row_index).to eq 0
-      expect(white_rook.current_column_index).to eq 5
-      expect(white_rook.rook_data(0, 7)).to eq false
-    end
+       # end
 
     # Tests for front end data object returned
     it 'should return a destinationColumn of 5 for white kingside rook' do
@@ -394,8 +379,13 @@ RSpec.describe King, type: :model do
       # Must reload rook pieces
       white_rook.reload.current_row_index
       white_rook.reload.current_column_index
+      # white_king.reload.current_row_index
+      # white_king.reload.current_column_index
       expect(white_rook.current_row_index).to eq 0
       expect(white_rook.current_column_index).to eq 5
+      # expect(white_rook.rook_data_initial).to eq 7
+      # expect(white_rook.rook_data_final).to eq 7
+      expect(white_king.rook_data_returned).to eq 7
     end
   end
 
