@@ -47,7 +47,7 @@ class King < Piece
   end
 
   def king_data
-    { initial_Row: @start_row_index, initial_Column: @start_col_index, destination_Row: current_row_index, destination_Column: current_column_index }
+    { initialRow: @start_row_index, initialColumn: @start_col_index, destinationRow: current_row_index, destinationColumn: current_column_index }
   end
 
   def data_object

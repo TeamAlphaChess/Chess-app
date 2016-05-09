@@ -186,10 +186,10 @@ class Piece < ActiveRecord::Base
   end
 
   def rook_data_initial
-    [initial_Row: current_row_index, initial_Column: current_column_index]
+    [initialRow: current_row_index, initialColumn: current_column_index]
   end
 
   def rook_data_final
-    [destination_Row: current_row_index, destination_Column: current_column_index]
+    [destinationRow: current_row_index, destinationColumn: current_column_index]
   end
 end
