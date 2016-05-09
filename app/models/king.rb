@@ -120,6 +120,10 @@ class King < Piece
     returned_rook_data = []
     returned_rook_data << @rook_data_initial
     returned_rook_data << @rook_data_final
-    returned_rook_data
+    flat_data = returned_rook_data.flatten
+    # init = @rook_data_initial
+    # final = @rook_data_final
+    Hash[*flat_data.map(&:to_a).flatten]
+
   end
 end
