@@ -175,7 +175,6 @@ class Piece < ActiveRecord::Base
 
   def piece_data
     { initial_Row: current_row_index, initial_Column: current_column_index, destination_Row: current_row_index, destination_Column: current_column_index }
-
   end
 
   def update_rook_kingside(*)
@@ -187,11 +186,10 @@ class Piece < ActiveRecord::Base
   end
 
   def rook_data_initial
-    rook_data_initial = [initial_Row: current_row_index, initial_Column: current_column_index]
+    [initial_Row: current_row_index, initial_Column: current_column_index]
   end
 
   def rook_data_final
-    rook_data_final = [destination_Row: current_row_index, destination_Column: current_column_index]
+    [destination_Row: current_row_index, destination_Column: current_column_index]
   end
-
 end

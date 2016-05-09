@@ -37,28 +37,25 @@ class King < Piece
     if destination_col > current_column_index
       move_to!(destination_row, 6)
       rook_move!(destination_row, 7)
-      #@rook_data = {initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index, destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index }
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
-     #@rook_data = {initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index, destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index }
     end
     king_data
     rook_data_returned
+    data_object
   end
 
   def king_data
     { initial_Row: @start_row_index, initial_Column: @start_col_index, destination_Row: current_row_index, destination_Column: current_column_index }
   end
 
-  # def rook_data_initial
-  #   rook_data_initial = [initial_Row: @rook_start_row_index, initial_Column: @rook_start_column_index]
-  # end
+  def data_object
+    data_object = []
+    data_object << king_data
+    data_object << rook_data_returned
+  end
 
-  # def rook_data_final
-  #   rook_data_final = [destination_Row: @rook.current_row_index, destination_Column: @rook.current_column_index]
-  # end
-  
   def can_castle?(destination_row, destination_col)
     # check that king hasn't moved
     return false unless unmoved?
@@ -76,9 +73,9 @@ class King < Piece
 
   def castling_rook(destination_row, destination_col)
     if destination_col > current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
-    elsif  destination_col < current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+      game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+    elsif destination_col < current_column_index
+      game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
     end
   end
 
@@ -104,9 +101,7 @@ class King < Piece
       @rook_moved.update_rook_kingside(0, 7)
       @rook_data_final = []
       @rook_data_final << @rook_moved.rook_data_final
-
-      # parameters passed into method will be new position
-    elsif  destination_col < current_column_index
+    elsif destination_col < current_column_index
       @rook_moved = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
       @rook_data_initial = []
       @rook_data_initial << @rook_moved.rook_data_initial
@@ -121,9 +116,6 @@ class King < Piece
     returned_rook_data << @rook_data_initial
     returned_rook_data << @rook_data_final
     flat_data = returned_rook_data.flatten
-    # init = @rook_data_initial
-    # final = @rook_data_final
     Hash[*flat_data.map(&:to_a).flatten]
-
   end
 end

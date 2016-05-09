@@ -363,30 +363,6 @@ RSpec.describe King, type: :model do
       expect(black_rook.current_row_index).to eq 7
       expect(black_rook.current_column_index).to eq 3
     end
-
-       # end
-
-    # Tests for front end data object returned
-    it 'should return a destinationColumn of 5 for white kingside rook' do
-      game = FactoryGirl.create(:game)
-      white_king = game.pieces.find_by_current_row_index_and_current_column_index(0, 4)
-      white_rook = game.pieces.find_by_current_row_index_and_current_column_index(0, 7)
-      white_bishop = game.pieces.find_by_current_row_index_and_current_column_index(0, 5)
-      white_bishop.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_knight = game.pieces.find_by_current_row_index_and_current_column_index(0, 6)
-      white_knight.update_attributes(current_row_index: nil, current_column_index: nil)
-      white_king.castle!(0, 7)
-      # Must reload rook pieces
-      white_rook.reload.current_row_index
-      white_rook.reload.current_column_index
-      # white_king.reload.current_row_index
-      # white_king.reload.current_column_index
-      expect(white_rook.current_row_index).to eq 0
-      expect(white_rook.current_column_index).to eq 5
-      # expect(white_rook.rook_data_initial).to eq 7
-      # expect(white_rook.rook_data_final).to eq 7
-      expect(white_king.rook_data_returned).to eq 7
-    end
   end
 
   describe 'can_move_out_of_check?' do
