@@ -172,24 +172,4 @@ class Piece < ActiveRecord::Base
   def black?
     !white?
   end
-
-  def piece_data
-    { initial_Row: current_row_index, initial_Column: current_column_index, destination_Row: current_row_index, destination_Column: current_column_index }
-  end
-
-  def update_rook_kingside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 5)
-  end
-
-  def update_rook_queenside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 3)
-  end
-
-  def rook_data_initial
-    [initialRow: current_row_index, initialColumn: current_column_index]
-  end
-
-  def rook_data_final
-    [destinationRow: current_row_index, destinationColumn: current_column_index]
-  end
 end
