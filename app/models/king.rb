@@ -4,7 +4,6 @@ class King < Piece
   def valid_move?(destination_row, destination_col)
     # Evaluate piece with invalid_destination to make sure there is not already a piece in the
     # destination_row/destination_column of the same color
-    # Check to see if the king is only moving exactly one space in any direction on the board
     !same_color?(destination_row, destination_col) && distance(destination_row, destination_col) == 1
   end
 
@@ -104,12 +103,4 @@ class King < Piece
     flat_rook_data = rook_data.flatten
     Hash[*flat_rook_data.map(&:to_a).flatten]
   end
-
-  # def rook_data
-  #   rook_data = []
-  #   rook_data << @rook_data_initial
-  #   rook_data << @rook_data_final
-  #   flat_rook_data = rook_data.flatten
-  #   Hash[*flat_rook_data.map(&:to_a).flatten]
-  # end
 end
