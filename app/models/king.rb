@@ -27,6 +27,7 @@ class King < Piece
 
   def castle!(destination_row, destination_col)
     # Store initial king position values
+    castle_data = []
     start_row = current_row_index
     start_col = current_column_index
     king_data = { initialRow: start_row, initialColumn: start_col }
@@ -35,14 +36,15 @@ class King < Piece
       move_to!(destination_row, 6)
       king_data[:destinationRow] = current_row_index
       king_data[:destinationColumn] = current_column_index
-      rook_move!(destination_row, 7)
+      castle_data << rook_move!(destination_row, 7)
+      castle_data.unshift(king_data)
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
-      rook_move!(destination_row, 0)
       king_data[:destinationRow] = current_row_index
       king_data[:destinationColumn] = current_column_index
+      castle_data << rook_move!(destination_row, 0)
+      castle_data.unshift(king_data)
     end
-    castle_data.unshift(king_data)
   end
 
   def can_castle?(destination_row, destination_col)
@@ -54,31 +56,10 @@ class King < Piece
     return false if current_row_index != destination_row
     # Select rook on correct side and check if it's moved
     if destination_col > current_column_index
-      rook_kingside_unmoved?
+      rook_kingside.unmoved?
     else
-      rook_queenside_unmoved?
+      rook_queenside.unmoved?
     end
-  end
-
-  def castle_data
-    castle_data = []
-    castle_data << rook_data
-  end
-
-  def rook_data
-    rook_data = []
-    rook_data << @rook_data_initial
-    rook_data << @rook_data_final
-    flat_rook_data = rook_data.flatten
-    Hash[*flat_rook_data.map(&:to_a).flatten]
-  end
-
-  def rook_kingside_unmoved?
-    rook_kingside.unmoved?
-  end
-
-  def rook_queenside_unmoved?
-    rook_queenside.unmoved?
   end
 
   def rook_kingside
@@ -95,27 +76,40 @@ class King < Piece
       type: 'Rook')
   end
 
-  def rook_move!(destination_row, destination_col)
-    @rook_data_initial = []
-    @rook_data_final = []
+  def rook_move!(_destination_row, destination_col)
+    rook_data_initial = []
+    rook_data_final = []
+    rook_data = []
     if destination_col > current_column_index
       # Locate kingside rook
       rook = rook_kingside
       # Store initial position attributes
-      @rook_data_initial << rook.rook_data_initial
+      rook_data_initial << rook.rook_data_initial
       # Move castling kingside rook to new coordinates
       rook.update_rook_kingside(0, 7)
       # Store final position attributes
-      @rook_data_final << rook.rook_data_final
+      rook_data_final << rook.rook_data_final
     elsif destination_col < current_column_index
       # Locate queenside rook
       rook = rook_queenside
       # Store initial position attributes
-      @rook_data_initial << rook.rook_data_initial
+      rook_data_initial << rook.rook_data_initial
       # Move castling queenside rook to new coordinates
       rook.update_rook_queenside(0, 0)
       # Store final position attributes
-      @rook_data_final << rook.rook_data_final
+      rook_data_final << rook.rook_data_final
     end
+    rook_data << rook_data_initial
+    rook_data << rook_data_final
+    flat_rook_data = rook_data.flatten
+    Hash[*flat_rook_data.map(&:to_a).flatten]
   end
+
+  # def rook_data
+  #   rook_data = []
+  #   rook_data << @rook_data_initial
+  #   rook_data << @rook_data_final
+  #   flat_rook_data = rook_data.flatten
+  #   Hash[*flat_rook_data.map(&:to_a).flatten]
+  # end
 end
