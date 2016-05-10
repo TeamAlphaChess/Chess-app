@@ -27,17 +27,24 @@ class King < Piece
 
   def castle!(destination_row, destination_col)
     # Store initial king position values
-    @start_row = current_row_index
-    @start_col = current_column_index
+    start_row = current_row_index
+    start_col = current_column_index
+    king_data = { initialRow: start_row, initialColumn: start_col }
     # Update the database for the move
     if destination_col > current_column_index
       move_to!(destination_row, 6)
+      king_data[:destinationRow] = current_row_index
+      king_data[:destinationColumn] = current_column_index
       rook_move!(destination_row, 7)
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
       rook_move!(destination_row, 0)
+      king_data[:destinationRow] = current_row_index
+      king_data[:destinationColumn] = current_column_index
     end
-    castle_data
+    #castle_data
+    castle_data.unshift(king_data)
+    
   end
 
   def can_castle?(destination_row, destination_col)
@@ -57,13 +64,13 @@ class King < Piece
 
   def castle_data
     castle_data = []
-    castle_data << king_data
+    #castle_data << king_data
     castle_data << rook_data
   end
 
-  def king_data
-    { initialRow: @start_row, initialColumn: @start_col, destinationRow: current_row_index, destinationColumn: current_column_index }
-  end
+  # def king_data
+  #   { initialRow: @start_row, initialColumn: @start_col, destinationRow: current_row_index, destinationColumn: current_column_index }
+  # end
 
   def rook_data
     rook_data = []
