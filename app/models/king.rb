@@ -35,13 +35,15 @@ class King < Piece
       move_to!(destination_row, 6)
       king_data[:destinationRow] = current_row_index
       king_data[:destinationColumn] = current_column_index
-      castle_data << rook_move!(destination_row, 7)
+      rook_data = rook_move!(destination_row, 7)
+      castle_data << rook_data
       castle_data.unshift(king_data)
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
       king_data[:destinationRow] = current_row_index
       king_data[:destinationColumn] = current_column_index
-      castle_data << rook_move!(destination_row, 0)
+      rook_data = rook_move!(destination_row, 0)
+      castle_data << rook_data
       castle_data.unshift(king_data)
     end
   end
@@ -76,31 +78,27 @@ class King < Piece
   end
 
   def rook_move!(_destination_row, destination_col)
-    rook_data_initial = []
-    rook_data_final = []
-    rook_data = []
     if destination_col > current_column_index
       # Locate kingside rook
       rook = rook_kingside
       # Store initial position attributes
-      rook_data_initial << rook.rook_data_initial
+      rook_data = { initialRow: rook.current_row_index, initialColumn: rook.current_column_index }
       # Move castling kingside rook to new coordinates
-      rook.update_rook_kingside(0, 7)
+      rook.update_attributes(current_row_index: current_row_index, current_column_index: 5)
       # Store final position attributes
-      rook_data_final << rook.rook_data_final
+      rook_data[:destinationRow] = rook.current_row_index
+      rook_data[:destinationColumn] = rook.current_column_index
     elsif destination_col < current_column_index
       # Locate queenside rook
       rook = rook_queenside
       # Store initial position attributes
-      rook_data_initial << rook.rook_data_initial
+      rook_data = { initialRow: rook.current_row_index, initialColumn: rook.current_column_index }
       # Move castling queenside rook to new coordinates
-      rook.update_rook_queenside(0, 0)
+      rook.update_attributes(current_row_index: current_row_index, current_column_index: 3)
       # Store final position attributes
-      rook_data_final << rook.rook_data_final
+      rook_data[:destinationRow] = rook.current_row_index
+      rook_data[:destinationColumn] = rook.current_column_index
     end
-    rook_data << rook_data_initial
-    rook_data << rook_data_final
-    flat_rook_data = rook_data.flatten
-    Hash[*flat_rook_data.map(&:to_a).flatten]
+    rook_data
   end
 end
