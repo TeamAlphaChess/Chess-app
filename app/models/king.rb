@@ -42,9 +42,7 @@ class King < Piece
       king_data[:destinationRow] = current_row_index
       king_data[:destinationColumn] = current_column_index
     end
-    #castle_data
     castle_data.unshift(king_data)
-    
   end
 
   def can_castle?(destination_row, destination_col)
@@ -64,13 +62,8 @@ class King < Piece
 
   def castle_data
     castle_data = []
-    #castle_data << king_data
     castle_data << rook_data
   end
-
-  # def king_data
-  #   { initialRow: @start_row, initialColumn: @start_col, destinationRow: current_row_index, destinationColumn: current_column_index }
-  # end
 
   def rook_data
     rook_data = []
@@ -81,17 +74,25 @@ class King < Piece
   end
 
   def rook_kingside_unmoved?
-    game.pieces.find_by(
-      current_row_index: current_row_index,
-      current_column_index: 7,
-      type: 'Rook').unmoved?
+    rook_kingside.unmoved?
   end
 
   def rook_queenside_unmoved?
+    rook_queenside.unmoved?
+  end
+
+  def rook_kingside
+    game.pieces.find_by(
+      current_row_index: current_row_index,
+      current_column_index: 7,
+      type: 'Rook')
+  end
+
+  def rook_queenside
     game.pieces.find_by(
       current_row_index: current_row_index,
       current_column_index: 0,
-      type: 'Rook').unmoved?
+      type: 'Rook')
   end
 
   def rook_move!(destination_row, destination_col)
@@ -99,22 +100,22 @@ class King < Piece
     @rook_data_final = []
     if destination_col > current_column_index
       # Locate kingside rook
-      @rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 7)
+      rook = rook_kingside
       # Store initial position attributes
-      @rook_data_initial << @rook.rook_data_initial
+      @rook_data_initial << rook.rook_data_initial
       # Move castling kingside rook to new coordinates
-      @rook.update_rook_kingside(0, 7)
+      rook.update_rook_kingside(0, 7)
       # Store final position attributes
-      @rook_data_final << @rook.rook_data_final
+      @rook_data_final << rook.rook_data_final
     elsif destination_col < current_column_index
       # Locate queenside rook
-      @rook = game.pieces.find_by(type: 'Rook', current_row_index: destination_row, current_column_index: 0)
+      rook = rook_queenside
       # Store initial position attributes
-      @rook_data_initial << @rook.rook_data_initial
+      @rook_data_initial << rook.rook_data_initial
       # Move castling queenside rook to new coordinates
-      @rook.update_rook_queenside(0, 0)
+      rook.update_rook_queenside(0, 0)
       # Store final position attributes
-      @rook_data_final << @rook.rook_data_final
+      @rook_data_final << rook.rook_data_final
     end
   end
 end
