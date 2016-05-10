@@ -64,7 +64,7 @@ class King < Piece
   def king_data
     { initialRow: @start_row, initialColumn: @start_col, destinationRow: current_row_index, destinationColumn: current_column_index }
   end
-  
+
   def rook_data
     rook_data = []
     rook_data << @rook_data_initial
