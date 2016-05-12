@@ -25,13 +25,22 @@ class King < Piece
   end
 
   def castle!(destination_row, destination_col) # rubocop:disable Metrics/AbcSize
-    castle_data = [{ initialRow: nil, initialColumn: nil, destinationRow: nil, destinationColumn: nil }, { initialRow: nil, initialColumn: nil, destinationRow: nil, destinationColumn: nil }]
+    castle_data = [{  initialRow:         nil,
+                      initialColumn:      nil,
+                      destinationRow:     nil,
+                      destinationColumn:  nil },
+                   {  initialRow:         nil,
+                      initialColumn:      nil,
+                      destinationRow:     nil,
+                      destinationColumn:  nil }]
     castle_data[0][:initialRow] = current_row_index
     castle_data[0][:initialColumn] = current_column_index
+
     if destination_col > current_column_index
       move_to!(destination_row, 6)
       castle_data[0][:destinationRow] = current_row_index
       castle_data[0][:destinationColumn] = current_column_index
+
       rook = rook_kingside
       castle_data[1][:initialRow] = rook.current_row_index
       castle_data[1][:initialColumn] = rook.current_column_index
@@ -39,10 +48,12 @@ class King < Piece
       castle_data[1][:destinationRow] = rook.current_row_index
       castle_data[1][:destinationColumn] = rook.current_column_index
       castle_data
+
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
       castle_data[0][:destinationRow] = current_row_index
       castle_data[0][:destinationColumn] = current_column_index
+
       rook = rook_queenside
       castle_data[1][:initialRow] = rook.current_row_index
       castle_data[1][:initialColumn] = rook.current_column_index
@@ -54,13 +65,9 @@ class King < Piece
   end
 
   def can_castle?(destination_row, destination_col)
-    # Check that king hasn't moved
     return false unless unmoved?
-    # Check that king moves not obstructed
     return false if obstructed?(destination_row, destination_col)
-    # Check that current_row_index is the same
     return false if current_row_index != destination_row
-    # Select rook on correct side and check if it's moved
     if destination_col > current_column_index
       rook_kingside.unmoved?
     else
