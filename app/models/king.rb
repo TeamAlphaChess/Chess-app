@@ -4,7 +4,6 @@ class King < Piece
   def valid_move?(destination_row, destination_col)
     # Evaluate piece with invalid_destination to make sure there is not already a piece in the
     # destination_row/destination_column of the same color
-    # Check to see if the king is only moving exactly one space in any direction on the board
     !same_color?(destination_row, destination_col) && distance(destination_row, destination_col) == 1
   end
 
@@ -25,53 +24,68 @@ class King < Piece
     success
   end
 
-  def castle!(destination_row, destination_col)
-    # this is where we will update the database for the move.
+  def castle!(destination_row, destination_col) # rubocop:disable Metrics/AbcSize
+    castle_data = [{  initialRow:         nil,
+                      initialColumn:      nil,
+                      destinationRow:     nil,
+                      destinationColumn:  nil },
+                   {  initialRow:         nil,
+                      initialColumn:      nil,
+                      destinationRow:     nil,
+                      destinationColumn:  nil }]
+    castle_data[0][:initialRow] = current_row_index
+    castle_data[0][:initialColumn] = current_column_index
+
     if destination_col > current_column_index
-      move_to!(current_row_index, 6)
-      rook_move!(destination_row, destination_col)
+      move_to!(destination_row, 6)
+      castle_data[0][:destinationRow] = current_row_index
+      castle_data[0][:destinationColumn] = current_column_index
+
+      rook = rook_kingside
+      castle_data[1][:initialRow] = rook.current_row_index
+      castle_data[1][:initialColumn] = rook.current_column_index
+      rook.update_attributes(current_row_index: current_row_index, current_column_index: 5)
+      castle_data[1][:destinationRow] = rook.current_row_index
+      castle_data[1][:destinationColumn] = rook.current_column_index
+      castle_data
+
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
-      rook_move!(destination_row, destination_col)
+      castle_data[0][:destinationRow] = current_row_index
+      castle_data[0][:destinationColumn] = current_column_index
+
+      rook = rook_queenside
+      castle_data[1][:initialRow] = rook.current_row_index
+      castle_data[1][:initialColumn] = rook.current_column_index
+      rook.update_attributes(current_row_index: current_row_index, current_column_index: 3)
+      castle_data[1][:destinationRow] = rook.current_row_index
+      castle_data[1][:destinationColumn] = rook.current_column_index
+      castle_data
     end
   end
 
   def can_castle?(destination_row, destination_col)
-    # check that king hasn't moved
     return false unless unmoved?
-    # check that king moves not obstructed
     return false if obstructed?(destination_row, destination_col)
-    # check that current_row_index is the same
     return false if current_row_index != destination_row
-    # select rook on correct side and check if it's moved
     if destination_col > current_column_index
-      rook_kingside_unmoved?
+      rook_kingside.unmoved?
     else
-      rook_queenside_unmoved?
+      rook_queenside.unmoved?
     end
   end
 
-  def rook_kingside_unmoved?
+  def rook_kingside
     game.pieces.find_by(
       current_row_index: current_row_index,
       current_column_index: 7,
-      type: 'Rook').unmoved?
+      type: 'Rook')
   end
 
-  def rook_queenside_unmoved?
+  def rook_queenside
     game.pieces.find_by(
       current_row_index: current_row_index,
       current_column_index: 0,
-      type: 'Rook').unmoved?
-  end
-
-  def rook_move!(_destination_row, destination_col)
-    if destination_col > current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 7)
-      rook.update_rook_kingside(0, 7)
-    elsif  destination_col < current_column_index
-      rook = game.pieces.find_by(type: 'Rook', current_row_index: current_row_index, current_column_index: 0)
-      rook.update_rook_queenside(0, 0)
-    end
+      type: 'Rook')
   end
 end

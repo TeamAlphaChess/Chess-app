@@ -188,7 +188,7 @@ class PiecesController < ApplicationController
   def castling!
     if @piece.type == 'King'
       if @piece.can_castle?(@destination_row, @destination_column)
-        @piece.castle!(@destination_row, @destination_column)
+        @response[:moves] = @piece.castle!(@destination_row, @destination_column)
         add_player_messages!('Other player\'s turn', 'Your turn')
         check_game_status
         @game.update_player_turn

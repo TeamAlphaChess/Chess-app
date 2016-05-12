@@ -172,12 +172,4 @@ class Piece < ActiveRecord::Base
   def black?
     !white?
   end
-
-  def update_rook_kingside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 5)
-  end
-
-  def update_rook_queenside(*)
-    update_attributes(current_row_index: current_row_index, current_column_index: 3)
-  end
 end
