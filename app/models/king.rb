@@ -25,42 +25,31 @@ class King < Piece
   end
 
   def castle!(destination_row, destination_col) # rubocop:disable Metrics/AbcSize
-    # Store initial king position values
-    castle_data = []
-    start_row = current_row_index
-    start_col = current_column_index
-    king_data = { initialRow: start_row, initialColumn: start_col }
-    # Update the database for the move
+    castle_data = [{ initialRow: nil, initialColumn: nil, destinationRow: nil, destinationColumn: nil }, { initialRow: nil, initialColumn: nil, destinationRow: nil, destinationColumn: nil }]
+    castle_data[0][:initialRow] = current_row_index
+    castle_data[0][:initialColumn] = current_column_index
     if destination_col > current_column_index
       move_to!(destination_row, 6)
-      king_data[:destinationRow] = current_row_index
-      king_data[:destinationColumn] = current_column_index
-      # Locate kingside rook
+      castle_data[0][:destinationRow] = current_row_index
+      castle_data[0][:destinationColumn] = current_column_index
       rook = rook_kingside
-      # Store initial position attributes
-      rook_data = { initialRow: rook.current_row_index, initialColumn: rook.current_column_index }
-      # Move castling kingside rook to new coordinates
+      castle_data[1][:initialRow] = rook.current_row_index
+      castle_data[1][:initialColumn] = rook.current_column_index
       rook.update_attributes(current_row_index: current_row_index, current_column_index: 5)
-      # Store final position attributes
-      rook_data[:destinationRow] = rook.current_row_index
-      rook_data[:destinationColumn] = rook.current_column_index
-      castle_data << rook_data
-      castle_data.unshift(king_data)
+      castle_data[1][:destinationRow] = rook.current_row_index
+      castle_data[1][:destinationColumn] = rook.current_column_index
+      castle_data
     elsif destination_col < current_column_index
       move_to!(current_row_index, 2)
-      king_data[:destinationRow] = current_row_index
-      king_data[:destinationColumn] = current_column_index
-      # Locate queenside rook
+      castle_data[0][:destinationRow] = current_row_index
+      castle_data[0][:destinationColumn] = current_column_index
       rook = rook_queenside
-      # Store initial position attributes
-      rook_data = { initialRow: rook.current_row_index, initialColumn: rook.current_column_index }
-      # Move castling queenside rook to new coordinates
+      castle_data[1][:initialRow] = rook.current_row_index
+      castle_data[1][:initialColumn] = rook.current_column_index
       rook.update_attributes(current_row_index: current_row_index, current_column_index: 3)
-      # Store final position attributes
-      rook_data[:destinationRow] = rook.current_row_index
-      rook_data[:destinationColumn] = rook.current_column_index
-      castle_data << rook_data
-      castle_data.unshift(king_data)
+      castle_data[1][:destinationRow] = rook.current_row_index
+      castle_data[1][:destinationColumn] = rook.current_column_index
+      castle_data
     end
   end
 
