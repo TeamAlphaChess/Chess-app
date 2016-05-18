@@ -10,6 +10,10 @@ class Game < ActiveRecord::Base
     Game.where(black_player_id: nil).offset(offset_count).limit(query_limit)
   end
 
+  def self.list_active_games(offset_count = 0, query_limit = 10)
+    Game.where(black_player_id: black_player_id).offset(offset_count).limit(query_limit)
+  end
+
   def populate_board! # rubocop:disable Metrics/AbcSize
     (0..7).each do |i|
       pieces.create(color: 'white', type: 'Pawn', current_row_index: 1,
